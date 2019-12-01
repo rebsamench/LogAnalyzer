@@ -3,8 +3,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ch.zhaw.javavertriefung.loganalyzer.view.HomePanelUIController"
+            fx:controller="ch.zhaw.jv19.loganalyzer.view.ImportPanelUIController"
             prefHeight="400.0" prefWidth="600.0"
-            id="HomePanel">
+            id="ImportPanel">
 
 </AnchorPane>

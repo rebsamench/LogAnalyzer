@@ -1,5 +1,6 @@
-package ch.zhaw.javavertriefung.loganalyzer.view;
+package ch.zhaw.jv19.loganalyzer.view;
 
+import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -10,7 +11,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.util.Callback;
-import ch.zhaw.javavertriefung.loganalyzer.util.db.DBUtil;
 
 import java.sql.ResultSet;
 

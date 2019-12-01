@@ -1,4 +1,4 @@
-package ch.zhaw.javavertriefung.loganalyzer.util.db;
+package ch.zhaw.jv19.loganalyzer.util.db;
 
 public class MySQLKeyword {
     public static final String WHERE = " WHERE ";

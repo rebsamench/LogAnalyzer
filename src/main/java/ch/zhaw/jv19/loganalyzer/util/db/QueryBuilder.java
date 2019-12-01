@@ -1,7 +1,7 @@
-package ch.zhaw.javavertriefung.loganalyzer.util.db;
+package ch.zhaw.jv19.loganalyzer.util.db;
 
-import ch.zhaw.javavertriefung.loganalyzer.util.datatypes.DateUtil;
-import ch.zhaw.javavertriefung.loganalyzer.model.SearchCondition;
+import ch.zhaw.jv19.loganalyzer.util.datatypes.DateUtil;
+import ch.zhaw.jv19.loganalyzer.model.SearchCondition;
 import javafx.collections.ObservableList;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;

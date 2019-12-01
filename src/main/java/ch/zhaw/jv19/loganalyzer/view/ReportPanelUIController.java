@@ -1,16 +1,16 @@
-package ch.zhaw.javavertriefung.loganalyzer.view;
+package ch.zhaw.jv19.loganalyzer.view;
 
-import ch.zhaw.javavertriefung.loganalyzer.util.datatypes.DateUtil;
-import ch.zhaw.javavertriefung.loganalyzer.model.SearchReport;
+import ch.zhaw.jv19.loganalyzer.util.datatypes.DateUtil;
+import ch.zhaw.jv19.loganalyzer.model.SearchReport;
+import ch.zhaw.jv19.loganalyzer.model.SearchCondition;
+import ch.zhaw.jv19.loganalyzer.util.db.MySQLKeyword;
+import ch.zhaw.jv19.loganalyzer.util.db.QueryBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import ch.zhaw.javavertriefung.loganalyzer.model.SearchCondition;
 import org.controlsfx.control.CheckComboBox;
-import ch.zhaw.javavertriefung.loganalyzer.util.db.MySQLKeyword;
-import ch.zhaw.javavertriefung.loganalyzer.util.db.QueryBuilder;
 
 public class ReportPanelUIController {
     private SearchReport searchReport;

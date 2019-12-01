@@ -3,7 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane id="MainApp" stylesheets="/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.javavertriefung.loganalyzer.view.MainAppUIController">
+<AnchorPane id="MainApp" stylesheets="/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.jv19.loganalyzer.view.MainAppUIController">
    <children>
       <VBox id="main_menu_pane" prefHeight="761.0" prefWidth="196.0">
          <children>

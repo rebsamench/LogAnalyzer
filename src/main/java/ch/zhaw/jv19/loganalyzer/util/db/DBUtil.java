@@ -1,4 +1,4 @@
-package ch.zhaw.javavertriefung.loganalyzer.util.db;
+package ch.zhaw.jv19.loganalyzer.util.db;
 
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetFactory;

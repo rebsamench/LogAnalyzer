@@ -1,4 +1,4 @@
-package ch.zhaw.javavertriefung.loganalyzer.model;
+package ch.zhaw.jv19.loganalyzer.model;
 
 import java.util.ArrayList;
 

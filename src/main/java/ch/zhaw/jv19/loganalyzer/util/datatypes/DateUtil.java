@@ -1,4 +1,4 @@
-package ch.zhaw.javavertriefung.loganalyzer.util.datatypes;
+package ch.zhaw.jv19.loganalyzer.util.datatypes;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

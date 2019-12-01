@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<AnchorPane id="ReportPanel" prefHeight="529.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.javavertriefung.loganalyzer.view.ReportPanelUIController">
+<AnchorPane id="ReportPanel" prefHeight="529.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.jv19.loganalyzer.view.ReportPanelUIController">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="745.6" prefWidth="602.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>

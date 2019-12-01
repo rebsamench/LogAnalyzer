@@ -1,4 +1,4 @@
-package ch.zhaw.javavertriefung.loganalyzer;
+package ch.zhaw.jv19.loganalyzer;
 
 public class Launcher {
 

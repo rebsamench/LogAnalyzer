@@ -1,6 +1,6 @@
-package ch.zhaw.javavertriefung.loganalyzer.view;
+package ch.zhaw.jv19.loganalyzer.view;
 
-import ch.zhaw.javavertriefung.loganalyzer.MainApp;
+import ch.zhaw.jv19.loganalyzer.MainApp;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
