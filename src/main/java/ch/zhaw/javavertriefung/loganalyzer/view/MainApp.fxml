@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane id="MainApp" stylesheets="/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.javavertriefung.loganalyzer.view.MainAppUIController">
+   <children>
+      <VBox id="main_menu_pane" prefHeight="761.0" prefWidth="196.0">
+         <children>
+            <HBox id="logo" prefHeight="100.0" prefWidth="200.0" />
+            <ToggleButton fx:id="btnHome" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#handleMenuButtonClicks" styleClass="main_menu_button" text="Start">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </ToggleButton>
+            <ToggleButton fx:id="btnImport" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#handleMenuButtonClicks" styleClass="main_menu_button" text="Import">
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </ToggleButton>
+            <ToggleButton fx:id="btnReports" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="262.0" mnemonicParsing="false" onMouseClicked="#handleMenuButtonClicks" styleClass="main_menu_button" text="Reports">
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </ToggleButton>
+            <ToggleButton fx:id="btnSQL" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="312.0" mnemonicParsing="false" onMouseClicked="#handleMenuButtonClicks" styleClass="main_menu_button" text="SQL">
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </ToggleButton>
+            <ToggleButton fx:id="btnSettings" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="363.0" mnemonicParsing="false" onMouseClicked="#handleMenuButtonClicks" styleClass="main_menu_button" text="Einstellungen">
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </ToggleButton>
+         </children>
+      </VBox>
+      <AnchorPane id="content_pane" fx:id="contentPane" layoutX="200.0" layoutY="50.0" minHeight="200.0" minWidth="200.0" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+   </children>
+</AnchorPane>

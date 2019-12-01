@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane id="SQLPanel" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.javavertriefung.loganalyzer.view.SQLPanelUIController">
+   <children>
+      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="380.0" prefWidth="613.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+            <AnchorPane>
+               <children>
+                  <HBox layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                     <children>
+                        <TextArea fx:id="sqlStatementTextArea" promptText="SQL-Statement" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </TextArea>
+                        <VBox minWidth="120.0" spacing="10.0">
+                           <children>
+                            <Button fx:id="sqlExecuteStatementButton" mnemonicParsing="false" onAction="#handleSqlExecuteStatement" text="Ausführen" />
+                              <Button fx:id="sqlExecuteScriptButton" mnemonicParsing="false" onAction="#handleSqlExecuteScript" prefHeight="26.0" prefWidth="199.0" text="Skript ausführen" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <VBox layoutY="146.0">
+                     <children>
+                        <ButtonBar minHeight="30.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+          <AnchorPane>
+               <children>
+                  <TableView fx:id="sqlResultTable" layoutX="14.0" layoutY="14.0" prefHeight="170.0" prefWidth="570.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
