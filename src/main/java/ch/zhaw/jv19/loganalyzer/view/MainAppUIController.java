@@ -63,21 +63,6 @@ public class MainAppUIController implements Initializable {
         }
     }
 
-    private void loadUI(String ui) {
-        AnchorPane pane = null;
-        contentPane.getChildren().clear();
-        try {
-            pane = FXMLLoader.load(getClass().getResource(ui + ".fxml"));
-            pane.minWidthProperty().bind(contentPane.widthProperty());
-            pane.minHeightProperty().bind(contentPane.heightProperty());
-            contentPane.getChildren().add(pane);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-        }
-    }
-
     private void selectPanel(String panelId) {
         Iterator<AnchorPane> it = uiPanels.iterator();
         boolean panelFound = false;

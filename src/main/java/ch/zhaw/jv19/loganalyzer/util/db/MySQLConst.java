@@ -1,6 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.util.db;
 
-public class MySQLKeyword {
+public class MySQLConst {
     public static final String WHERE = " WHERE ";
     public static final String AND = " AND ";
     public static final String OR = " OR ";
@@ -13,4 +13,5 @@ public class MySQLKeyword {
     public static final String SEPARATOR = ", ";
     public static final String IN = " IN ";
     public static final String ENDQUERY = ";";
+    public static final String DATETIMEPATTERN = "yyyy-MM-dd hh:mm:ss";
 }
