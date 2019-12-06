@@ -1,31 +1,26 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
-import ch.zhaw.jv19.loganalyzer.util.datatypes.DateUtil;
-import ch.zhaw.jv19.loganalyzer.model.SearchReport;
-import ch.zhaw.jv19.loganalyzer.model.SearchCondition;
-import ch.zhaw.jv19.loganalyzer.util.db.MySQLKeyword;
-import ch.zhaw.jv19.loganalyzer.util.db.QueryBuilder;
-import javafx.event.ActionEvent;
+import ch.zhaw.jv19.loganalyzer.model.QueryExecutor;
+import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
+import javafx.beans.binding.Bindings;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import org.controlsfx.control.CheckComboBox;
 
-public class ReportPanelUIController {
-    private SearchReport searchReport;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.ResourceBundle;
+
+public class ReportPanelUIController implements Initializable {
+    private HashMap<String, Object> formData;
     @FXML
     private DatePicker createdFrom;
     @FXML
     private DatePicker createdUpTo;
     @FXML
-    private ComboBox<String> createdUser;
-    @FXML
-    private DatePicker replacedFrom;
-    @FXML
-    private DatePicker replacedUpTo;
-    @FXML
-    private ComboBox<String> replacedUser;
+    private CheckComboBox<String> createdUser;
     @FXML
     private DatePicker loggedTimestampFrom;
     @FXML
@@ -33,48 +28,80 @@ public class ReportPanelUIController {
     @FXML
     private CheckComboBox<String> recordType;
     @FXML
-    private ComboBox<String> site;
+    private CheckComboBox<String> site;
     @FXML
-    private TextField messageLike;
+    private TextField messageSubstring;
     @FXML
     private TextField sqlStatement;
+    @FXML
+    private TableView<ObservableList> resultTable;
+    @FXML
+    private Button exportButton;
 
-    //TODO validate Date: https://stackoverflow.com/questions/28432576/javafx-datepicker-validation
-    // separate UI from model, this fx controller must not know about SearchReport and QueryBuilder
-    public ReportPanelUIController() {
-        searchReport = new SearchReport();
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        exportButton.disableProperty().bind(
+                Bindings.isEmpty(resultTable.getItems())
+        );
+        getUserList();
+        getSiteList();
+        getBusList();
     }
 
-    public void updateSearchReport() {
+    @FXML
+    private void search() {
+        resultTable.getItems().clear();
+        prepareFormData();
+        resultTable = QueryExecutor.getLogRecordsTable(formData);
+    }
+
+    @FXML
+    private void exportResultTable() {
+    }
+
+    // TODO get User list from DB over AppData
+    private void getUserList() {
+
+    }
+
+    // TODO get Site list from DB over AppData
+    private void getSiteList() {
+
+    }
+
+    // TODO get bus list from DB over AppData
+    private void getBusList() {
+
+    }
+
+    private void prepareFormData() {
+        formData = new HashMap<>();
         if (createdFrom.getValue() != null) {
-            searchReport.addCondition(new SearchCondition(createdFrom.getId(), DateUtil.getUtcStartOfDayFromDate(createdFrom.getValue()), MySQLKeyword.AND, MySQLKeyword.EQUALS));
+            formData.put(createdFrom.getId(), DateUtil.getUtcStartOfDayFromDate(createdFrom.getValue()));
         }
-        if (createdUpTo.getValue() != null) {
-            searchReport.addCondition(new SearchCondition(createdUpTo.getId(), DateUtil.getUtcEndOfDayFromDate(createdUpTo.getValue()), MySQLKeyword.AND, MySQLKeyword.EQUALS));
+        if (createdFrom.getValue() != null) {
+            formData.put(createdUpTo.getId(), DateUtil.getUtcEndOfDayFromDate(createdUpTo.getValue()));
         }
-        if (loggedTimestampFrom.getValue() != null) {
-            searchReport.addCondition(new SearchCondition(loggedTimestampFrom.getId(), DateUtil.getUtcEndOfDayFromDate(loggedTimestampFrom.getValue()), MySQLKeyword.AND, MySQLKeyword.EQUALS));
+        if (createdFrom.getValue() != null) {
+            formData.put(loggedTimestampFrom.getId(), DateUtil.getUtcEndOfDayFromDate(loggedTimestampFrom.getValue()));
         }
-        if (loggedTimestampUpTo.getValue() != null) {
-            searchReport.addCondition(new SearchCondition(loggedTimestampUpTo.getId(), DateUtil.getUtcEndOfDayFromDate(loggedTimestampUpTo.getValue()), MySQLKeyword.AND, MySQLKeyword.EQUALS));
+        if (createdFrom.getValue() != null) {
+            formData.put(loggedTimestampUpTo.getId(), DateUtil.getUtcEndOfDayFromDate(loggedTimestampUpTo.getValue()));
         }
-        if (createdUser.getValue() != null) {
-            searchReport.addCondition(new SearchCondition(createdUser.getId(), createdUser.getItems(), MySQLKeyword.AND, MySQLKeyword.EQUALS));
+        if (createdFrom.getValue() != null) {
+            formData.put(createdUser.getId(), createdUser.getCheckModel().getCheckedItems());
         }
-        if (recordType.getItems().size() > 0) {
-            searchReport.addCondition(new SearchCondition(recordType.getId(), recordType.getItems(), MySQLKeyword.AND, MySQLKeyword.EQUALS));
+        if (createdFrom.getValue() != null) {
+            formData.put(createdUser.getId(), createdUser.getCheckModel().getCheckedItems());
         }
-        if (site.getSelectionModel().getSelectedItem() != null) {
-            searchReport.addCondition(new SearchCondition(site.getId(), site.getSelectionModel().getSelectedItem(), MySQLKeyword.AND, MySQLKeyword.EQUALS));
+        if (createdFrom.getValue() != null) {
+            formData.put(recordType.getId(), recordType.getCheckModel().getCheckedItems());
         }
-        if (!messageLike.getText().trim().isEmpty()) {
-            searchReport.addCondition(new SearchCondition(messageLike.getId(), messageLike.getText(), MySQLKeyword.AND, MySQLKeyword.LIKE));
+        if (createdFrom.getValue() != null) {
+            formData.put(site.getId(), site.getItems());
         }
-    }
-
-
-    public void searchWithReportSettings(ActionEvent actionEvent) {
-        updateSearchReport();
-        sqlStatement.setText("SELECT * FROM TABLE " + QueryBuilder.getSQLConditionsFromList(searchReport.getFormData()));
+        if (createdFrom.getValue() != null) {
+            formData.put(messageSubstring.getId(), messageSubstring.getText());
+        }
     }
 }

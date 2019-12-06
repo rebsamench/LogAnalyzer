@@ -44,10 +44,10 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <DatePicker fx:id="createdFrom" GridPane.columnIndex="1" />
-                                    <DatePicker fx:id="createdUpTo" GridPane.columnIndex="4" />
-                                    <DatePicker fx:id="loggedTimestampFrom" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <DatePicker fx:id="loggedTimestampUpTo" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                    <DatePicker fx:id="createdFrom" prefHeight="26.0" prefWidth="181.0" GridPane.columnIndex="1" />
+                                    <DatePicker fx:id="createdUpTo" prefHeight="26.0" prefWidth="182.0" GridPane.columnIndex="4" />
+                                    <DatePicker fx:id="loggedTimestampFrom" prefHeight="26.0" prefWidth="198.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <DatePicker fx:id="loggedTimestampUpTo" prefHeight="26.0" prefWidth="190.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                     <Label text="Erstellt von" />
                                     <Label text="Logzeitpunkt von" GridPane.rowIndex="1">
                                        <GridPane.margin>
@@ -56,14 +56,14 @@
                                     <Label text="Benutzer" GridPane.rowIndex="2" />
                                     <Label text="Erstellt bis" GridPane.columnIndex="3" />
                                     <Label text="Logzeitpunkt bis" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                    <ComboBox fx:id="createdUser" prefHeight="26.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <CheckComboBox fx:id="recordType" prefHeight="26.0" prefWidth="171.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                    <CheckComboBox fx:id="createdUser" prefHeight="26.0" prefWidth="183.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <CheckComboBox fx:id="recordType" prefHeight="26.0" prefWidth="189.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                                     <Label text="Typ" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                     <Label text="Anlage" GridPane.rowIndex="3" />
                                     <Label text="Text in Meldung" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                    <TextField fx:id="messageLike" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                                    <Button mnemonicParsing="false" onAction="#searchWithReportSettings" text="Suchen" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                                    <ComboBox fx:id="site" prefHeight="26.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <TextField fx:id="messageSubstring" prefHeight="26.0" prefWidth="212.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                                    <Button mnemonicParsing="false" onAction="#search" text="Suchen" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                                    <CheckComboBox fx:id="site" prefHeight="26.0" prefWidth="186.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                  </children>
                               </GridPane>
                               <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
@@ -94,12 +94,12 @@
                            <children>
                               <ScrollPane layoutX="19.600000381469727" layoutY="19.600000381469727" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                                  <content>
-                                    <TableView minWidth="800.0" />
+                                    <TableView fx:id="resultTable" minWidth="600.0" />
                                  </content>
                               </ScrollPane>
-                              <ButtonBar prefHeight="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                              <ButtonBar prefHeight="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0">
                                 <buttons>
-                                  <Button mnemonicParsing="false" text="Exportieren" />
+                                  <Button fx:id="exportButton" mnemonicParsing="false" onAction="#exportResultTable" text="Exportieren" />
                                 </buttons>
                               </ButtonBar>
                            </children>
