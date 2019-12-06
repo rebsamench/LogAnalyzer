@@ -22,22 +22,16 @@ public class LogRecordQueryBuilder {
                 conditionSb.append(entry.getKey());
                 switch (entry.getKey()) {
                     case "createdFrom":
-                        conditionSb.append(MySQLConst.GT);
-                        conditionSb.append(convertToString(entry.getValue()));
-                        break;
-                    case "createdUpTo":
-                        conditionSb.append(MySQLConst.LT);
-                        conditionSb.append(convertToString(entry.getValue()));
-                        break;
                     case "loggedTimestampFrom":
                         conditionSb.append(MySQLConst.GT);
                         conditionSb.append(convertToString(entry.getValue()));
                         break;
+                    case "createdUpTo":
                     case "loggedTimestampUpTo":
                         conditionSb.append(MySQLConst.LT);
                         conditionSb.append(convertToString(entry.getValue()));
-                        //list types -> IN conditions
                         break;
+                    //list types -> IN conditions
                     case "createdUser":
                     case "site":
                     case "recordType":
