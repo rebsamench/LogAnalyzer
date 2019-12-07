@@ -1,16 +1,13 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
-import ch.zhaw.jv19.loganalyzer.model.Busline;
-import ch.zhaw.jv19.loganalyzer.model.FileImport;
-import ch.zhaw.jv19.loganalyzer.model.Site;
-import ch.zhaw.jv19.loganalyzer.model.User;
+import ch.zhaw.jv19.loganalyzer.model.*;
 import javafx.event.ActionEvent;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.util.List;
 
-public class ImportPanelUIController {
+public class ImportPanelUIController implements UIPanelController {
 
     // TODO
     // Will be collected by the import form
@@ -19,6 +16,7 @@ public class ImportPanelUIController {
     private Busline busline;
 
     private List<File> fileList;
+    private AppDataController appDataController;
 
     public void handleImportSelectedFiles(ActionEvent event) {
 
@@ -30,5 +28,10 @@ public class ImportPanelUIController {
         /* Show open file dialog to select multiple files. */
         fileList = fileChooser.showOpenMultipleDialog(null);
         FileImport fileImport = new FileImport(user, site, busline, fileList);
+    }
+
+    @Override
+    public void setAppDataController(AppDataController appDataController) {
+        this.appDataController = appDataController;
     }
 }

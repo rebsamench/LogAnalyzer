@@ -56,8 +56,12 @@ public final class DateUtil {
 
     public static ZonedDateTime getZonedDateTimeFromDateString(String date, String inputDatePattern) {
         String validZonedDateTimePattern = inputDatePattern + "hh:mm";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(validZonedDateTimePattern);
-        return ZonedDateTime.parse(date + "00:00" + ZoneId.systemDefault(), formatter);
+        return getZonedDateTimeFromDateTimeString(date + "00:00", validZonedDateTimePattern);
+    }
+
+    public static ZonedDateTime getZonedDateTimeFromDateTimeString(String dateTime, String inputDateTimePattern) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(inputDateTimePattern);
+        return ZonedDateTime.parse(dateTime + ZoneId.systemDefault(), formatter);
     }
 
 }

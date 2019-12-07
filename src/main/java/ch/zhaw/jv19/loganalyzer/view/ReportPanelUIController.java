@@ -1,5 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
+import ch.zhaw.jv19.loganalyzer.model.AppDataController;
 import ch.zhaw.jv19.loganalyzer.model.QueryExecutor;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import javafx.beans.binding.Bindings;
@@ -13,7 +14,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class ReportPanelUIController implements Initializable {
+public class ReportPanelUIController implements Initializable, UIPanelController {
     private HashMap<String, Object> formData;
     @FXML
     private DatePicker createdFrom;
@@ -37,6 +38,7 @@ public class ReportPanelUIController implements Initializable {
     private TableView<ObservableList> resultTable;
     @FXML
     private Button exportButton;
+    private AppDataController appDataController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -50,9 +52,12 @@ public class ReportPanelUIController implements Initializable {
 
     @FXML
     private void search() {
-        resultTable.getItems().clear();
+        resultTable.getColumns().clear();
         prepareFormData();
-        resultTable = QueryExecutor.getLogRecordsTable(formData);
+        TableView<ObservableList> returnedTable = QueryExecutor.getLogRecordsTable(formData);
+        appDataController.setMessage(returnedTable.getItems().size() + " Einträge geladen.");
+        resultTable.getColumns().addAll(returnedTable.getColumns());
+        resultTable.getItems().addAll(returnedTable.getItems());
     }
 
     @FXML
@@ -103,5 +108,10 @@ public class ReportPanelUIController implements Initializable {
         if (createdFrom.getValue() != null) {
             formData.put(messageSubstring.getId(), messageSubstring.getText());
         }
+    }
+
+    @Override
+    public void setAppDataController(AppDataController appDataController) {
+        this.appDataController = appDataController;
     }
 }

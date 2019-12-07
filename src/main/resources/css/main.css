@@ -1,17 +1,35 @@
 #main_menu_pane {
     -fx-background-color: darkslateblue;
-    -fx-pref-width: 200;
-    -fx-pref-height: 768;
 }
 
-#sql_pane {
-/*    -fx-border-width: 1;
-    -fx-border-color: green; */
+#sql_panel, #report_panel {
+/   -fx-border-width: 1;
+    -fx-border-color: green;
 }
 
 #content_pane {
-/*    -fx-border-width: 1;
-    -fx-border-color: red; */
+    -fx-border-width: 1;
+    -fx-border-color: red;
+}
+
+#scroll {
+    -fx-border-width: 1;
+    -fx-border-color: pink;
+}
+
+#vbox {
+    -fx-border-width: 1;
+    -fx-border-color: blue;
+}
+
+#anchor_inside {
+    -fx-border-width: 1;
+    -fx-border-color: blue;
+}
+
+#tp1, tp2 {
+    -fx-border-width: 1;
+    -fx-border-color: darkgreen;
 }
 
 .main_menu_button {

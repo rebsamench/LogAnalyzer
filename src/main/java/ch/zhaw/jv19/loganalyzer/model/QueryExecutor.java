@@ -20,6 +20,4 @@ public class QueryExecutor {
         tableView = DBUtil.getQueryResultAsTable(query);
         return tableView;
     }
-
-
 }

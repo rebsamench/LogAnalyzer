@@ -9,7 +9,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
-import java.security.spec.ECField;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,19 +20,21 @@ public class DBUtil {
     private static String password = "zhaw123*";
     private static Connection con;
 
-    private static void dbConnect() {
+    public static Connection getConnection() {
         try {
             Class.forName(driverName);
             try {
-
                 con = DriverManager.getConnection(url, username, password);
-                con.setAutoCommit(true);
             } catch (SQLException e) {
                 System.out.println("Datenbank " + url + " nicht erreichbar.");
             }
         } catch (ClassNotFoundException e) {
             System.out.println("Driver not found.");
         }
+        return con;
+    }
+    private static void dbConnect() {
+        con = getConnection();
     }
 
     private static void dbDisconnect() {
@@ -106,7 +107,7 @@ public class DBUtil {
     }
 
     public static TableView<ObservableList> getQueryResultAsTable(String query) {
-        ObservableList<ObservableList> resultList;
+        ObservableList<ObservableList> rowList;
         ResultSet resultSet;
         TableView<ObservableList> resultTable = null;
         try {
@@ -114,7 +115,7 @@ public class DBUtil {
             Statement statement = con.createStatement();
             PreparedStatement pstmt = con.prepareStatement(query);
             resultSet = statement.executeQuery(query);
-            resultList = FXCollections.observableArrayList();
+            rowList = FXCollections.observableArrayList();
             resultTable = new TableView();
             //check if any row is in resultset, https://stackoverflow.com/questions/867194/java-resultset-how-to-check-if-there-are-any-results/6813771#6813771
             if (resultSet.isBeforeFirst()) {
@@ -137,9 +138,9 @@ public class DBUtil {
                         row.add(resultSet.getString(i));
                     }
                     System.out.println("Row [1] added " + row);
-                    resultList.add(row);
+                    rowList.add(row);
                 }
-                resultTable.setItems(resultList);
+                resultTable.setItems(rowList);
             }
         } catch (SQLException e) {
             e.printStackTrace();

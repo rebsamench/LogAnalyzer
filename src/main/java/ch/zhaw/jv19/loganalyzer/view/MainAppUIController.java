@@ -1,9 +1,11 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.MainApp;
+import ch.zhaw.jv19.loganalyzer.model.AppDataController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
@@ -29,10 +31,16 @@ public class MainAppUIController implements Initializable {
     private ToggleButton btnSQL;
     @FXML
     private ToggleButton btnSettings;
+    @FXML
+    private TextArea messageBox;
     private ArrayList<AnchorPane> uiPanels;
+    private MainApp mainApp;
+    private AppDataController appDataController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // create global appdata controller
+        appDataController = new AppDataController();
         uiPanels = new ArrayList<>();
         ToggleGroup mainMenu = new ToggleGroup();
         btnHome.setToggleGroup(mainMenu);
@@ -40,6 +48,8 @@ public class MainAppUIController implements Initializable {
         btnReports.setToggleGroup(mainMenu);
         btnSQL.setToggleGroup(mainMenu);
         btnSettings.setToggleGroup(mainMenu);
+        // bind message box to message in app data
+        messageBox.textProperty().bind(appDataController.getMessage());
         // all panels must be created here by providing the name of the fxml file
         addPanelToPanelList("HomePanel");
         addPanelToPanelList("ImportPanel");
@@ -82,9 +92,13 @@ public class MainAppUIController implements Initializable {
     private void addPanelToPanelList(String fxmlName) {
         AnchorPane pane;
         try {
-            pane = FXMLLoader.load(getClass().getResource(fxmlName + ".fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlName + ".fxml"));
+            pane = fxmlLoader.load();
             // top level pane in panel needs an id attribute in order to load it by id
             if(pane.getId() != null) {
+                // panels need to know app data controller in order to show global messages
+                UIPanelController uiPanelController = (UIPanelController) fxmlLoader.getController();
+                uiPanelController.setAppDataController(appDataController);
                 uiPanels.add(pane);
             }
             else {
@@ -96,5 +110,7 @@ public class MainAppUIController implements Initializable {
     }
 
     public void setMainApp(MainApp main) {
+        this.mainApp = main;
     }
+
 }

@@ -1,5 +1,7 @@
 package ch.zhaw.jv19.loganalyzer;
 
+import ch.zhaw.jv19.loganalyzer.model.AppData;
+import ch.zhaw.jv19.loganalyzer.model.AppDataController;
 import ch.zhaw.jv19.loganalyzer.view.MainAppUIController;
 import javafx.scene.layout.Pane;
 import javafx.application.Application;
@@ -14,10 +16,12 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private Pane rootLayout;
     private double x, y;
+    private AppDataController appDataController;
 
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        appDataController = new AppDataController();
         initRootLayout();
     }
 
@@ -39,15 +43,14 @@ public class MainApp extends Application {
             });
 
             Scene scene = new Scene(rootLayout, 1200, 800);
-            primaryStage.setScene(scene);
             MainAppUIController controller = loader.getController();
             controller.setMainApp(this);
+            primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
     public static void main(String[] args) {
         launch(args);
