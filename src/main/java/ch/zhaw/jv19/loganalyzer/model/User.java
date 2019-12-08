@@ -34,4 +34,27 @@ public class User {
         this.isadmin = isadmin;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public ZonedDateTime getCreated() {
+        return created;
+    }
+
+    public String getCreatedUser() {
+        return createdUser;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getIsadmin() {
+        return isadmin;
+    }
 }

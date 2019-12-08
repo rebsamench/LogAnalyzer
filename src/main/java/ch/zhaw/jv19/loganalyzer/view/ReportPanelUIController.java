@@ -2,17 +2,21 @@ package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.model.AppDataController;
 import ch.zhaw.jv19.loganalyzer.model.QueryExecutor;
+import ch.zhaw.jv19.loganalyzer.model.User;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 import org.controlsfx.control.CheckComboBox;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class ReportPanelUIController implements Initializable, UIPanelController {
     private HashMap<String, Object> formData;
@@ -21,7 +25,7 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     @FXML
     private DatePicker createdUpTo;
     @FXML
-    private CheckComboBox<String> createdUser;
+    private CheckComboBox<User> createdUser;
     @FXML
     private DatePicker loggedTimestampFrom;
     @FXML
@@ -31,7 +35,7 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     @FXML
     private CheckComboBox<String> site;
     @FXML
-    private TextField messageSubstring;
+    private TextField message;
     @FXML
     private TextField sqlStatement;
     @FXML
@@ -45,28 +49,43 @@ public class ReportPanelUIController implements Initializable, UIPanelController
         exportButton.disableProperty().bind(
                 Bindings.isEmpty(resultTable.getItems())
         );
-        getUserList();
-        getSiteList();
-        getBusList();
+        createdUser.addEventHandler(ComboBox.ON_SHOWING, event -> {
+            fillUserList();
+        });
+        createdUser.setConverter(new StringConverter<User>() {
+            @Override
+            public String toString(User user) {
+                return user.getName();
+            }
+
+            @Override
+            public User fromString(String string) {
+                return createdUser.getItems().stream().filter(user ->
+                        user.getName().equals(string)).findFirst().orElse(null);
+            }
+        });
     }
 
     @FXML
     private void search() {
-        resultTable.getColumns().clear();
+        resultTable.getItems().clear();
         prepareFormData();
         TableView<ObservableList> returnedTable = QueryExecutor.getLogRecordsTable(formData);
-        appDataController.setMessage(returnedTable.getItems().size() + " Einträge geladen.");
-        resultTable.getColumns().addAll(returnedTable.getColumns());
-        resultTable.getItems().addAll(returnedTable.getItems());
+        if(returnedTable != null) {
+            appDataController.setMessage(returnedTable.getItems().size() + " Einträge geladen.");
+            resultTable.getColumns().addAll(returnedTable.getColumns());
+            resultTable.getItems().addAll(returnedTable.getItems());
+        }
     }
 
     @FXML
     private void exportResultTable() {
     }
 
-    // TODO get User list from DB over AppData
-    private void getUserList() {
-
+    private void fillUserList() {
+        if (createdUser.getItems().size() == 0) {
+            createdUser.getItems().addAll(appDataController.getUserList());
+        }
     }
 
     // TODO get Site list from DB over AppData
@@ -84,29 +103,30 @@ public class ReportPanelUIController implements Initializable, UIPanelController
         if (createdFrom.getValue() != null) {
             formData.put(createdFrom.getId(), DateUtil.getUtcStartOfDayFromDate(createdFrom.getValue()));
         }
-        if (createdFrom.getValue() != null) {
+        if (createdUpTo.getValue() != null) {
             formData.put(createdUpTo.getId(), DateUtil.getUtcEndOfDayFromDate(createdUpTo.getValue()));
         }
-        if (createdFrom.getValue() != null) {
+        if (loggedTimestampFrom.getValue() != null) {
             formData.put(loggedTimestampFrom.getId(), DateUtil.getUtcEndOfDayFromDate(loggedTimestampFrom.getValue()));
         }
-        if (createdFrom.getValue() != null) {
+        if (loggedTimestampUpTo.getValue() != null) {
             formData.put(loggedTimestampUpTo.getId(), DateUtil.getUtcEndOfDayFromDate(loggedTimestampUpTo.getValue()));
         }
-        if (createdFrom.getValue() != null) {
-            formData.put(createdUser.getId(), createdUser.getCheckModel().getCheckedItems());
+        if (createdUser.getCheckModel().getCheckedItems().size() > 0) {
+            ObservableList<User> userList = createdUser.getCheckModel().getCheckedItems();
+            ArrayList<String> userNameList = new ArrayList<>(userList.stream()
+                    .map(user -> user.getName())
+                    .collect(Collectors.toList()));
+            formData.put(createdUser.getId(), userNameList);
         }
-        if (createdFrom.getValue() != null) {
-            formData.put(createdUser.getId(), createdUser.getCheckModel().getCheckedItems());
-        }
-        if (createdFrom.getValue() != null) {
+        if (recordType.getCheckModel().getCheckedItems().size() > 0) {
             formData.put(recordType.getId(), recordType.getCheckModel().getCheckedItems());
         }
-        if (createdFrom.getValue() != null) {
-            formData.put(site.getId(), site.getItems());
+        if (site.getCheckModel().getCheckedItems().size() > 0) {
+            formData.put(site.getId(), site.getCheckModel().getCheckedItems());
         }
-        if (createdFrom.getValue() != null) {
-            formData.put(messageSubstring.getId(), messageSubstring.getText());
+        if (!message.getText().isEmpty()) {
+            formData.put(message.getId(), message.getText());
         }
     }
 

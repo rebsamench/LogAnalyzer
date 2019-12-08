@@ -2,6 +2,7 @@ package ch.zhaw.jv19.loganalyzer.model.dao;
 
 import ch.zhaw.jv19.loganalyzer.model.User;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
+import ch.zhaw.jv19.loganalyzer.util.datatype.StringUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
 import javafx.collections.FXCollections;
@@ -19,7 +20,7 @@ public class MySQLUserDAO implements UserDAO {
         User user = null;
         Connection con = DBUtil.getConnection();
         PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user WHERE name = '?';");
-        ResultSet rs =  pstmt.executeQuery();
+        ResultSet rs = pstmt.executeQuery();
         return extractUserFromResultSet(rs);
     }
 
@@ -28,8 +29,8 @@ public class MySQLUserDAO implements UserDAO {
         ObservableList userList = FXCollections.observableArrayList();
         Connection con = DBUtil.getConnection();
         PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user;");
-        ResultSet rs =  pstmt.executeQuery();
-        while(rs.next()) {
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
             userList.add(extractUserFromResultSet(rs));
         }
         return userList;
@@ -41,22 +42,31 @@ public class MySQLUserDAO implements UserDAO {
     }
 
     @Override
-    public void saveUser(User user) {
-
-    }
-
-    @Override
-    public void updateUser(User user, String[] params) {
-
+    public int saveUser(User user) throws SQLException {
+        String[] values = {
+                StringUtil.addQuotes.apply(user.getCreatedUser()),
+                StringUtil.addQuotes.apply(user.getPassword()),
+                StringUtil.addQuotes.apply(String.valueOf(user.getIsadmin()))};
+        String statementTemplate =
+                "INSERT INTO user (createdUser, password, isadmin) " +
+                        "VALUES (" +
+                        values[0] + "," +
+                        values[1] + "," +
+                        values[2] +
+                        ") ON DUPLICATE KEY UPDATE " +
+                        " createdUser" + MySQLConst.EQUALS + values[0] +
+                        " password " + MySQLConst.EQUALS + values[1] +
+                        " isadmin " + MySQLConst.EQUALS + values[2] +
+                        MySQLConst.ENDQUERY;
+        return DBUtil.executeUpdate(statementTemplate);
     }
 
     private User extractUserFromResultSet(ResultSet rs) throws SQLException {
         User user = new User();
-        user.setId( rs.getInt("id") );
-        user.setName( rs.getString("name") );
-        user.setCreated(DateUtil.getZonedDateTimeFromDateTimeString(rs.getString("pass"), MySQLConst.DATETIMEPATTERN));
+        user.setId(rs.getInt("id"));
+        user.setName(rs.getString("name"));
+        user.setCreated(DateUtil.getZonedDateTimeFromDateTimeString(rs.getString("created"), MySQLConst.DATETIMEPATTERN));
         user.setCreatedUser(rs.getString("createduser"));
-        user.setPassword( rs.getString("age"));
         user.setIsadmin(rs.getInt("isadmin"));
         return user;
     }

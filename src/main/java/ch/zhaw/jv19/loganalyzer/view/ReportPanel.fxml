@@ -60,7 +60,7 @@
                                     <Label text="Typ" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                     <Label text="Anlage" GridPane.rowIndex="3" />
                                     <Label text="Text in Meldung" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                    <TextField fx:id="messageSubstring" prefHeight="26.0" prefWidth="212.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                                    <TextField fx:id="message" prefHeight="26.0" prefWidth="212.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                                     <Button mnemonicParsing="false" onAction="#search" text="Suchen" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                                     <CheckComboBox fx:id="site" prefHeight="26.0" prefWidth="186.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                  </children>

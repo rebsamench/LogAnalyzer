@@ -3,6 +3,7 @@ package ch.zhaw.jv19.loganalyzer.model;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import ch.zhaw.jv19.loganalyzer.util.datatype.StringUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
+import javafx.collections.ObservableList;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -36,9 +37,9 @@ public class LogRecordQueryBuilder {
                     case "site":
                     case "recordType":
                         conditionSb.append(MySQLConst.IN);
-                        conditionSb.append(convertToString(entry.getValue()));
+                        conditionSb.append(getInConditions((ArrayList<String>) entry.getValue()));
                         break;
-                    case "messageSubstring":
+                    case "message":
                         conditionSb.append(MySQLConst.LIKE);
                         String messageSubstring = entry.getValue().toString();
                         conditionSb.append(StringUtil.addQuotes.apply(StringUtil.addPercent.apply(messageSubstring)));
@@ -72,14 +73,14 @@ public class LogRecordQueryBuilder {
         if(conditionList.size() > 0) {
             querySb.append(connectConditions(conditionList));
         }
-        return querySb.append(MySQLConst.ENDQUERY).toString();
+        querySb.append(MySQLConst.ENDQUERY);
+        System.out.println(querySb.toString());
+        return querySb.toString();
     }
 
     public static String connectConditions(ArrayList<String> conditionList) {
         Iterator<String> it = conditionList.iterator();
         StringBuilder conditionSb = new StringBuilder();
-        // connect first condition with WHERE
-        conditionSb.append(MySQLConst.WHERE);
         boolean isFirstCondition = true;
         while (it.hasNext()) {
             // replace first AND with WHERE

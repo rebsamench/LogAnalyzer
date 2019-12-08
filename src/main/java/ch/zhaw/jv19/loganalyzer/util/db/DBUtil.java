@@ -33,6 +33,7 @@ public class DBUtil {
         }
         return con;
     }
+
     private static void dbConnect() {
         con = getConnection();
     }
@@ -47,32 +48,42 @@ public class DBUtil {
         }
     }
 
-    public static int[] executeUpdateWithPreparedStatement(ArrayList<String[]> conditionValueList, String preparedStatementTemplate) throws SQLException {
+    public static int[] executeMultipleUpsertWithStatementTemplate(ArrayList<String[]> valueList, String statementTemplate) throws SQLException {
         int[] rowsAffected;
         dbConnect();
-        int parameterCount = StringUtil.countCharacterOcurrenceInString(preparedStatementTemplate, '?');
-        PreparedStatement pstmt = con.prepareStatement(preparedStatementTemplate);
-        for (String[] conditionList : conditionValueList) {
-            if (conditionList.length == parameterCount) {
-                for (int paramNo = 0; paramNo < conditionList.length; paramNo++) {
-                    pstmt.setString(paramNo, conditionList[paramNo]);
+        int parameterCount = StringUtil.countCharacterOcurrenceInString(statementTemplate, '?');
+        PreparedStatement pstmt = con.prepareStatement(statementTemplate);
+        for (String[] valueSet : valueList) {
+            if (valueSet.length == parameterCount) {
+                for (int paramNo = 0; paramNo < valueSet.length; paramNo++) {
+                    pstmt.setString(paramNo, valueSet[paramNo]);
                     pstmt.addBatch();
                 }
             } else {
-                System.out.println("Number of parameter placeholders (?) does not match condition number. Expected "
-                        + parameterCount + ", given " + conditionList.length + " (" + conditionList.toString() + ").");
+                System.out.println("Number of parameter placeholders (?) does not match number of values. Expected "
+                        + parameterCount + ", given " + valueSet.length + " (" + valueSet.toString() + ").");
             }
         }
         return pstmt.executeBatch();
     }
 
-    public static void executeUpdate(String query) {
+
+    public static int executeUpdate(String query) throws SQLException {
+        int affectedRows;
+        dbConnect();
+        PreparedStatement pstmt = con.prepareStatement(query);
+        affectedRows = pstmt.executeUpdate();
+        dbDisconnect();
+        return affectedRows;
+    }
+
+    public static void executeMultipleUpdate(String query) throws SQLException {
         ArrayList<String> queryList = new ArrayList<>(Arrays.asList(query.split("(?<=;)")));
         int[] affectedRows;
         if (queryList.size() > 1) {
             dbExecuteBatchUpdate(queryList);
         } else {
-            dbExecuteQuery(queryList.get(0));
+            executeUpdate(queryList.get(0));
         }
     }
 
@@ -148,30 +159,6 @@ public class DBUtil {
             dbDisconnect();
         }
         return resultTable;
-    }
-
-    public static ResultSet dbExecuteQuery(String query) {
-        ResultSet resultSet;
-        try {
-            dbConnect();
-            PreparedStatement pstmt = con.prepareStatement(query);
-            resultSet = pstmt.executeQuery();
-            return resultSet;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            dbDisconnect();
-        }
-        return null;
-    }
-
-    private static int dbExecuteUpdate(String query) throws SQLException {
-        int affectedRows;
-        dbConnect();
-        PreparedStatement pstmt = con.prepareStatement(query);
-        affectedRows = pstmt.executeUpdate();
-        dbDisconnect();
-        return affectedRows;
     }
 }
 
