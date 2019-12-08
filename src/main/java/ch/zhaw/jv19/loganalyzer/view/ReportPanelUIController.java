@@ -1,7 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.model.AppDataController;
-import ch.zhaw.jv19.loganalyzer.model.QueryExecutor;
 import ch.zhaw.jv19.loganalyzer.model.User;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import javafx.beans.binding.Bindings;
@@ -70,9 +69,9 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     private void search() {
         resultTable.getItems().clear();
         prepareFormData();
-        TableView<ObservableList> returnedTable = QueryExecutor.getLogRecordsTable(formData);
+        TableView<ObservableList> returnedTable = appDataController.getLogRecordsTableByConditions(formData);
         if(returnedTable != null) {
-            appDataController.setMessage(returnedTable.getItems().size() + " Einträge geladen.");
+            // appDataController.setMessage(returnedTable.getItems().size() + " Einträge geladen.");
             resultTable.getColumns().addAll(returnedTable.getColumns());
             resultTable.getItems().addAll(returnedTable.getItems());
         }

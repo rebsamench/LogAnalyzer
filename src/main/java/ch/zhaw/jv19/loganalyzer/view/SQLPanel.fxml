@@ -26,7 +26,7 @@
                         </TextArea>
                         <VBox minWidth="120.0" spacing="10.0">
                            <children>
-                            <Button fx:id="sqlExecuteStatementButton" mnemonicParsing="false" onAction="#executeQuery" text="Ausführen" />
+                            <Button fx:id="sqlExecuteStatementButton" mnemonicParsing="false" text="Ausführen" />
                            </children>
                            <opaqueInsets>
                               <Insets />

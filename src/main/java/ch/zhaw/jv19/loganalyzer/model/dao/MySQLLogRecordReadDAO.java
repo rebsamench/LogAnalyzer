@@ -1,9 +1,11 @@
-package ch.zhaw.jv19.loganalyzer.model;
+package ch.zhaw.jv19.loganalyzer.model.dao;
 
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import ch.zhaw.jv19.loganalyzer.util.datatype.StringUtil;
+import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -11,26 +13,50 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 
-public class LogRecordQueryBuilder {
+public class MySQLLogRecordReadDAO implements LogRecordReadDAO {
+    private String currentQuery;
 
-    public static ArrayList<String> getConditionListFromMap(HashMap<String, Object> conditionsMap) {
+    @Override
+    public TableView<ObservableList> getLogRecordsTableByConditions(HashMap<String, Object> searchConditions) {
+        TableView<ObservableList> tableView;
+        setCurrentLogRecordQuery(searchConditions);
+        tableView = DBUtil.getQueryResultAsTable(currentQuery);
+        return tableView;
+    }
+
+    @Override
+    public String getCurrentQuery() {
+        return currentQuery;
+    }
+
+    private void setCurrentLogRecordQuery(HashMap<String, Object> searchConditions) {
+        StringBuilder querySb = new StringBuilder();
+        querySb.append("SELECT * FROM logrecord");
+        if(searchConditions.size() > 0) {
+            querySb.append(connectConditions(getConditionListFromMap(searchConditions)));
+        }
+        querySb.append(MySQLConst.ENDQUERY);
+        currentQuery = querySb.toString();
+    }
+
+    private ArrayList<String> getConditionListFromMap(HashMap<String, Object> conditionsMap) {
         Iterator<HashMap.Entry<String, Object>> entries = conditionsMap.entrySet().iterator();
         ArrayList<String> conditionsList = new ArrayList<>();
         while (entries.hasNext()) {
             HashMap.Entry<String, Object> entry = entries.next();
             if (entry.getValue() != null) {
                 StringBuilder conditionSb = new StringBuilder();
-                conditionSb.append(entry.getKey());
+                conditionSb.append(mapKey(entry.getKey()));
                 switch (entry.getKey()) {
                     case "createdFrom":
                     case "loggedTimestampFrom":
                         conditionSb.append(MySQLConst.GT);
-                        conditionSb.append(convertToString(entry.getValue()));
+                        conditionSb.append(StringUtil.addQuotes.apply(convertToString(entry.getValue())));
                         break;
                     case "createdUpTo":
                     case "loggedTimestampUpTo":
                         conditionSb.append(MySQLConst.LT);
-                        conditionSb.append(convertToString(entry.getValue()));
+                        conditionSb.append(StringUtil.addQuotes.apply(convertToString(entry.getValue())));
                         break;
                     //list types -> IN conditions
                     case "createdUser":
@@ -51,7 +77,21 @@ public class LogRecordQueryBuilder {
         return conditionsList;
     }
 
-    private static String convertToString(Object object) {
+    private String mapKey(String key){
+        switch (key) {
+            case "createdFrom":
+            case "createdUpTo": {
+                return "created";
+            }
+            case "loggedTimestampFrom":
+            case "loggedTimestampUpTo": {
+                return "timestamp";
+            }
+            default: return key;
+        }
+    }
+
+    private String convertToString(Object object) {
         String condition = null;
         if (object instanceof ZonedDateTime) {
             condition = DateUtil.convertDateTimeToString((ZonedDateTime) object, MySQLConst.DATETIMEPATTERN);
@@ -67,18 +107,7 @@ public class LogRecordQueryBuilder {
         return condition;
     }
 
-    public static String buildLogRecordQuery(ArrayList conditionList) {
-        StringBuilder querySb = new StringBuilder();
-        querySb.append("SELECT * FROM logrecord");
-        if(conditionList.size() > 0) {
-            querySb.append(connectConditions(conditionList));
-        }
-        querySb.append(MySQLConst.ENDQUERY);
-        System.out.println(querySb.toString());
-        return querySb.toString();
-    }
-
-    public static String connectConditions(ArrayList<String> conditionList) {
+    private static String connectConditions(ArrayList<String> conditionList) {
         Iterator<String> it = conditionList.iterator();
         StringBuilder conditionSb = new StringBuilder();
         boolean isFirstCondition = true;
@@ -95,7 +124,7 @@ public class LogRecordQueryBuilder {
         return conditionSb.toString();
     }
 
-    private static String getInConditions(ArrayList<String> conditionList) {
+    private String getInConditions(ArrayList<String> conditionList) {
         return StringUtil.addBrackets.apply(conditionList.stream()
                 .map(StringUtil.addQuotes)
                 .collect(Collectors.joining(MySQLConst.SEPARATOR)));
