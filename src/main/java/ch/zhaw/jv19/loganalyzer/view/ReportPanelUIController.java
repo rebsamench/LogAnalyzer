@@ -8,9 +8,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.util.StringConverter;
 import org.controlsfx.control.CheckComboBox;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,6 +70,7 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     @FXML
     private void search() {
         resultTable.getItems().clear();
+        resultTable.getColumns().clear();
         prepareFormData();
         TableView<ObservableList> returnedTable = appDataController.getLogRecordsTableByConditions(formData);
         if(returnedTable != null) {
@@ -79,6 +82,12 @@ public class ReportPanelUIController implements Initializable, UIPanelController
 
     @FXML
     private void exportResultTable() {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Tabelle exportieren");
+        chooser.setInitialFileName("Export_" + DateUtil.getCurrentDateTimeString("yyyy-MM-dd_HHmm") + ".xlsx");
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel-Dateien (*.xlsx)", "*.xlsx"));
+        File file = chooser.showSaveDialog(exportButton.getScene().getWindow());
+        appDataController.exportToExcel(resultTable, file);
     }
 
     private void fillUserList() {

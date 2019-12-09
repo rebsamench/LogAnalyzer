@@ -4,10 +4,12 @@ import ch.zhaw.jv19.loganalyzer.model.dao.LogRecordReadDAO;
 import ch.zhaw.jv19.loganalyzer.model.dao.MySQLLogRecordReadDAO;
 import ch.zhaw.jv19.loganalyzer.model.dao.MySQLUserDAO;
 import ch.zhaw.jv19.loganalyzer.model.dao.UserDAO;
+import ch.zhaw.jv19.loganalyzer.util.export.ExcelExporter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -67,5 +69,13 @@ public class AppDataController {
         TableView<ObservableList> resultTable = logRecordReadDAO.getLogRecordsTableByConditions(searchConditions);
         setMessage(logRecordReadDAO.getCurrentQuery());
         return resultTable;
+    }
+
+    /**
+     * Exports TableView as Excel file
+     */
+    public void exportToExcel(TableView<ObservableList> table, File file) {
+        ExcelExporter exporter = new ExcelExporter();
+        exporter.saveTable(table, file);
     }
 }
