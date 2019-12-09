@@ -61,7 +61,7 @@ public final class DateUtil {
 
     public static ZonedDateTime getZonedDateTimeFromDateTimeString(String dateTime, String inputDateTimePattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(inputDateTimePattern);
-        return ZonedDateTime.parse(dateTime + ZoneId.systemDefault(), formatter);
+        return LocalDateTime.parse(dateTime, formatter).atZone(systemZone);
     }
 
 }

@@ -1,7 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.model.AppDataController;
-import ch.zhaw.jv19.loganalyzer.model.QueryExecutor;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,12 +26,6 @@ public class SQLPanelUIController implements Initializable, UIPanelController {
         exportButton.disableProperty().bind(
                 Bindings.isEmpty(resultTable.getItems())
         );
-    }
-
-    //TODO not working. somehow table is not being replaced
-    public void executeQuery() {
-        resultTable = QueryExecutor.getQueryResultTable(sqlStatementTextArea.getText());
-
     }
 
     @Override
