@@ -1,13 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.util.db;
 
 import ch.zhaw.jv19.loganalyzer.util.datatype.StringUtil;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.util.Callback;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -38,7 +31,7 @@ public class DBUtil {
         con = getConnection();
     }
 
-    private static void dbDisconnect() {
+    public static void dbDisconnect() {
         try {
             if (con != null && !con.isClosed()) {
                 con.close();
@@ -115,50 +108,6 @@ public class DBUtil {
                 e.printStackTrace();
             }
         }
-    }
-
-    public static TableView<ObservableList> getQueryResultAsTable(String query) {
-        ObservableList<ObservableList> rowList;
-        ResultSet resultSet;
-        TableView<ObservableList> resultTable = null;
-        try {
-            dbConnect();
-            Statement statement = con.createStatement();
-            PreparedStatement pstmt = con.prepareStatement(query);
-            resultSet = statement.executeQuery(query);
-            rowList = FXCollections.observableArrayList();
-            resultTable = new TableView();
-            //check if any row is in resultset, https://stackoverflow.com/questions/867194/java-resultset-how-to-check-if-there-are-any-results/6813771#6813771
-            if (resultSet.isBeforeFirst()) {
-                for (int i = 0; i < resultSet.getMetaData().getColumnCount(); i++) {
-                    final int j = i;
-                    TableColumn<ObservableList, String> col = new TableColumn(resultSet.getMetaData().getColumnName(i + 1));
-                    col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-                        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-                            return new SimpleStringProperty(param.getValue().get(j).toString());
-                        }
-                    });
-                    resultTable.getColumns().addAll(col);
-                    //System.out.println("Column [" + i + "] ");
-                }
-                while (resultSet.next()) {
-                    //Iterate Row
-                    ObservableList<String> row = FXCollections.observableArrayList();
-                    for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
-                        //Iterate Column
-                        row.add(resultSet.getString(i));
-                    }
-                    System.out.println("Row [1] added " + row);
-                    rowList.add(row);
-                }
-                resultTable.setItems(rowList);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            dbDisconnect();
-        }
-        return resultTable;
     }
 }
 

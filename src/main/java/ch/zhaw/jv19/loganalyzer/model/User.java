@@ -3,12 +3,12 @@ package ch.zhaw.jv19.loganalyzer.model;
 import java.time.ZonedDateTime;
 
 public class User {
-    int id;
-    ZonedDateTime created;
-    String createdUser;
-    String name;
-    String password;
-    int isadmin;
+    private int id;
+    private ZonedDateTime created;
+    private String createdUser;
+    private String name;
+    private String password;
+    private int isadmin;
 
     public void setId(int id) {
         this.id = id;
@@ -56,5 +56,10 @@ public class User {
 
     public int getIsadmin() {
         return isadmin;
+    }
+
+    @Override
+    public String toString() {
+        return (getName());
     }
 }

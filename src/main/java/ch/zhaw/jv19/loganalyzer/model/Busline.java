@@ -8,4 +8,18 @@ public class Busline {
     String createdUser;
     String name;
     String bustype;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getBustype() {
+        return bustype;
+    }
+
+    @Override
+    public String toString() {
+        return (getName() + ", " +
+                getBustype());
+    }
 }

@@ -1,7 +1,7 @@
 package ch.zhaw.jv19.loganalyzer.model;
 
 import ch.zhaw.jv19.loganalyzer.model.dao.LogRecordReadDAO;
-import ch.zhaw.jv19.loganalyzer.model.dao.MySQLLogRecordReadDAO;
+import ch.zhaw.jv19.loganalyzer.model.dao.MySQLLogRecordReportDAO;
 import ch.zhaw.jv19.loganalyzer.model.dao.MySQLUserDAO;
 import ch.zhaw.jv19.loganalyzer.model.dao.UserDAO;
 import ch.zhaw.jv19.loganalyzer.util.export.ExcelExporter;
@@ -52,9 +52,18 @@ public class AppDataController {
 
     /**
      * Gets all users in an Observable List
+     * @return ObservableList of Users
      */
     public ObservableList<User> getUserList() {
         return appData.getUserList();
+    }
+
+    /**
+     * Gets all sites in an Observable List
+     * @return ObservableList of Sites
+     */
+    public ObservableList<Site> getSiteList() {
+        return appData.getSiteList();
     }
 
     /**
@@ -65,7 +74,7 @@ public class AppDataController {
      * @return TableView with log records that met search conditions
      */
     public TableView<ObservableList> getLogRecordsTableByConditions(HashMap<String, Object> searchConditions) {
-        LogRecordReadDAO logRecordReadDAO = new MySQLLogRecordReadDAO();
+        LogRecordReadDAO logRecordReadDAO = new MySQLLogRecordReportDAO(this);
         TableView<ObservableList> resultTable = logRecordReadDAO.getLogRecordsTableByConditions(searchConditions);
         setMessage(logRecordReadDAO.getCurrentQuery());
         return resultTable;
@@ -77,5 +86,23 @@ public class AppDataController {
     public void exportToExcel(TableView<ObservableList> table, File file) {
         ExcelExporter exporter = new ExcelExporter();
         exporter.saveTable(table, file);
+    }
+
+    /**
+     * Gets user from AppData by its user id
+     * @param id user id
+     * @return User which matches given id
+     */
+    public User getUserById(int id) {
+        return (User) getUserList().stream().filter(user -> (user.getId() == id));
+    }
+
+    /**
+     * Gets site from AppData by its user id
+     * @param id site id
+     * @return Site which matches given id
+     */
+    public Site getSiteById(int id) {
+        return (Site) getSiteList().stream().filter(site -> (site.getId() == id));
     }
 }

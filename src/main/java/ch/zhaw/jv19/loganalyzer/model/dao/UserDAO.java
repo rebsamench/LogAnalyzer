@@ -6,7 +6,7 @@ import javafx.scene.control.TableView;
 
 import java.sql.SQLException;
 
-public interface UserDAO<T> {
+public interface UserDAO {
     User getUserByName(String name) throws SQLException;
     ObservableList<User> getAllUsersList() throws SQLException;
     TableView<ObservableList> getAllUsersTable();

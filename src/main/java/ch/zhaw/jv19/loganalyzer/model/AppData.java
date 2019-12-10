@@ -33,6 +33,14 @@ public class AppData {
         return userList;
     }
 
+    public void setSiteList(ObservableList<Site> siteList) {
+        this.siteList = siteList;
+    }
+
+    public ObservableList<Site> getSiteList() {
+        return siteList;
+    }
+
     public void addUser(User user) {
         userList.add(user);
     }
