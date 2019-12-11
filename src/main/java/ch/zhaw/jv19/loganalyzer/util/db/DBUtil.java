@@ -1,5 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.util.db;
 
+import ch.zhaw.jv19.loganalyzer.model.PropertyHandler;
 import ch.zhaw.jv19.loganalyzer.util.datatype.StringUtil;
 
 import java.sql.*;
@@ -7,19 +8,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DBUtil {
-    private static String url = "jdbc:mysql://localhost:3306/belimo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/Berlin";
-    private static String driverName = "com.mysql.cj.jdbc.Driver";
-    private static String username = "root";
-    private static String password = "zhaw123*";
     private static Connection con;
+    private static PropertyHandler propHandler = PropertyHandler.getInstance();
 
     public static Connection getConnection() {
         try {
-            Class.forName(driverName);
+            Class.forName(propHandler.getValue("db.driver.class"));
             try {
-                con = DriverManager.getConnection(url, username, password);
+                con = DriverManager.getConnection(propHandler.getValue("db.conn.url"),
+                        propHandler.getValue("db.username"), propHandler.getValue("db.password"));
             } catch (SQLException e) {
-                System.out.println("Datenbank " + url + " nicht erreichbar.");
+                System.out.println("Datenbank " + propHandler.getValue("db.conn.url") + " nicht erreichbar: " + e.getMessage());
             }
         } catch (ClassNotFoundException e) {
             System.out.println("Driver not found.");
@@ -59,7 +58,6 @@ public class DBUtil {
         }
         return pstmt.executeBatch();
     }
-
 
     public static int executeUpdate(String query) throws SQLException {
         int affectedRows;

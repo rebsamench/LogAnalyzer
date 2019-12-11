@@ -14,11 +14,20 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 public class AppDataController {
-    AppData appData;
+    private AppData appData;
+    private static AppDataController instance;
 
-    public AppDataController() {
-        appData = new AppData();
+    //Singleton: AppDataController can only be instantiated once
+    private AppDataController () {
+        appData = AppData.getInstance();
         initializeAppData();
+    }
+
+    public static AppDataController getInstance () {
+        if (AppDataController.instance == null) {
+            AppDataController.instance = new AppDataController();
+        }
+        return AppDataController.instance;
     }
 
     /**

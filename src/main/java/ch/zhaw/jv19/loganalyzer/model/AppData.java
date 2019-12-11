@@ -12,9 +12,18 @@ public class AppData {
     private ObservableList<Site> siteList;
     private ObservableList<Busline> busLineList;
     private SimpleStringProperty message;
+    private static AppData instance;
 
-    public AppData() {
+    //Singleton: AppData can only be instantiated once
+    private AppData () {
         message = new SimpleStringProperty();
+    }
+
+    public static AppData getInstance () {
+        if (AppData.instance == null) {
+            AppData.instance = new AppData();
+        }
+        return AppData.instance;
     }
 
     public SimpleStringProperty getMessage() {

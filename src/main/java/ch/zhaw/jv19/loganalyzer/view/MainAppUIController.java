@@ -40,7 +40,7 @@ public class MainAppUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // create global appdata controller
-        appDataController = new AppDataController();
+        appDataController = AppDataController.getInstance();
         uiPanels = new ArrayList<>();
         ToggleGroup mainMenu = new ToggleGroup();
         btnHome.setToggleGroup(mainMenu);
