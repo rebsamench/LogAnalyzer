@@ -49,6 +49,18 @@ public class LogRecord {
         return message;
     }
 
+    public String getUser() {
+        return user.toString();
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getSite() {
+        return site.toString();
+    }
+
     public void setDateTime(ZonedDateTime dateTime) {
         this.dateTime = dateTime;
     }
@@ -67,5 +79,17 @@ public class LogRecord {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
+    }
+
+    public String getBusline() {
+        return busline.toString();
+    }
+
+    public void setBusline(Busline busline) {
+        this.busline = busline;
     }
 }

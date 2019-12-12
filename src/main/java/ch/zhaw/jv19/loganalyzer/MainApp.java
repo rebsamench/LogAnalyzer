@@ -24,7 +24,7 @@ public class MainApp extends Application {
         initRootLayout();
     }
 
-    public void initRootLayout(){
+    public void initRootLayout() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class
@@ -53,5 +53,9 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 }
