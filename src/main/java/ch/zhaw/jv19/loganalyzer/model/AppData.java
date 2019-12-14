@@ -42,6 +42,14 @@ public class AppData {
         return userList;
     }
 
+    public ObservableList<Busline> getBusLineList() {
+        return busLineList;
+    }
+
+    public void setBusLineList(ObservableList<Busline> busLineList) {
+        this.busLineList = busLineList;
+    }
+
     public void setSiteList(ObservableList<Site> siteList) {
         this.siteList = siteList;
     }
@@ -49,6 +57,8 @@ public class AppData {
     public ObservableList<Site> getSiteList() {
         return siteList;
     }
+
+
 
     public void addUser(User user) {
         userList.add(user);

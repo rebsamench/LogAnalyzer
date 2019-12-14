@@ -129,8 +129,8 @@ public class ImportPanelUIController implements Initializable, UIPanelController
     }
 
     private void fillBuslineList() {
-        if (chooseCreatedUser.getItems().size() == 0) {
-            chooseCreatedUser.getItems().addAll(appDataController.getUserList());
+        if (chooseBusline.getItems().size() == 0) {
+            chooseBusline.getItems().addAll(appDataController.getBuslineList());
         }
     }
 }

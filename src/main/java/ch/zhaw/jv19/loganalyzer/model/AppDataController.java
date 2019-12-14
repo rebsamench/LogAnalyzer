@@ -1,9 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.model;
 
-import ch.zhaw.jv19.loganalyzer.model.dao.LogRecordReadDAO;
-import ch.zhaw.jv19.loganalyzer.model.dao.MySQLLogRecordReportDAO;
-import ch.zhaw.jv19.loganalyzer.model.dao.MySQLUserDAO;
-import ch.zhaw.jv19.loganalyzer.model.dao.UserDAO;
+import ch.zhaw.jv19.loganalyzer.model.dao.*;
 import ch.zhaw.jv19.loganalyzer.util.export.ExcelExporter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
@@ -52,8 +49,12 @@ public class AppDataController {
      */
     public void initializeAppData() {
         UserDAO userDao = new MySQLUserDAO();
+        SiteDAO siteDAO = new MySQLSiteDAO();
+        BusLineDAO busLineDAO = new MySQLBuslineDAO();
         try {
             appData.setUserList(userDao.getAllUsersList());
+            appData.setSiteList(siteDAO.getAllSitesList());
+            appData.setBusLineList(busLineDAO.getAllBuslinesList());
         } catch (SQLException e) {
             setMessage(e.getMessage());
         }
@@ -74,6 +75,8 @@ public class AppDataController {
     public ObservableList<Site> getSiteList() {
         return appData.getSiteList();
     }
+
+    public ObservableList<Busline> getBuslineList() {return appData.getBusLineList();}
 
     /**
      * Gets log records from responsible DAO as table view.

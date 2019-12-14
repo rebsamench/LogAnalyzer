@@ -32,6 +32,17 @@ public class Site {
         return city;
     }
 
+    public ZonedDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(ZonedDateTime created) {
+    }
+
+    public String getCreatedUser() {
+        return createdUser;
+    }
+
     @Override
     public String toString() {
         return (getName() + ", " +
@@ -39,4 +50,35 @@ public class Site {
                 getZipCode() + ", " +
                 getCity());
     }
+
+    public void setCreatedUser(String createduser) {
+    }
+
+    public String getTimezone() {
+        return timezone;
+    }
+
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
+    }
+
+    public void setId(int id) {
+    }
+
+    public void setName(String name) {
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+
 }

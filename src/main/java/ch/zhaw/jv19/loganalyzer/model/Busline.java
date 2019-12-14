@@ -17,9 +17,29 @@ public class Busline {
         return bustype;
     }
 
+    public String getCreatedUser() {
+        return createdUser;
+    }
+
     @Override
     public String toString() {
         return (getName() + ", " +
                 getBustype());
+    }
+
+    public void setCreatedUser(String createduser) {
+    }
+
+    public void setId(int id) {
+    }
+
+    public void setCreated(ZonedDateTime created) {
+    }
+
+    public void setName(String name) {
+    }
+
+    public void setBustype(String bustype) {
+        this.bustype = bustype;
     }
 }
