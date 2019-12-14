@@ -32,6 +32,8 @@ public class MainAppUIController implements Initializable {
     @FXML
     private ToggleButton btnSettings;
     @FXML
+    private ToggleButton btnBaseData;
+    @FXML
     private TextArea messageBox;
     private ArrayList<AnchorPane> uiPanels;
     private MainApp mainApp;
@@ -48,6 +50,7 @@ public class MainAppUIController implements Initializable {
         btnReports.setToggleGroup(mainMenu);
         btnSQL.setToggleGroup(mainMenu);
         btnSettings.setToggleGroup(mainMenu);
+        btnBaseData.setToggleGroup(mainMenu);
         // bind message box to message in app data
         messageBox.textProperty().bind(appDataController.getMessage());
         // all panels must be created here by providing the name of the fxml file
@@ -56,6 +59,7 @@ public class MainAppUIController implements Initializable {
         addPanelToPanelList("ReportPanel");
         addPanelToPanelList("SQLPanel");
         addPanelToPanelList("SettingsPanel");
+        addPanelToPanelList("BaseDataPanel");
     }
 
     @FXML
@@ -70,6 +74,8 @@ public class MainAppUIController implements Initializable {
             selectPanel("SQLPanel");
         } else if (event.getSource() == btnSettings) {
             selectPanel("SettingsPanel");
+        } else if (event.getSource() == btnBaseData) {
+            selectPanel("BaseDataPanel");
         }
     }
 

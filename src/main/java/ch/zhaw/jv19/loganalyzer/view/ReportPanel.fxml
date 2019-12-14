@@ -55,7 +55,7 @@
                                     <Label text="Benutzer" GridPane.rowIndex="2" />
                                     <Label text="Erstellt bis" GridPane.columnIndex="3" />
                                     <Label text="Logzeitpunkt bis" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                    <CheckComboBox fx:id="createdUser" prefHeight="26.0" prefWidth="183.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                  <CheckComboBox fx:id="createdUser" prefHeight="26.0" prefWidth="183.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <CheckComboBox fx:id="recordType" prefHeight="26.0" prefWidth="189.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                                     <Label text="Typ" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                     <Label text="Anlage" GridPane.rowIndex="3" />
