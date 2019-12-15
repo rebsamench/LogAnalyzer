@@ -32,6 +32,10 @@
     -fx-border-color: darkgreen;
 }
 
+.invalid {
+    -fx-background-color: rgba(255,0,0,0.2);
+}
+
 .main_menu_button {
     -fx-background-color: darkslateblue;
     -fx-text-fill: aliceblue;

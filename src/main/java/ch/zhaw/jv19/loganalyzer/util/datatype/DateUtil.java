@@ -38,13 +38,13 @@ public final class DateUtil {
         return ZonedDateTime.of(1900, 01, 01, 00, 00, 00, 0000, ZoneId.of("UTC"));
     }
 
-    public static ZonedDateTime getUtcStartOfDayFromDate(LocalDate date) {
+    public static ZonedDateTime getSystemTimezoneStartOfDayFromDate(LocalDate date) {
         LocalDateTime startOfDay = date.atStartOfDay();
         return ZonedDateTime.of(startOfDay, systemZone);
     }
 
-    public static ZonedDateTime getUtcEndOfDayFromDate(LocalDate date) {
-        ZonedDateTime startOfToday = getUtcStartOfDayFromDate(date);
+    public static ZonedDateTime getSystemTimezoneEndOfDayFromDate(LocalDate date) {
+        ZonedDateTime startOfToday = getSystemTimezoneStartOfDayFromDate(date);
         ZonedDateTime startOfTomorrow =
                 startOfToday.toLocalDate()
                         .plusDays(1)
