@@ -27,16 +27,20 @@ public class Busline {
                 getBustype());
     }
 
-    public void setCreatedUser(String createduser) {
-    }
-
     public void setId(int id) {
+        this.id = id;
     }
 
     public void setCreated(ZonedDateTime created) {
+        this.created = created;
+    }
+
+    public void setCreatedUser(String createdUser) {
+        this.createdUser = createdUser;
     }
 
     public void setName(String name) {
+        this.name = name;
     }
 
     public void setBustype(String bustype) {

@@ -4,7 +4,7 @@ import java.time.ZonedDateTime;
 
 public class Site {
     private int id;
-        private ZonedDateTime created;
+    private ZonedDateTime created;
     private String createdUser;
     private String name;
     private String street;
@@ -36,7 +36,8 @@ public class Site {
         return created;
     }
 
-    public void setCreated(ZonedDateTime created) {
+    public String getTimezone() {
+        return timezone;
     }
 
     public String getCreatedUser() {
@@ -52,10 +53,11 @@ public class Site {
     }
 
     public void setCreatedUser(String createduser) {
+        this.createdUser = createduser;
     }
 
-    public String getTimezone() {
-        return timezone;
+    public void setCreated(ZonedDateTime created) {
+        this.created = created;
     }
 
     public void setTimezone(String timezone) {
@@ -63,9 +65,11 @@ public class Site {
     }
 
     public void setId(int id) {
+        this.id = id;
     }
 
     public void setName(String name) {
+        this.name = name;
     }
 
     public void setStreet(String street) {
@@ -79,6 +83,4 @@ public class Site {
     public void setCity(String city) {
         this.city = city;
     }
-
-
 }

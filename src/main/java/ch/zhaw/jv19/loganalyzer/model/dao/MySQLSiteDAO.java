@@ -28,14 +28,14 @@ public class MySQLSiteDAO implements SiteDAO {
 
     @Override
     public ObservableList<Site> getAllSitesList() throws SQLException {
-        ObservableList userList = FXCollections.observableArrayList();
+        ObservableList siteList = FXCollections.observableArrayList();
         Connection con = DBUtil.getConnection();
-        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user;");
+        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM site;");
         ResultSet rs = pstmt.executeQuery();
         while (rs.next()) {
-            userList.add(extractSiteFromResultSet(rs));
+            siteList.add(extractSiteFromResultSet(rs));
         }
-        return userList;
+        return siteList;
     }
 
     @Override
