@@ -32,7 +32,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
     public TableView<ObservableList> getLogRecordsTableByConditions(HashMap<String, Object> searchConditions) {
         TableView<ObservableList> tableView;
         buildLogRecordQuery(searchConditions);
-        tableView = getQueryResultAsTable(currentQuery);
+        tableView = getLogRecordsTable(currentQuery);
         return tableView;
     }
 
@@ -41,7 +41,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
         return currentQuery;
     }
 
-    public static TableView<ObservableList> getQueryResultAsTable(String query) {
+    private static TableView<ObservableList> getLogRecordsTable(String query) {
         ObservableList<ObservableList> rowList;
         ResultSet resultSet;
         TableView<ObservableList> resultTable = null;
@@ -85,24 +85,33 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
         return resultTable;
     }
 
+    public TableColumn buildColumn(TableColumn column) {
+        return null;
+    }
+
     /** Query Builder methods */
 
     /**
-     * Builds query for log records which meet the given conditions
-     *
-     * @param searchConditions hash map of search conditions. key = db column,
+    * Builds query for log records which meet the given conditions.
+     * Assembled query is set as current query of this DAO.
+     * @param conditionsMap hash map of search conditions. key = db column,
      *                         value = String value, date or array list of multiple IN conditions (strings)
      */
-    private void buildLogRecordQuery(HashMap<String, Object> searchConditions) {
+    private void buildLogRecordQuery(HashMap<String, Object> conditionsMap) {
         StringBuilder querySb = new StringBuilder();
         querySb.append("SELECT * FROM logrecord");
-        if (searchConditions.size() > 0) {
-            querySb.append(connectConditions(getConditionListFromMap(searchConditions)));
+        if (conditionsMap != null && conditionsMap.size() > 0) {
+            querySb.append(connectConditions(getConditionListFromMap(conditionsMap)));
         }
         querySb.append(MySQLConst.ENDQUERY);
         currentQuery = querySb.toString();
     }
 
+    /**
+     * Creates a list of conditions
+     * @param conditionsMap
+     * @return
+     */
     private ArrayList<String> getConditionListFromMap(HashMap<String, Object> conditionsMap) {
         Iterator<HashMap.Entry<String, Object>> entries = conditionsMap.entrySet().iterator();
         ArrayList<String> conditionsList = new ArrayList<>();
@@ -146,7 +155,6 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
     /**
      * Maps key to database column. Only needed for keys, which dont
      * represent any db column.
-     *
      * @param key as String
      * @return key that represents a table column
      */
@@ -165,6 +173,11 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
         }
     }
 
+    /**
+     * Converts input to string based on input type
+     * @param object object to convert to string
+     * @return Condition as String.
+     */
     private String convertToString(Object object) {
         String condition = null;
         if (object instanceof ZonedDateTime) {
@@ -181,7 +194,12 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
         return condition;
     }
 
-    private static String connectConditions(ArrayList<String> conditionList) {
+    /**
+     * Connects Conditions of conditionList with WHERE or AND.
+     * @param conditionList list of conditions to connect
+     * @return String of conditions (WHERE clauses) connected with WHERE and AND
+     */
+    private String connectConditions(ArrayList<String> conditionList) {
         Iterator<String> it = conditionList.iterator();
         StringBuilder conditionSb = new StringBuilder();
         boolean isFirstCondition = true;
@@ -198,6 +216,11 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
         return conditionSb.toString();
     }
 
+    /**
+     * Builds and IN-condition set from a list.
+     * @param conditionList list of condition values
+     * @return String
+     */
     private String getInConditions(ArrayList<String> conditionList) {
         return StringUtil.addBrackets.apply(
                 conditionList.stream()
