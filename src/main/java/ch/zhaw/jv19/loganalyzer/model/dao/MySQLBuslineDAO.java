@@ -1,7 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.model.dao;
 
 import ch.zhaw.jv19.loganalyzer.model.Busline;
-import ch.zhaw.jv19.loganalyzer.model.Site;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import ch.zhaw.jv19.loganalyzer.util.datatype.StringUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
@@ -18,10 +17,10 @@ import java.sql.SQLException;
 public class MySQLBuslineDAO implements BusLineDAO {
 
     @Override
-    public Busline getBuslineByName(Busline busline) throws SQLException {
-        Site site = null;
+    public Busline getBuslineByName(String name) throws SQLException {
+        Busline busline = null;
         Connection con = DBUtil.getConnection();
-        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM site WHERE name = '?';");
+        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM busline WHERE name = '?';");
         ResultSet rs = pstmt.executeQuery();
         return extractBuslineFromResultSet(rs);
     }
