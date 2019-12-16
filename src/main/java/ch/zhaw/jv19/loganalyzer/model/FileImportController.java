@@ -13,7 +13,6 @@ public class FileImportController {
     private Site site;
     private Busline busline;
     private List<LogRecord> logRecordList;
-    private ImportPanelUIController importPanelUIController;
 
     public FileImportController() {}
 

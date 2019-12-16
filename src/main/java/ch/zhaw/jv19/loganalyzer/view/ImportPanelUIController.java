@@ -1,15 +1,12 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
-import ch.zhaw.jv19.loganalyzer.MainApp;
 import ch.zhaw.jv19.loganalyzer.model.*;
-import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.FileChooser;
-import javafx.util.StringConverter;
-import org.controlsfx.control.CheckComboBox;
+
 
 import java.io.File;
 import java.net.URL;
@@ -19,17 +16,22 @@ import java.util.ResourceBundle;
 public class ImportPanelUIController implements Initializable, UIPanelController {
 
     private AppDataController appDataController;
-    private MainApp mainApp;
     private List<File> fileList;
 
     @FXML
-    private CheckComboBox<User> chooseCreatedUser;
+    private ComboBox<User> chooseCreatedUser;
 
     @FXML
-    private CheckComboBox<Site> chooseSite;
+    private ComboBox<Site> chooseSite;
 
     @FXML
-    private CheckComboBox<Busline> chooseBusline;
+    private ComboBox<Busline> chooseBusline;
+
+    @FXML
+    private Button selectLogFiles;
+
+    @FXML
+    private Button importData;
 
     public ImportPanelUIController() {
     }
@@ -39,49 +41,11 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         chooseCreatedUser.addEventHandler(ComboBox.ON_SHOWING, event -> {
             fillUserList();
         });
-        chooseCreatedUser.setConverter(new StringConverter<User>() {
-            @Override
-            public String toString(User user) {
-                return user.getName();
-            }
-
-            @Override
-            public User fromString(String string) {
-                return chooseCreatedUser.getItems().stream().filter(user ->
-                        user.getName().equals(string)).findFirst().orElse(null);
-            }
-        });
-
         chooseSite.addEventHandler(ComboBox.ON_SHOWING, event -> {
             fillSiteList();
         });
-        chooseSite.setConverter(new StringConverter<Site>() {
-            @Override
-            public String toString(Site site) {
-                return site.getName();
-            }
-
-            @Override
-            public Site fromString(String string) {
-                return chooseSite.getItems().stream().filter(site ->
-                        site.getName().equals(string)).findFirst().orElse(null);
-            }
-        });
-
         chooseBusline.addEventHandler(ComboBox.ON_SHOWING, event -> {
             fillBuslineList();
-        });
-        chooseBusline.setConverter(new StringConverter<Busline>() {
-            @Override
-            public String toString(Busline busline) {
-                return busline.getName();
-            }
-
-            @Override
-            public Busline fromString(String string) {
-                return chooseBusline.getItems().stream().filter(busline ->
-                        busline.getName().equals(string)).findFirst().orElse(null);
-            }
         });
     }
 
@@ -91,16 +55,25 @@ public class ImportPanelUIController implements Initializable, UIPanelController
     }
 
     @FXML
-    public void handleImportSelectedFiles(ActionEvent event) {
-
+    public void handleSelectedLogFiles() {
         // Set extension filter
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("txt files (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
-
         // Show open file dialog to select multiple files.
         fileList = fileChooser.showOpenMultipleDialog(null);
-        new FileImportController();
+    }
+
+    @FXML
+    public void handleImportData() {
+        User user = chooseCreatedUser.getSelectionModel().getSelectedItem();
+        Site site = chooseSite.getSelectionModel().getSelectedItem();
+        Busline busline = chooseBusline.getSelectionModel().getSelectedItem();
+        if(user == null) {appDataController.setMessage("Select Created User!");}
+        else if(site == null) {appDataController.setMessage("Select site!");}
+        else if(busline == null){appDataController.setMessage("Select Busline!");}
+        else if(fileList == null){appDataController.setMessage("No files selected!");}
+        else {new FileImportController(user, site, busline, fileList);}
     }
 
     private void fillUserList() {
