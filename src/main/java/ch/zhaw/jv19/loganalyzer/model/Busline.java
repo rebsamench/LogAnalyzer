@@ -13,6 +13,10 @@ public class Busline {
         return name;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getBustype() {
         return bustype;
     }

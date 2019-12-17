@@ -1,6 +1,8 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.model.AppDataController;
+import ch.zhaw.jv19.loganalyzer.model.Busline;
+import ch.zhaw.jv19.loganalyzer.model.Site;
 import ch.zhaw.jv19.loganalyzer.model.User;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import javafx.beans.binding.Bindings;
@@ -42,9 +44,9 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     @FXML
     private CheckComboBox<String> recordType;
     @FXML
-    private CheckComboBox<String> site;
+    private CheckComboBox<Site> site;
     @FXML
-    private CheckComboBox<String> busLine;
+    private CheckComboBox<Busline> busLine;
     @FXML
     private TextField message;
     @FXML
@@ -101,7 +103,7 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     }
 
     /**
-     * Exports current
+     * Exports current resultTable to Excel
      */
     @FXML
     private void exportResultTable() {
@@ -127,13 +129,17 @@ public class ReportPanelUIController implements Initializable, UIPanelController
      * Fill site combobox if it is empty
      */
     private void fillSiteComboBox() {
-
+        if (site.getItems().size() == 0) {
+            site.getItems().addAll(appDataController.getSiteList());
+        }
     }
 
     /**
      * Fill busline combobox if it is empty
      */    private void fillRecordTypeComboBox() {
-
+        if (busLine.getItems().size() == 0) {
+            busLine.getItems().addAll(appDataController.getBuslineList());
+        }
     }
 
     /**

@@ -61,6 +61,12 @@ public class MySQLUserDAO implements UserDAO {
         return DBUtil.executeUpdate(statementTemplate);
     }
 
+    /**
+     * Extracts user from Resultset.
+     * @param rs result set
+     * @return user
+     * @throws SQLException
+     */
     private User extractUserFromResultSet(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getInt("id"));

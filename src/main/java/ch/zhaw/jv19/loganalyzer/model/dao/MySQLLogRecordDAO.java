@@ -55,8 +55,8 @@ public class MySQLLogRecordDAO implements LogRecordDAO {
 
     private LogRecord extractLogRecordFromResultSet(ResultSet rs) throws SQLException {
         LogRecord logRecord = new LogRecord();
-        logRecord.setDateTime(DateUtil.getZonedDateTimeFromDateTimeString(rs.getString("timestamp"), MySQLConst.DATETIMEPATTERN ));
-        logRecord.setMilliSeconds( rs.getString("milliseconds") );
+        logRecord.setTimestamp(DateUtil.getZonedDateTimeFromDateTimeString(rs.getString("timestamp"), MySQLConst.DATETIMEPATTERN ));
+        logRecord.setMilliseconds( rs.getInt("milliseconds") );
         logRecord.setEventType(rs.getString("type"));
         logRecord.setSource(rs.getString("source"));
         logRecord.setMessage( rs.getString("message"));
@@ -69,14 +69,14 @@ public class MySQLLogRecordDAO implements LogRecordDAO {
             for (LogRecord logRecord: logRecordList){
                 PreparedStatement ps = connection.prepareStatement("INSERT INTO user logrecord (NULL, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-                ps.setString(1, DateUtil.convertDateTimeToUtcString(logRecord.getDateTime(), MySQLConst.DATETIMEPATTERN));
-                ps.setString(2, logRecord.getMilliSeconds());
+                ps.setString(1, DateUtil.convertDateTimeToUtcString(logRecord.getTimestamp(), MySQLConst.DATETIMEPATTERN));
+                ps.setInt(2, logRecord.getMilliseconds());
                 ps.setString(3, logRecord.getEventType());
                 ps.setString(4, logRecord.getSource());
                 ps.setString(5, logRecord.getMessage());
-                ps.setString(6, logRecord.getUser());
-                ps.setString(7, logRecord.getSite());
-                ps.setString(8, logRecord.getBusline());
+                ps.setInt(6, logRecord.getUser().getId());
+                ps.setInt(7, logRecord.getSite().getId());
+                ps.setInt(8, logRecord.getBusline().getId());
                 ps.addBatch();
 
                 int i = ps.executeUpdate();

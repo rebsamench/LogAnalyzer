@@ -34,7 +34,7 @@ public class FileImportController {
                 String strLine;
                 while ((strLine = br.readLine()) != null) {
                     String[] tokens = strLine.split("\t");
-                    LogRecord record = new LogRecord(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4], user, site, busline);
+                    LogRecord record = new LogRecord(tokens[0], Integer.parseInt(tokens[1]), tokens[2], tokens[3], tokens[4], user, site, busline);
                     logRecordList.add(record);
                 }
             }

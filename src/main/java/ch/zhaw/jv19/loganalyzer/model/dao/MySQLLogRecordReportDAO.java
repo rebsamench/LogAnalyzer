@@ -1,6 +1,7 @@
 package ch.zhaw.jv19.loganalyzer.model.dao;
 
 import ch.zhaw.jv19.loganalyzer.model.AppDataController;
+import ch.zhaw.jv19.loganalyzer.model.LogRecord;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import ch.zhaw.jv19.loganalyzer.util.datatype.StringUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
@@ -41,7 +42,8 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
         return currentQuery;
     }
 
-    private static TableView<ObservableList> getLogRecordsTable(String query) {
+    //TODO documentation and remove unused code
+    private TableView<ObservableList> getLogRecordsTable(String query) {
         ObservableList<ObservableList> rowList;
         ResultSet resultSet;
         TableView<ObservableList> resultTable = null;
@@ -57,21 +59,22 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
                 for (int i = 0; i < resultSet.getMetaData().getColumnCount(); i++) {
                     final int j = i;
                     TableColumn<ObservableList, String> col = new TableColumn(resultSet.getMetaData().getColumnName(i + 1));
-                    col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-                        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-                            return new SimpleStringProperty(param.getValue().get(j).toString());
-                        }
-                    });
+//                    col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+//                        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+//                            return new SimpleStringProperty(param.getValue().get(j).toString());
+//                        }
+//                    });
                     resultTable.getColumns().addAll(col);
                     //System.out.println("Column [" + i + "] ");
                 }
                 while (resultSet.next()) {
                     //Iterate Row
-                    ObservableList<String> row = FXCollections.observableArrayList();
-                    for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
-                        //Iterate Column
-                        row.add(resultSet.getString(i));
-                    }
+                    ObservableList<LogRecord> row = FXCollections.observableArrayList();
+                    row.add(extractLogRecordFromResultSet(resultSet));
+//                    for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
+//                        //Iterate Column
+//                        row.add(resultSet.getString(i));
+//                    }
                     System.out.println("Row [1] added " + row);
                     rowList.add(row);
                 }
@@ -228,6 +231,29 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
                         .collect(Collectors.joining(MySQLConst.SEPARATOR)
                         )
         );
+    }
+
+    /**
+     * Extracts log record from Resultset.
+     * @param rs result set
+     * @return user
+     * @throws SQLException
+     */
+    private LogRecord extractLogRecordFromResultSet(ResultSet rs) throws SQLException {
+        LogRecord logRecord = new LogRecord();
+        logRecord.setId(rs.getInt("id"));
+        logRecord.setCreated(DateUtil.getZonedDateTimeFromDateTimeString(rs.getDate("created") + " " + rs.getTime("created"), MySQLConst.DATETIMEPATTERN));
+        logRecord.setLastchanged(DateUtil.getZonedDateTimeFromDateTimeString(rs.getDate("created") + " " + rs.getTime("created"), MySQLConst.DATETIMEPATTERN));
+        logRecord.setUser(controller.getUserByName(rs.getString("createduser")));
+        logRecord.setUniqueIdentifier(rs.getString("unique_identifier"));
+        logRecord.setTimestamp(DateUtil.getZonedDateTimeFromDateTimeString(rs.getDate("timestamp") + " " + rs.getTime("timestamp"), MySQLConst.DATETIMEPATTERN));
+        logRecord.setSite(controller.getSiteById(rs.getInt("site")));
+        logRecord.setBusline(controller.getBuslineById(rs.getInt("busline")));
+        logRecord.setAddress(rs.getInt("address"));
+        logRecord.setMilliseconds(rs.getInt("milliseconds"));
+        logRecord.setEventType(rs.getString("type"));
+        logRecord.setMessage(rs.getString("message"));
+        return logRecord;
     }
 
 }

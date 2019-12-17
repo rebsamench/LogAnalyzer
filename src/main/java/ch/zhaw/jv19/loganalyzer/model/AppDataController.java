@@ -15,12 +15,12 @@ public class AppDataController {
     private static AppDataController instance;
 
     //Singleton: AppDataController can only be instantiated once
-    private AppDataController () {
+    private AppDataController() {
         appData = AppData.getInstance();
         initializeAppData();
     }
 
-    public static AppDataController getInstance () {
+    public static AppDataController getInstance() {
         if (AppDataController.instance == null) {
             AppDataController.instance = new AppDataController();
         }
@@ -29,6 +29,7 @@ public class AppDataController {
 
     /**
      * Sets current global message on AppData.
+     *
      * @param message
      */
     public void setMessage(String message) {
@@ -38,6 +39,7 @@ public class AppDataController {
     /**
      * Returns message as String Property. UI Elements can be bound to this method
      * in order to observe global messages.
+     *
      * @return
      */
     public SimpleStringProperty getMessage() {
@@ -62,6 +64,7 @@ public class AppDataController {
 
     /**
      * Gets all users in an Observable List
+     *
      * @return ObservableList of Users
      */
     public ObservableList<User> getUserList() {
@@ -70,19 +73,23 @@ public class AppDataController {
 
     /**
      * Gets all sites in an Observable List
+     *
      * @return ObservableList of Sites
      */
     public ObservableList<Site> getSiteList() {
         return appData.getSiteList();
     }
 
-    public ObservableList<Busline> getBuslineList() {return appData.getBusLineList();}
+    public ObservableList<Busline> getBuslineList() {
+        return appData.getBusLineList();
+    }
 
     /**
      * Gets log records from responsible DAO as table view.
+     *
      * @param searchConditions: HashMap(columnName, conditionValue): conditionValues can either be simple Strings,
-     * ZonedDateTime-Objects or ArrayLists of Strings for IN conditions etc. For Details see
-     * methods in DAO
+     *                          ZonedDateTime-Objects or ArrayLists of Strings for IN conditions etc. For Details see
+     *                          methods in DAO
      * @return TableView with log records that met search conditions
      */
     public TableView<ObservableList> getLogRecordsTableByConditions(HashMap<String, Object> searchConditions) {
@@ -101,20 +108,41 @@ public class AppDataController {
     }
 
     /**
-     * Gets user from AppData by its user id
-     * @param id user id
+     * Gets user from AppData by its id
+     *
+     * @param name unique user name
      * @return User which matches given id
      */
-    public User getUserById(int id) {
-        return (User) getUserList().stream().filter(user -> (user.getId() == id));
+    public User getUserByName(String name) {
+        return (User) getUserList().stream()
+                .filter(user -> (user.getName().equals(name)))
+                .findAny()
+                .orElse(null);
     }
 
     /**
-     * Gets site from AppData by its user id
+     * Gets site from AppData by its id
+     *
      * @param id site id
      * @return Site which matches given id
      */
     public Site getSiteById(int id) {
-        return (Site) getSiteList().stream().filter(site -> (site.getId() == id));
+        return (Site) getSiteList().stream()
+                .filter(site -> (site.getId() == id))
+                .findAny()
+                .orElse(null);
+    }
+
+    /**
+     * Gets busline from AppData by its id
+     *
+     * @param id bus line id
+     * @return Bus line which matches given id
+     */
+    public Busline getBuslineById(int id) {
+        return (Busline) getBuslineList().stream()
+                .filter(busline -> (busline.getId() == id))
+                .findAny()
+                .orElse(null);
     }
 }
