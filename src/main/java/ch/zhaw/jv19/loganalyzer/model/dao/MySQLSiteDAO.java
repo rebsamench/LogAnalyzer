@@ -68,6 +68,10 @@ public class MySQLSiteDAO implements SiteDAO {
         site.setCreated(DateUtil.getZonedDateTimeFromDateTimeString(rs.getString("created"), MySQLConst.DATETIMEPATTERN));
         site.setCreatedUser(rs.getString("createduser"));
         site.setName(rs.getString("name"));
+        site.setStreet(rs.getString("street"));
+        site.setCity(rs.getString("city"));
+        site.setTimezone(rs.getString("timezone"));
+        site.setZipCode(rs.getString("zipcode"));
         return site;
     }
 }

@@ -3,6 +3,7 @@ package ch.zhaw.jv19.loganalyzer.model;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 public class LogRecord {

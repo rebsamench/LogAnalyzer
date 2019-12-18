@@ -46,10 +46,7 @@ public class Site {
 
     @Override
     public String toString() {
-        return (getName() + ", " +
-                getStreet() + ", " +
-                getZipCode() + ", " +
-                getCity());
+      return (getName() + ", " + getStreet() + ", " + getZipCode() + ", " + getCity());
     }
 
     public void setCreatedUser(String createduser) {

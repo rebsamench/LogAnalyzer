@@ -64,4 +64,8 @@ public final class DateUtil {
         return LocalDateTime.parse(dateTime, formatter).atZone(systemZone);
     }
 
+    public static LocalDateTime getLocalDateTimeFromDateTimeString(String dateTime, String inputDateTimePattern) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(inputDateTimePattern);
+        return LocalDateTime.parse(dateTime, formatter);
+    }
 }
