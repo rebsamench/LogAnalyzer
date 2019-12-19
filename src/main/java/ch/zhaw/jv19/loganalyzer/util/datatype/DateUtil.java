@@ -64,8 +64,11 @@ public final class DateUtil {
         return LocalDateTime.parse(dateTime, formatter).atZone(systemZone);
     }
 
-    public static LocalDateTime getLocalDateTimeFromDateTimeString(String dateTime, String inputDateTimePattern) {
+    public static ZonedDateTime getZonedDateTimeFromDateTimeStringAlt(String dateTime, String inputDateTimePattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(inputDateTimePattern);
-        return LocalDateTime.parse(dateTime, formatter);
+        LocalDateTime parsedDate = LocalDateTime.parse(dateTime, formatter);
+        ZoneId zoneId = ZoneId.of( "Europe/Zurich");
+        ZonedDateTime zonedDateTime = parsedDate.atZone( zoneId );
+        return zonedDateTime;
     }
 }

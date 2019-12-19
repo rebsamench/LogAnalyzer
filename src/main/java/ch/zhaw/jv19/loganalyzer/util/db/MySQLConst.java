@@ -14,4 +14,5 @@ public class MySQLConst {
     public static final String IN = " IN ";
     public static final String ENDQUERY = ";";
     public static final String DATETIMEPATTERN = "yyyy-MM-dd HH:mm:ss";
+    public static final String LOCALDATETIMEPATTERN = "dd.MM.yyyy HH:mm:ss";
 }
