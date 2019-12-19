@@ -16,13 +16,13 @@ import java.util.List;
 
 public class MySQLLogRecordDAO implements LogRecordDAO {
 
-    public MySQLLogRecordDAO(List logRecordList) {
+    public MySQLLogRecordDAO(List<LogRecord> logRecordList) {
         insertLogRecords(logRecordList);
     }
 
     @Override
     public ObservableList<LogRecord> getAllLogRecordsList() throws SQLException {
-        ObservableList logRecordList = FXCollections.observableArrayList();
+        ObservableList<LogRecord> logRecordList = FXCollections.observableArrayList();
         Connection con = DBUtil.getConnection();
         PreparedStatement pstmt = con.prepareStatement("SELECT * FROM logrecord;");
         ResultSet rs =  pstmt.executeQuery();
@@ -33,10 +33,10 @@ public class MySQLLogRecordDAO implements LogRecordDAO {
     }
 
     @Override
-    public TableView<ObservableList> getAllLogRecordsTable() {
-        TableView allLogRecordsTable = null;
+    public TableView<LogRecord> getAllLogRecordsTable() {
+        TableView<LogRecord> allLogRecordsTable = null;
         try {
-            allLogRecordsTable = new TableView(getAllLogRecordsList());
+            allLogRecordsTable = new TableView<>(getAllLogRecordsList());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,7 +67,7 @@ public class MySQLLogRecordDAO implements LogRecordDAO {
         Connection connection = DBUtil.getConnection();
         try {
             for (LogRecord logRecord: logRecordList){
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO user logrecord (NULL, ?, ?, ?, ?, ?, ?, ?, ?)");
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO logrecord VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)");
 
                 ps.setString(1, DateUtil.convertDateTimeToUtcString(logRecord.getTimestamp(), MySQLConst.DATETIMEPATTERN));
                 ps.setInt(2, logRecord.getMilliseconds());

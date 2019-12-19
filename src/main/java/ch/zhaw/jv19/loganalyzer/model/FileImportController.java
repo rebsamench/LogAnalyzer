@@ -1,7 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.model;
 
 import ch.zhaw.jv19.loganalyzer.model.dao.MySQLLogRecordDAO;
-import ch.zhaw.jv19.loganalyzer.view.ImportPanelUIController;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ public class FileImportController {
 
     public FileImportController() {}
 
-    public FileImportController(User user, Site site, Busline busline, List fileList) {
+    public FileImportController(User user, Site site, Busline busline, List<File> fileList) {
         this.user = user;
         this.site = site;
         this.busline = busline;
@@ -44,7 +43,7 @@ public class FileImportController {
         }
     }
 
-    private void saveToDB(List logRecordList) {
+    private void saveToDB(List<LogRecord> logRecordList) {
         MySQLLogRecordDAO logRecordDAOWriter = new MySQLLogRecordDAO(logRecordList);
     }
 

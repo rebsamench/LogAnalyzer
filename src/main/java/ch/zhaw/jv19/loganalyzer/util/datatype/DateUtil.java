@@ -7,7 +7,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public final class DateUtil {
-    private static ZoneId systemZone = ZoneId.systemDefault();
+    private static final ZoneId SYSTEM_ZONE = ZoneId.systemDefault();
     private DateUtil() {
     }
 
@@ -40,7 +40,7 @@ public final class DateUtil {
 
     public static ZonedDateTime getSystemTimezoneStartOfDayFromDate(LocalDate date) {
         LocalDateTime startOfDay = date.atStartOfDay();
-        return ZonedDateTime.of(startOfDay, systemZone);
+        return ZonedDateTime.of(startOfDay, SYSTEM_ZONE);
     }
 
     public static ZonedDateTime getSystemTimezoneEndOfDayFromDate(LocalDate date) {
@@ -61,7 +61,7 @@ public final class DateUtil {
 
     public static ZonedDateTime getZonedDateTimeFromDateTimeString(String dateTime, String inputDateTimePattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(inputDateTimePattern);
-        return LocalDateTime.parse(dateTime, formatter).atZone(systemZone);
+        return LocalDateTime.parse(dateTime, formatter).atZone(SYSTEM_ZONE);
     }
 
     public static ZonedDateTime getZonedDateTimeFromDateTimeStringAlt(String dateTime, String inputDateTimePattern) {

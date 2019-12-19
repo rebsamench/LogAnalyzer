@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class DBUtil {
     private static Connection con;
-    private static PropertyHandler propHandler = PropertyHandler.getInstance();
+    private static final PropertyHandler propHandler = PropertyHandler.getInstance();
 
     public static Connection getConnection() {
         try {
@@ -98,10 +98,10 @@ public class DBUtil {
             e.printStackTrace();
         } finally {
             try {
-                stmt.close();
+                if (stmt != null) {
+                    stmt.close();
+                }
                 dbDisconnect();
-            } catch (SQLException e) {
-                e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
             }

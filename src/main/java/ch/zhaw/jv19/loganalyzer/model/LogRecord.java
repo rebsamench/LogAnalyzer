@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 public class LogRecord {
     private int id;
     private ZonedDateTime created;
-    private ZonedDateTime lastchanged;
+    private ZonedDateTime lastChanged;
     private User user;
     private String uniqueIdentifier;
     private ZonedDateTime timestamp;
@@ -20,10 +20,10 @@ public class LogRecord {
     private String source;
     private String message;
 
-    public LogRecord(){};
+    public LogRecord(){}
 
     public LogRecord(String timestamp, int milliseconds, String eventType, String source, String message, User user, Site site, Busline busline) {
-        this.timestamp = DateUtil.getZonedDateTimeFromDateTimeStringAlt(timestamp, MySQLConst.LOCALDATETIMEPATTERN);
+        this.timestamp = DateUtil.getZonedDateTimeFromDateTimeString(timestamp, MySQLConst.DATETIMEPATTERN);
         this.milliseconds = milliseconds;
         this.eventType = eventType;
         this.source = source;
@@ -39,10 +39,6 @@ public class LogRecord {
 
     public void setCreated(ZonedDateTime created) {
         this.created = created;
-    }
-
-    public void setLastchanged(ZonedDateTime lastchanged) {
-        this.lastchanged = lastchanged;
     }
 
     public void setUniqueIdentifier(String uniqueIdentifier) {
@@ -125,8 +121,8 @@ public class LogRecord {
         return created;
     }
 
-    public ZonedDateTime getLastchanged() {
-        return lastchanged;
+    public ZonedDateTime getLastChanged() {
+        return lastChanged;
     }
 
     public String getUniqueIdentifier() {
@@ -135,5 +131,9 @@ public class LogRecord {
 
     public int getAddress() {
         return address;
+    }
+
+    public void setLastChanged(ZonedDateTime lastChanged) {
+        this.lastChanged = lastChanged;
     }
 }

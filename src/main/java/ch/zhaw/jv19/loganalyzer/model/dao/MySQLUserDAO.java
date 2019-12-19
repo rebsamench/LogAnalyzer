@@ -26,7 +26,7 @@ public class MySQLUserDAO implements UserDAO {
 
     @Override
     public ObservableList<User> getAllUsersList() throws SQLException {
-        ObservableList userList = FXCollections.observableArrayList();
+        ObservableList<User> userList = FXCollections.observableArrayList();
         Connection con = DBUtil.getConnection();
         PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user;");
         ResultSet rs = pstmt.executeQuery();
@@ -37,7 +37,7 @@ public class MySQLUserDAO implements UserDAO {
     }
 
     @Override
-    public TableView<ObservableList> getAllUsersTable() {
+    public TableView<User> getAllUsersTable() {
         return null;
     }
 
@@ -65,7 +65,7 @@ public class MySQLUserDAO implements UserDAO {
      * Extracts user from Resultset.
      * @param rs result set
      * @return user
-     * @throws SQLException
+     * @throws SQLException database exception
      */
     private User extractUserFromResultSet(ResultSet rs) throws SQLException {
         User user = new User();
