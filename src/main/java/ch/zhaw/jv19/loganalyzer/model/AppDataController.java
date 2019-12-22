@@ -8,10 +8,11 @@ import javafx.scene.control.TableView;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AppDataController {
-    private AppData appData;
+    private final AppData appData;
     private static AppDataController instance;
 
     //Singleton: AppDataController can only be instantiated once
@@ -30,7 +31,7 @@ public class AppDataController {
     /**
      * Sets current global message on AppData.
      *
-     * @param message
+     * @param message String message to be set
      */
     public void setMessage(String message) {
         appData.setMessage(message);
@@ -40,7 +41,7 @@ public class AppDataController {
      * Returns message as String Property. UI Elements can be bound to this method
      * in order to observe global messages.
      *
-     * @return
+     * @return message as property
      */
     public SimpleStringProperty getMessage() {
         return appData.getMessage();
@@ -90,19 +91,19 @@ public class AppDataController {
      * @param searchConditions: HashMap(columnName, conditionValue): conditionValues can either be simple Strings,
      *                          ZonedDateTime-Objects or ArrayLists of Strings for IN conditions etc. For Details see
      *                          methods in DAO
-     * @return TableView with log records that met search conditions
+     * @return ArrayList of log records that meet search conditions
      */
-    public TableView<ObservableList> getLogRecordsTableByConditions(HashMap<String, Object> searchConditions) {
+    public ArrayList<LogRecord> getLogRecordsListByConditions(HashMap<String, Object> searchConditions) {
         LogRecordReadDAO logRecordReadDAO = new MySQLLogRecordReportDAO(this);
-        TableView<ObservableList> resultTable = logRecordReadDAO.getLogRecordsTableByConditions(searchConditions);
+        ArrayList<LogRecord> resultList = logRecordReadDAO.getLogRecordsListByConditions(searchConditions);
         setMessage(logRecordReadDAO.getCurrentQuery());
-        return resultTable;
+        return resultList;
     }
 
     /**
      * Exports TableView as Excel file
      */
-    public void exportToExcel(TableView<ObservableList> table, File file) {
+    public void exportToExcel(TableView<LogRecord> table, File file) {
         ExcelExporter exporter = new ExcelExporter();
         exporter.saveTable(table, file);
     }
@@ -114,7 +115,7 @@ public class AppDataController {
      * @return User which matches given id
      */
     public User getUserByName(String name) {
-        return (User) getUserList().stream()
+        return getUserList().stream()
                 .filter(user -> (user.getName().equals(name)))
                 .findAny()
                 .orElse(null);
@@ -127,7 +128,7 @@ public class AppDataController {
      * @return Site which matches given id
      */
     public Site getSiteById(int id) {
-        return (Site) getSiteList().stream()
+        return getSiteList().stream()
                 .filter(site -> (site.getId() == id))
                 .findAny()
                 .orElse(null);
@@ -140,7 +141,7 @@ public class AppDataController {
      * @return Bus line which matches given id
      */
     public Busline getBuslineById(int id) {
-        return (Busline) getBuslineList().stream()
+        return getBuslineList().stream()
                 .filter(busline -> (busline.getId() == id))
                 .findAny()
                 .orElse(null);

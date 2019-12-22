@@ -1,6 +1,5 @@
 package ch.zhaw.jv19.loganalyzer;
 
-import ch.zhaw.jv19.loganalyzer.model.AppData;
 import ch.zhaw.jv19.loganalyzer.model.AppDataController;
 import ch.zhaw.jv19.loganalyzer.view.MainAppUIController;
 import javafx.scene.layout.Pane;
@@ -14,7 +13,6 @@ import java.io.IOException;
 
 public class MainApp extends Application {
     private Stage primaryStage;
-    private Pane rootLayout;
     private double x, y;
     private AppDataController appDataController;
 
@@ -29,7 +27,7 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class
                     .getResource("view/MainApp.fxml"));
-            rootLayout = (AnchorPane) loader.load();
+            Pane rootLayout = (AnchorPane) loader.load();
 
             rootLayout.setOnMousePressed(mouseEvent -> {
                 x = mouseEvent.getSceneX();
@@ -41,7 +39,7 @@ public class MainApp extends Application {
                 primaryStage.setY(mouseEvent.getScreenY() - y);
             });
 
-            Scene scene = new Scene(rootLayout, 1200, 800);
+            Scene scene = new Scene(rootLayout, 1200, 600);
             MainAppUIController controller = loader.getController();
             controller.setMainApp(this);
             primaryStage.setScene(scene);

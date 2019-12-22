@@ -1,21 +1,21 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
-import ch.zhaw.jv19.loganalyzer.model.AppDataController;
-import ch.zhaw.jv19.loganalyzer.model.Busline;
-import ch.zhaw.jv19.loganalyzer.model.Site;
-import ch.zhaw.jv19.loganalyzer.model.User;
+import ch.zhaw.jv19.loganalyzer.model.*;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.util.StringConverter;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.File;
 import java.net.URL;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -52,22 +52,21 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     @FXML
     private TextArea sqlStatement;
     @FXML
-    private TableView<ObservableList> resultTable;
+    private TableView<LogRecord> resultTable;
+    private final ObservableList<LogRecord> tableData = FXCollections.observableArrayList();
     @FXML
     private Button exportButton;
     private AppDataController appDataController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        exportButton.disableProperty().bind(
-                Bindings.isEmpty(resultTable.getItems())
-        );
+        exportButton.disableProperty().bind(Bindings.isEmpty(tableData));
         // fill comboboxes on first use, since appdatacontroller is not yet set when initialize method is called
         createdUser.addEventHandler(ComboBox.ON_SHOWING, event -> fillUserComboBox());
         recordType.addEventHandler(ComboBox.ON_SHOWING, event -> fillRecordTypeComboBox());
         site.addEventHandler(ComboBox.ON_SHOWING, event -> fillSiteComboBox());
         busLine.addEventHandler(ComboBox.ON_SHOWING, event -> fillBusLineComboBox());
-        createdUser.setConverter(new StringConverter<User>() {
+        createdUser.setConverter(new StringConverter<>() {
             @Override
             public String toString(User user) {
                 return user.getName();
@@ -94,12 +93,49 @@ public class ReportPanelUIController implements Initializable, UIPanelController
         resultTable.getItems().clear();
         resultTable.getColumns().clear();
         prepareFormData();
-        TableView<ObservableList> returnedTable = appDataController.getLogRecordsTableByConditions(formData);
-        if (returnedTable != null) {
-            // replace columns and rows of resultTable, since replacing resultTable not working
-            resultTable.getColumns().addAll(returnedTable.getColumns());
-            resultTable.getItems().addAll(returnedTable.getItems());
-        }
+        tableData.addAll(appDataController.getLogRecordsListByConditions(formData));
+        buildLogRecordResultTable(tableData);
+    }
+
+    private void buildLogRecordResultTable(ObservableList<LogRecord> tableData) {
+        TableColumn<LogRecord, Integer> idCol = new TableColumn<>("id");
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        TableColumn<LogRecord, ZonedDateTime> createdCol = new TableColumn<>("created");
+        createdCol.setCellValueFactory(new PropertyValueFactory<>("created"));
+
+        TableColumn<LogRecord, ZonedDateTime> lastChangedCol = new TableColumn<>("lastChanged");
+        lastChangedCol.setCellValueFactory(new PropertyValueFactory<>("lastChanged"));
+
+        TableColumn<LogRecord, User> createdUserColumn = new TableColumn<>("user");
+        createdUserColumn.setCellValueFactory(new PropertyValueFactory<>("user"));
+
+        // omit unique_identifier, not relevant
+        TableColumn<LogRecord, ZonedDateTime> timestampCol = new TableColumn<>("timestamp");
+        timestampCol.setCellValueFactory(new PropertyValueFactory<>("timestamp"));
+
+        TableColumn<LogRecord, Integer> millisecondsCol = new TableColumn<>("milliseconds");
+        millisecondsCol.setCellValueFactory(new PropertyValueFactory<>("milliseconds"));
+
+        TableColumn<LogRecord, Site> siteCol = new TableColumn<>("site");
+        siteCol.setCellValueFactory(new PropertyValueFactory<>("site"));
+
+        TableColumn<LogRecord, Busline> busLineCol = new TableColumn<>("busline");
+        busLineCol.setCellValueFactory(new PropertyValueFactory<>("busline"));
+
+        TableColumn<LogRecord, Integer> addressCol = new TableColumn<>("address");
+        addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+
+        TableColumn<LogRecord, String> eventTypeCol = new TableColumn<>("eventType");
+        eventTypeCol.setCellValueFactory(new PropertyValueFactory<>("eventType"));
+
+        TableColumn<LogRecord, String> messageCol = new TableColumn<>("message");
+        messageCol.setCellValueFactory(new PropertyValueFactory<>("message"));
+
+        resultTable.getColumns().addAll(idCol, createdCol, lastChangedCol,
+                createdUserColumn, timestampCol, millisecondsCol, siteCol,
+                busLineCol, addressCol, eventTypeCol, messageCol);
+        resultTable.setItems(tableData);
     }
 
     /**
@@ -136,7 +172,8 @@ public class ReportPanelUIController implements Initializable, UIPanelController
 
     /**
      * Fill busline combobox if it is empty
-     */    private void fillRecordTypeComboBox() {
+     */
+    private void fillRecordTypeComboBox() {
         if (busLine.getItems().size() == 0) {
             busLine.getItems().addAll(appDataController.getBuslineList());
         }
@@ -144,7 +181,8 @@ public class ReportPanelUIController implements Initializable, UIPanelController
 
     /**
      * Fill busline combobox if it is empty
-     */    private void fillBusLineComboBox() {
+     */
+    private void fillBusLineComboBox() {
 
     }
 
@@ -167,9 +205,8 @@ public class ReportPanelUIController implements Initializable, UIPanelController
         }
         if (createdUser.getCheckModel().getCheckedItems().size() > 0) {
             ObservableList<User> userList = createdUser.getCheckModel().getCheckedItems();
-            ArrayList<String> userNameList = new ArrayList<>(userList.stream()
-                    .map(user -> user.getName())
-                    .collect(Collectors.toList()));
+            ArrayList<String> userNameList = userList.stream()
+                    .map(User::getName).collect(Collectors.toCollection(ArrayList::new));
             formData.put(createdUser.getId(), userNameList);
         }
         if (recordType.getCheckModel().getCheckedItems().size() > 0) {
@@ -186,16 +223,16 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     /**
      * Validates entered time and sets style class 'invalid' if entered
      * time has unexpected format
+     *
      * @param textField text field containing time
-     * @param focus defines if focus is set. only when focus was removed (focus = false),
-     *              time is validated
+     * @param focus     defines if focus is set. only when focus was removed (focus = false),
+     *                  time is validated
      */
     private void timeFieldChanged(boolean focus, TextField textField) {
         if (!focus) {
             if (!isTimeValid(textField.getText())) {
                 textField.getStyleClass().add("invalid");
-            }
-            else {
+            } else {
                 textField.getStyleClass().removeAll("invalid");
             }
         }
@@ -207,6 +244,7 @@ public class ReportPanelUIController implements Initializable, UIPanelController
      * hours: 0 or 1 + any digit from 0 to 9 OR 2 + any digit from 0 to 3 (00 - 23)
      * minutes: 0 to 5 + any digit from 0 to 9 (00 - 59)
      * seconds: see minutes
+     *
      * @param timeString time string to be validated
      * @return true if time string is valid and false if not
      */

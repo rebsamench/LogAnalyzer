@@ -16,13 +16,13 @@ import java.util.List;
 
 public class MySQLLogRecordDAO implements LogRecordDAO {
 
-    public MySQLLogRecordDAO(List logRecordList) {
+    public MySQLLogRecordDAO(List<LogRecord> logRecordList) {
         insertLogRecords(logRecordList);
     }
 
     @Override
     public ObservableList<LogRecord> getAllLogRecordsList() throws SQLException {
-        ObservableList logRecordList = FXCollections.observableArrayList();
+        ObservableList<LogRecord> logRecordList = FXCollections.observableArrayList();
         Connection con = DBUtil.getConnection();
         PreparedStatement pstmt = con.prepareStatement("SELECT * FROM logrecord;");
         ResultSet rs =  pstmt.executeQuery();
@@ -33,10 +33,10 @@ public class MySQLLogRecordDAO implements LogRecordDAO {
     }
 
     @Override
-    public TableView<ObservableList> getAllLogRecordsTable() {
-        TableView allLogRecordsTable = null;
+    public TableView<LogRecord> getAllLogRecordsTable() {
+        TableView<LogRecord> allLogRecordsTable = null;
         try {
-            allLogRecordsTable = new TableView(getAllLogRecordsList());
+            allLogRecordsTable = new TableView<>(getAllLogRecordsList());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,20 +67,16 @@ public class MySQLLogRecordDAO implements LogRecordDAO {
         Connection connection = DBUtil.getConnection();
         try {
             for (LogRecord logRecord: logRecordList){
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO logrecord (createduser,unique_identifier,timestamp,site,busline,address,milliseconds,type,source,message) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                // INSERT INTO logrecord (createduser,unique_identifier,timestamp,site,busline,address,milliseconds,type,source, message) values ('admin', 'hueresiech', '2019-11-13 16:31:08', 1, 1, 1, 798420, 'Warning', 'Controller', 'Errors: +Mechanical')
-                ps.setString(1, logRecord.getUser().getName());
-                ps.setString(2, logRecord.getUniqueIdentifier());
-                ps.setString(3, DateUtil.convertDateTimeToUtcString(logRecord.getTimestamp(), MySQLConst.DATETIMEPATTERN));
-                ps.setInt(4, (logRecord.getSite().getId()));
-                ps.setInt(5, logRecord.getBusline().getId());
-                ps.setInt(6, logRecord.getAddress());
-                ps.setInt(7, logRecord.getMilliseconds());
-                ps.setString(8, logRecord.getEventType());
-                ps.setString(9, logRecord.getSource());
-                ps.setString(10, logRecord.getMessage());
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO logrecord VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-
+                ps.setString(1, DateUtil.convertDateTimeToUtcString(logRecord.getTimestamp(), MySQLConst.DATETIMEPATTERN));
+                ps.setInt(2, logRecord.getMilliseconds());
+                ps.setString(3, logRecord.getEventType());
+                ps.setString(4, logRecord.getSource());
+                ps.setString(5, logRecord.getMessage());
+                ps.setInt(6, logRecord.getUser().getId());
+                ps.setInt(7, logRecord.getSite().getId());
+                ps.setInt(8, logRecord.getBusline().getId());
                 ps.addBatch();
 
                 int i = ps.executeUpdate();

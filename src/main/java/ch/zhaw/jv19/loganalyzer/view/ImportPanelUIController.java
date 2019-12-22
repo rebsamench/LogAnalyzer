@@ -38,15 +38,9 @@ public class ImportPanelUIController implements Initializable, UIPanelController
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        chooseCreatedUser.addEventHandler(ComboBox.ON_SHOWING, event -> {
-            fillUserList();
-        });
-        chooseSite.addEventHandler(ComboBox.ON_SHOWING, event -> {
-            fillSiteList();
-        });
-        chooseBusline.addEventHandler(ComboBox.ON_SHOWING, event -> {
-            fillBuslineList();
-        });
+        chooseCreatedUser.addEventHandler(ComboBox.ON_SHOWING, event -> fillUserList());
+        chooseSite.addEventHandler(ComboBox.ON_SHOWING, event -> fillSiteList());
+        chooseBusline.addEventHandler(ComboBox.ON_SHOWING, event -> fillBuslineList());
     }
 
     @Override

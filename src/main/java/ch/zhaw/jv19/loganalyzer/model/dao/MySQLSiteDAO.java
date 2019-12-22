@@ -1,7 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.model.dao;
 
 import ch.zhaw.jv19.loganalyzer.model.Site;
-import ch.zhaw.jv19.loganalyzer.model.User;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import ch.zhaw.jv19.loganalyzer.util.datatype.StringUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
@@ -28,7 +27,7 @@ public class MySQLSiteDAO implements SiteDAO {
 
     @Override
     public ObservableList<Site> getAllSitesList() throws SQLException {
-        ObservableList siteList = FXCollections.observableArrayList();
+        ObservableList<Site> siteList = FXCollections.observableArrayList();
         Connection con = DBUtil.getConnection();
         PreparedStatement pstmt = con.prepareStatement("SELECT * FROM site;");
         ResultSet rs = pstmt.executeQuery();
@@ -39,7 +38,7 @@ public class MySQLSiteDAO implements SiteDAO {
     }
 
     @Override
-    public TableView<ObservableList> getAllSitesTable() {
+    public TableView<Site> getAllSitesTable() {
         return null;
     }
 

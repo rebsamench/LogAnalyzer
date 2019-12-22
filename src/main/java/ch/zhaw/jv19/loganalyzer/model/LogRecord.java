@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 public class LogRecord {
     private int id;
     private ZonedDateTime created;
-    private ZonedDateTime lastchanged;
+    private ZonedDateTime lastChanged;
     private User user;
     private String uniqueIdentifier;
     private ZonedDateTime timestamp;
@@ -20,10 +20,10 @@ public class LogRecord {
     private String source;
     private String message;
 
-    public LogRecord(){};
+    public LogRecord(){}
 
     public LogRecord(String timestamp, int milliseconds, String eventType, String source, String message, User user, Site site, Busline busline) {
-        this.timestamp = DateUtil.getZonedDateTimeFromDateTimeString(timestamp, MySQLConst.LOCALDATETIMEPATTERN);
+        this.timestamp = DateUtil.getZonedDateTimeFromDateTimeString(timestamp, MySQLConst.DATETIMEPATTERN);
         this.milliseconds = milliseconds;
         this.eventType = eventType;
         this.source = source;
@@ -41,10 +41,6 @@ public class LogRecord {
         this.created = created;
     }
 
-    public void setLastchanged(ZonedDateTime lastchanged) {
-        this.lastchanged = lastchanged;
-    }
-
     public void setUniqueIdentifier(String uniqueIdentifier) {
         this.uniqueIdentifier = uniqueIdentifier;
     }
@@ -52,35 +48,6 @@ public class LogRecord {
     public void setAddress(int address) {
         this.address = address;
     }
-
-    public void setTimestamp(ZonedDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public void setMilliseconds(int milliseconds) {
-        this.milliseconds = milliseconds;
-    }
-
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setSite(Site site) {
-        this.site = site;
-    }
-
-    public void setBusline(Busline busline) {
-        this.busline = busline;
-    }
-
 
     public ZonedDateTime getTimestamp() {
         return timestamp;
@@ -114,8 +81,36 @@ public class LogRecord {
         return site;
     }
 
+    public void setTimestamp(ZonedDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setMilliseconds(int milliseconds) {
+        this.milliseconds = milliseconds;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
+    }
+
     public Busline getBusline() {
         return busline;
+    }
+
+    public void setBusline(Busline busline) {
+        this.busline = busline;
     }
 
     public int getId() {
@@ -126,15 +121,19 @@ public class LogRecord {
         return created;
     }
 
-    public ZonedDateTime getLastchanged() {
-        return lastchanged;
+    public ZonedDateTime getLastChanged() {
+        return lastChanged;
     }
 
     public String getUniqueIdentifier() {
-        return "ien";
+        return uniqueIdentifier;
     }
 
     public int getAddress() {
-        return 1;
+        return address;
+    }
+
+    public void setLastChanged(ZonedDateTime lastChanged) {
+        this.lastChanged = lastChanged;
     }
 }

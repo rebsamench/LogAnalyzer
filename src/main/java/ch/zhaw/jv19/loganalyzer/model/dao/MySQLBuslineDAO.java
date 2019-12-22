@@ -27,7 +27,7 @@ public class MySQLBuslineDAO implements BusLineDAO {
 
     @Override
     public ObservableList<Busline> getAllBuslinesList() throws SQLException {
-        ObservableList buslineList = FXCollections.observableArrayList();
+        ObservableList<Busline> buslineList = FXCollections.observableArrayList();
         Connection con = DBUtil.getConnection();
         PreparedStatement pstmt = con.prepareStatement("SELECT * FROM busline;");
         ResultSet rs = pstmt.executeQuery();
@@ -38,7 +38,7 @@ public class MySQLBuslineDAO implements BusLineDAO {
     }
 
     @Override
-    public TableView<ObservableList> getAllBuslinesTable() {
+    public TableView<Busline> getAllBuslinesTable() {
         return null;
     }
 

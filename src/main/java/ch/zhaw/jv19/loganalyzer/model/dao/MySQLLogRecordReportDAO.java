@@ -6,13 +6,6 @@ import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import ch.zhaw.jv19.loganalyzer.util.datatype.StringUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.util.Callback;
 
 import java.sql.*;
 import java.time.ZonedDateTime;
@@ -23,18 +16,16 @@ import java.util.stream.Collectors;
 
 public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
     private String currentQuery;
-    private AppDataController controller;
+    private final AppDataController controller;
 
     public MySQLLogRecordReportDAO(AppDataController controller) {
         this.controller = controller;
     }
 
     @Override
-    public TableView<ObservableList> getLogRecordsTableByConditions(HashMap<String, Object> searchConditions) {
-        TableView<ObservableList> tableView;
+    public ArrayList<LogRecord> getLogRecordsListByConditions(HashMap<String, Object> searchConditions) {
         buildLogRecordQuery(searchConditions);
-        tableView = getLogRecordsTable(currentQuery);
-        return tableView;
+        return getLogRecordList(currentQuery);
     }
 
     @Override
@@ -42,57 +33,31 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
         return currentQuery;
     }
 
-    //TODO documentation and remove unused code
-    private TableView<ObservableList> getLogRecordsTable(String query) {
-        ObservableList<ObservableList> rowList;
+    /**
+     * Gets a list of log records from data base
+     * @param query SELECT statement
+     * @return ArrayList of LogRecords
+     */
+    private ArrayList<LogRecord> getLogRecordList(String query) {
+        ArrayList<LogRecord> resultList = new ArrayList<>();
         ResultSet resultSet;
-        TableView<ObservableList> resultTable = null;
         try {
             Connection con = DBUtil.getConnection();
             PreparedStatement pstmt = con.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
             resultSet = pstmt.executeQuery(query);
-            rowList = FXCollections.observableArrayList();
-            resultTable = new TableView();
-            //check if any row is in resultset, https://stackoverflow.com/questions/867194/java-resultset-how-to-check-if-there-are-any-results/6813771#6813771
-            if (resultSet.isBeforeFirst()) {
-                for (int i = 0; i < resultSet.getMetaData().getColumnCount(); i++) {
-                    final int j = i;
-                    TableColumn<ObservableList, String> col = new TableColumn(resultSet.getMetaData().getColumnName(i + 1));
-//                    col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-//                        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-//                            return new SimpleStringProperty(param.getValue().get(j).toString());
-//                        }
-//                    });
-                    resultTable.getColumns().addAll(col);
-                    //System.out.println("Column [" + i + "] ");
-                }
-                while (resultSet.next()) {
-                    //Iterate Row
-                    ObservableList<LogRecord> row = FXCollections.observableArrayList();
-                    row.add(extractLogRecordFromResultSet(resultSet));
-//                    for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
-//                        //Iterate Column
-//                        row.add(resultSet.getString(i));
-//                    }
-                    System.out.println("Row [1] added " + row);
-                    rowList.add(row);
-                }
-                resultTable.setItems(rowList);
+            while (resultSet.next()) {
+                LogRecord logRecord = extractLogRecordFromResultSet(resultSet);
+                resultList.add(logRecord);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             DBUtil.dbDisconnect();
         }
-        return resultTable;
+        return resultList;
     }
 
-    public TableColumn buildColumn(TableColumn column) {
-        return null;
-    }
-
-    /** Query Builder methods */
+    /* Query Builder methods */
 
     /**
     * Builds query for log records which meet the given conditions.
@@ -112,8 +77,9 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
 
     /**
      * Creates a list of conditions
-     * @param conditionsMap
-     * @return
+     * @param conditionsMap hash map of search conditions. key = db column,
+     *                         value = String value, date or array list of multiple IN conditions (strings)
+     * @return list of conditions as strings
      */
     private ArrayList<String> getConditionListFromMap(HashMap<String, Object> conditionsMap) {
         Iterator<HashMap.Entry<String, Object>> entries = conditionsMap.entrySet().iterator();
@@ -140,7 +106,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
                     case "recordType":
                         if(entry.getValue() instanceof ArrayList) {
                             conditionSb.append(MySQLConst.IN);
-                            conditionSb.append(convertToString((ArrayList<String>) entry.getValue()));
+                            conditionSb.append(convertToString(entry.getValue()));
                         }
                         break;
                     case "message":
@@ -237,13 +203,13 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
      * Extracts log record from Resultset.
      * @param rs result set
      * @return user
-     * @throws SQLException
+     * @throws SQLException database exception
      */
     private LogRecord extractLogRecordFromResultSet(ResultSet rs) throws SQLException {
         LogRecord logRecord = new LogRecord();
         logRecord.setId(rs.getInt("id"));
         logRecord.setCreated(DateUtil.getZonedDateTimeFromDateTimeString(rs.getDate("created") + " " + rs.getTime("created"), MySQLConst.DATETIMEPATTERN));
-        logRecord.setLastchanged(DateUtil.getZonedDateTimeFromDateTimeString(rs.getDate("created") + " " + rs.getTime("created"), MySQLConst.DATETIMEPATTERN));
+        logRecord.setLastChanged(DateUtil.getZonedDateTimeFromDateTimeString(rs.getDate("created") + " " + rs.getTime("created"), MySQLConst.DATETIMEPATTERN));
         logRecord.setUser(controller.getUserByName(rs.getString("createduser")));
         logRecord.setUniqueIdentifier(rs.getString("unique_identifier"));
         logRecord.setTimestamp(DateUtil.getZonedDateTimeFromDateTimeString(rs.getDate("timestamp") + " " + rs.getTime("timestamp"), MySQLConst.DATETIMEPATTERN));

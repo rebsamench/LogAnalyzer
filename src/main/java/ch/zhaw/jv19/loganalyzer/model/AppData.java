@@ -11,7 +11,7 @@ public class AppData {
     private ObservableList<User> userList;
     private ObservableList<Site> siteList;
     private ObservableList<Busline> busLineList;
-    private SimpleStringProperty message;
+    private final SimpleStringProperty message;
     private static AppData instance;
 
     //Singleton: AppData can only be instantiated once

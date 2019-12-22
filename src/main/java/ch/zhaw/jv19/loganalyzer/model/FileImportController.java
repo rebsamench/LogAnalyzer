@@ -16,7 +16,7 @@ public class FileImportController {
 
     public FileImportController() {}
 
-    public FileImportController(User user, Site site, Busline busline, List fileList) {
+    public FileImportController(User user, Site site, Busline busline, List<File> fileList) {
         this.user = user;
         this.site = site;
         this.busline = busline;
@@ -59,7 +59,7 @@ public class FileImportController {
         }
     }
 
-    private void saveToDB(List logRecordList) {
+    private void saveToDB(List<LogRecord> logRecordList) {
         MySQLLogRecordDAO logRecordDAOWriter = new MySQLLogRecordDAO(logRecordList);
     }
 

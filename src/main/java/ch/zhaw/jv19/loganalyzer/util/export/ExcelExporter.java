@@ -1,5 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.util.export;
 
+import ch.zhaw.jv19.loganalyzer.model.LogRecord;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import org.apache.poi.ss.usermodel.*;
@@ -11,10 +12,11 @@ import java.io.FileOutputStream;
 
 public class ExcelExporter {
 
-    public void saveTable(TableView<ObservableList> table, File file) {
+    //TODO make more generic
+    public void saveTable(TableView<LogRecord> table, File file) {
         String filepath = file.getAbsolutePath();
         try {
-            Workbook workbook = new XSSFWorkbook();
+            XSSFWorkbook workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Export");
             CellStyle headerStyle = workbook.createCellStyle();
             headerStyle.setFillForegroundColor(IndexedColors.DARK_BLUE.getIndex());
@@ -25,7 +27,7 @@ public class ExcelExporter {
             CellStyle oddRowStyle = workbook.createCellStyle();
             oddRowStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             oddRowStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
-            XSSFFont font = ((XSSFWorkbook) workbook).createFont();
+            XSSFFont font = workbook.createFont();
             font.setColor(IndexedColors.WHITE.getIndex());
             font.setFontHeightInPoints((short) 11);
             font.setBold(true);

@@ -9,6 +9,6 @@ import java.sql.SQLException;
 public interface SiteDAO {
     Site getSiteByName(String name) throws SQLException;
     ObservableList<Site> getAllSitesList() throws SQLException;
-    TableView<ObservableList> getAllSitesTable();
+    TableView<Site> getAllSitesTable();
     int saveSites(Site site) throws SQLException;
 }
