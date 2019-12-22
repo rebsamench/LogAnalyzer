@@ -1,6 +1,5 @@
 package ch.zhaw.jv19.loganalyzer;
 
-import ch.zhaw.jv19.loganalyzer.model.AppDataController;
 import ch.zhaw.jv19.loganalyzer.view.MainAppUIController;
 import javafx.scene.layout.Pane;
 import javafx.application.Application;
@@ -14,7 +13,6 @@ import java.io.IOException;
 public class MainApp extends Application {
     private Stage primaryStage;
     private double x, y;
-    private AppDataController appDataController;
 
     @Override
     public void start(Stage primaryStage) {
@@ -28,7 +26,7 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class
                     .getResource("view/MainApp.fxml"));
             Pane rootLayout = (AnchorPane) loader.load();
-
+            //TODO not working properly
             rootLayout.setOnMousePressed(mouseEvent -> {
                 x = mouseEvent.getSceneX();
                 y = mouseEvent.getSceneX();
@@ -51,9 +49,5 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
-    }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
     }
 }

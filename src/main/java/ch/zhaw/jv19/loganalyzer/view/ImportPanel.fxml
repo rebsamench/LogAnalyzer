@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="ImportPanel" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="ch.zhaw.jv19.loganalyzer.view.ImportPanelUIController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="ImportPanel" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" fx:controller="ch.zhaw.jv19.loganalyzer.view.ImportPanelUIController">
    <children>
       <GridPane layoutX="24.0" layoutY="24.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
          <columnConstraints>

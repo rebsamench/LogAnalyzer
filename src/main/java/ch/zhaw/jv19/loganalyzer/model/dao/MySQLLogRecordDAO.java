@@ -69,7 +69,7 @@ public class MySQLLogRecordDAO implements LogRecordDAO {
             for (LogRecord logRecord: logRecordList){
                 PreparedStatement ps = connection.prepareStatement("INSERT INTO logrecord VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-                ps.setString(1, DateUtil.convertDateTimeToUtcString(logRecord.getTimestamp(), MySQLConst.DATETIMEPATTERN));
+                ps.setString(1, DateUtil.convertDateTimeToString(logRecord.getTimestamp(), MySQLConst.DATETIMEPATTERN));
                 ps.setInt(2, logRecord.getMilliseconds());
                 ps.setString(3, logRecord.getEventType());
                 ps.setString(4, logRecord.getSource());

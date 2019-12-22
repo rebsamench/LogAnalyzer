@@ -1,5 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.model;
 
+import ch.zhaw.jv19.loganalyzer.MainApp;
 import ch.zhaw.jv19.loganalyzer.model.dao.*;
 import ch.zhaw.jv19.loganalyzer.util.export.ExcelExporter;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,6 +12,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Provides access to base data for loganalyzer app from UI. Every UI panel has access to AppDataController
+ * {@link ch.zhaw.jv19.loganalyzer.view.MainAppUIController}
+ * @author Simon Rizzi, rizzisim@students.zhaw.ch
+ */
 public class AppDataController {
     private final AppData appData;
     private static AppDataController instance;
@@ -21,6 +27,10 @@ public class AppDataController {
         initializeAppData();
     }
 
+    /**
+     * Gets instance of AppDataController. AppDataController is a Singleton.
+     * @return Singleton instance of AppDataController
+     */
     public static AppDataController getInstance() {
         if (AppDataController.instance == null) {
             AppDataController.instance = new AppDataController();
@@ -64,25 +74,35 @@ public class AppDataController {
     }
 
     /**
-     * Gets all users in an Observable List
-     *
-     * @return ObservableList of Users
+     * Gets a list of users.
+     * @return ObservableList of users
      */
     public ObservableList<User> getUserList() {
         return appData.getUserList();
     }
 
     /**
-     * Gets all sites in an Observable List
-     *
-     * @return ObservableList of Sites
+     * Gets a list of sites.
+     * @return ObservableList of sites
      */
     public ObservableList<Site> getSiteList() {
         return appData.getSiteList();
     }
 
+    /**
+     * Gets a list of bus lines.
+     * @return ObservableList of bus lines
+     */
     public ObservableList<Busline> getBuslineList() {
         return appData.getBusLineList();
+    }
+
+    /**
+     * Gets a list of record types defined in enum as strings.
+     * @return ObservableList of record types
+     */
+    public ObservableList<String> getRecordTypeList() {
+        return appData.getRecordTypeList();
     }
 
     /**

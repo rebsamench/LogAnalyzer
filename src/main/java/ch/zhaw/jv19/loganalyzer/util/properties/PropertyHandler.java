@@ -1,11 +1,15 @@
-package ch.zhaw.jv19.loganalyzer.model;
+package ch.zhaw.jv19.loganalyzer.util.properties;
 
 import org.apache.commons.collections4.properties.SortedProperties;
 
 import java.io.*;
 import java.util.Set;
 
-// copied from http://www.gridtec.at/java-properties-file-beispiel/ with minor changes
+/**
+ * Handles access to property file.
+ * @author Simon Rizzi, rizzisim@students.zhaw.ch
+ * copied from http://www.gridtec.at/java-properties-file-beispiel/ with minor changes
+ */
 public class PropertyHandler {
 
     private static PropertyHandler instance = null;
@@ -31,6 +35,10 @@ public class PropertyHandler {
         }
     }
 
+    /**
+     * Gets instance of PropertyHandler. PropertyHandler is a Singleton.
+     * @return Singleton instance of PropertyHandler
+     */
     public static PropertyHandler getInstance() {
         if (instance != null) {
             return instance;
@@ -44,6 +52,11 @@ public class PropertyHandler {
         return instance;
     }
 
+    /**
+     * Gets property by property key.
+     * @param propKey key of property
+     * @return property that matches fiven key.
+     */
     public String getValue(String propKey) {
         return this.prop.getProperty(propKey);
     }

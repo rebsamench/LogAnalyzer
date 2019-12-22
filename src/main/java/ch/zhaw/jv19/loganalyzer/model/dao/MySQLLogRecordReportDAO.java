@@ -1,11 +1,11 @@
 package ch.zhaw.jv19.loganalyzer.model.dao;
 
-import ch.zhaw.jv19.loganalyzer.model.AppDataController;
-import ch.zhaw.jv19.loganalyzer.model.LogRecord;
+import ch.zhaw.jv19.loganalyzer.model.*;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import ch.zhaw.jv19.loganalyzer.util.datatype.StringUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.time.ZonedDateTime;
@@ -14,6 +14,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 
+/**
+ * Provides interactions with MySQL database and to build queries dynamically from UI form data.
+ * @author Simon Rizzi, rizzisim@students.zhaw.ch
+ */
 public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
     private String currentQuery;
     private final AppDataController controller;
@@ -35,6 +39,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
 
     /**
      * Gets a list of log records from data base
+     *
      * @param query SELECT statement
      * @return ArrayList of LogRecords
      */
@@ -60,10 +65,11 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
     /* Query Builder methods */
 
     /**
-    * Builds query for log records which meet the given conditions.
+     * Builds query for log records which meet the given conditions.
      * Assembled query is set as current query of this DAO.
+     *
      * @param conditionsMap hash map of search conditions. key = db column,
-     *                         value = String value, date or array list of multiple IN conditions (strings)
+     *                      value = String value, date or array list of multiple IN conditions (strings)
      */
     private void buildLogRecordQuery(HashMap<String, Object> conditionsMap) {
         StringBuilder querySb = new StringBuilder();
@@ -77,8 +83,9 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
 
     /**
      * Creates a list of conditions
+     *
      * @param conditionsMap hash map of search conditions. key = db column,
-     *                         value = String value, date or array list of multiple IN conditions (strings)
+     *                      value = String value, date or array list of multiple IN conditions (strings)
      * @return list of conditions as strings
      */
     private ArrayList<String> getConditionListFromMap(HashMap<String, Object> conditionsMap) {
@@ -103,8 +110,9 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
                     //list types -> IN conditions
                     case "createdUser":
                     case "site":
-                    case "recordType":
-                        if(entry.getValue() instanceof ArrayList) {
+                    case "type":
+                    case "busLine":
+                        if (entry.getValue() instanceof ObservableList) {
                             conditionSb.append(MySQLConst.IN);
                             conditionSb.append(convertToString(entry.getValue()));
                         }
@@ -114,6 +122,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
                         String messageSubstring = entry.getValue().toString();
                         conditionSb.append(StringUtil.addQuotes.apply(StringUtil.addPercent.apply(messageSubstring)));
                         break;
+                    default: break;
                 }
                 conditionsList.add(conditionSb.toString());
             }
@@ -124,6 +133,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
     /**
      * Maps key to database column. Only needed for keys, which dont
      * represent any db column.
+     *
      * @param key as String
      * @return key that represents a table column
      */
@@ -144,6 +154,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
 
     /**
      * Converts input to string based on input type
+     *
      * @param object object to convert to string
      * @return Condition as String.
      */
@@ -151,10 +162,30 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
         String condition = null;
         if (object instanceof ZonedDateTime) {
             condition = DateUtil.convertDateTimeToString((ZonedDateTime) object, MySQLConst.DATETIMEPATTERN);
-        } else if (object instanceof ArrayList) {
-            ArrayList<String> inConditionList = (ArrayList<String>) object;
+        } else if (object instanceof ObservableList) {
+            ObservableList<?> inConditionList = (ObservableList<?>) object;
+            ArrayList<String> inConditionListString = new ArrayList<>();
             if (inConditionList.size() > 0) {
-                condition = getInConditions(inConditionList);
+                // handle different types of objects: get suitable foreign key
+                if (inConditionList.get(0) instanceof User) {
+                    ObservableList<User> inConditionListUser = (ObservableList<User>) inConditionList;
+                    inConditionListString = inConditionListUser.stream()
+                            .map(User::getName)
+                            .collect(Collectors.toCollection(ArrayList::new));
+                } else if (inConditionList.get(0) instanceof Site) {
+                    ObservableList<Site> inConditionListSite = (ObservableList<Site>) inConditionList;
+                    inConditionListString = inConditionListSite.stream()
+                            .map(site -> String.valueOf(site.getId()))
+                            .collect(Collectors.toCollection(ArrayList::new));
+                } else if (inConditionList.get(0) instanceof Busline) {
+                    ObservableList<Busline> inConditionListSite = (ObservableList<Busline>) inConditionList;
+                    inConditionListString = inConditionListSite.stream()
+                            .map(site -> String.valueOf(site.getId()))
+                            .collect(Collectors.toCollection(ArrayList::new));
+                } else if (inConditionList.get(0) instanceof String) {
+                    inConditionListString = new ArrayList<String>((ObservableList<String>) inConditionList);
+                }
+                condition = getInConditions(inConditionListString);
             }
         } else if (object instanceof String) {
             // Wrap in %
@@ -165,6 +196,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
 
     /**
      * Connects Conditions of conditionList with WHERE or AND.
+     *
      * @param conditionList list of conditions to connect
      * @return String of conditions (WHERE clauses) connected with WHERE and AND
      */
@@ -187,6 +219,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
 
     /**
      * Builds and IN-condition set from a list.
+     *
      * @param conditionList list of condition values
      * @return String
      */
@@ -201,6 +234,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
 
     /**
      * Extracts log record from Resultset.
+     *
      * @param rs result set
      * @return user
      * @throws SQLException database exception

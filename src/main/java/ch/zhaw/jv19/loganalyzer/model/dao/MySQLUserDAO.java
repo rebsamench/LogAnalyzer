@@ -7,14 +7,23 @@ import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Provides interactions with MySQL database to get and write user data to database
+ * @author Simon Rizzi, rizzisim@students.zhaw.ch
+ */
 public class MySQLUserDAO implements UserDAO {
+
+    /**
+     * Gets user by name (primary key) from user table.
+     * @param name user name
+     * @return user object
+     * @throws SQLException database exception
+     */
     @Override
     public User getUserByName(String name) throws SQLException {
         User user = null;
@@ -24,6 +33,11 @@ public class MySQLUserDAO implements UserDAO {
         return extractUserFromResultSet(rs);
     }
 
+    /**
+     * Gets all users from user table.
+     * @return observable list of users
+     * @throws SQLException database exception
+     */
     @Override
     public ObservableList<User> getAllUsersList() throws SQLException {
         ObservableList<User> userList = FXCollections.observableArrayList();
@@ -36,11 +50,12 @@ public class MySQLUserDAO implements UserDAO {
         return userList;
     }
 
-    @Override
-    public TableView<User> getAllUsersTable() {
-        return null;
-    }
-
+    /**
+     * Saves user in data base
+     * @param  user to be saved to data base
+     * @return number of rows affected. if > 0 -> user has been saved.
+     * @throws SQLException database exception
+     */
     @Override
     public int saveUser(User user) throws SQLException {
         String[] values = {
@@ -64,7 +79,7 @@ public class MySQLUserDAO implements UserDAO {
     /**
      * Extracts user from Resultset.
      * @param rs result set
-     * @return user
+     * @return user object
      * @throws SQLException database exception
      */
     private User extractUserFromResultSet(ResultSet rs) throws SQLException {
