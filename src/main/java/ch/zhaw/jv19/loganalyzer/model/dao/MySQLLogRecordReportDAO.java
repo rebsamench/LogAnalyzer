@@ -83,7 +83,6 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
 
     /**
      * Creates a list of conditions
-     *
      * @param conditionsMap hash map of search conditions. key = db column,
      *                      value = String value, date or array list of multiple IN conditions (strings)
      * @return list of conditions as strings
