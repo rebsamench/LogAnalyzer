@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.StringConverter;
+import javafx.util.converter.LocalDateTimeStringConverter;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.File;
@@ -23,8 +24,12 @@ import java.util.ResourceBundle;
 /**
  * Controls ui interactions of report panel. Provides form to select criteria for log record
  * search and displaying search results.
+ * resultPanelUIController is the controller of the included subpanel (fx:include) and
+ * is created by FXML loader. Therefore the id attribute on fx:include tag is resultPanelUI
+ *
  * @author Simon Rizzi, rizzisim@students.zhaw.ch
  */
+// TODO DatePicker cannot be nulled after date is set
 public class ReportPanelUIController implements Initializable, UIPanelController {
     private HashMap<String, Object> formData;
     @FXML
@@ -56,42 +61,18 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     @FXML
     private TextArea sqlStatement;
     @FXML
-    private TableView<LogRecord> resultTable;
-    private final ObservableList<LogRecord> tableData = FXCollections.observableArrayList();
-    @FXML
-    private Button exportButton;
-    @FXML
-    private VBox furtherAnalysisPanel;
-    @FXML
-    private TextField secondsBefore;
-    @FXML
-    private TextField secondsAfter;
+    private ResultPanelUIController resultPanelUIController; // controller of included sub panel
     private static final String REPORT_PANEL_DATETIME_PATTERN = "yyyy-MM-ddHH:mm:ss";
+    private static final String REPORT_PANEL_DATE_PATTERN = "yyyy-MM-dd";
     private AppDataController appDataController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // disable button when table is empty
-        exportButton.disableProperty().bind(Bindings.isEmpty(tableData));
-        //disable further analysis panel when no table row is selected
-        furtherAnalysisPanel.disableProperty().bind(Bindings.isEmpty(resultTable.getSelectionModel().getSelectedItems()));
         // fill comboboxes on first use, since appdatacontroller is not yet set when initialize method is called
         createdUser.addEventHandler(ComboBox.ON_SHOWING, event -> fillUserComboBox());
         type.addEventHandler(ComboBox.ON_SHOWING, event -> fillRecordTypeComboBox());
         site.addEventHandler(ComboBox.ON_SHOWING, event -> fillSiteComboBox());
         busLine.addEventHandler(ComboBox.ON_SHOWING, event -> fillBusLineComboBox());
-        createdUser.setConverter(new StringConverter<>() {
-            @Override
-            public String toString(User user) {
-                return user.getName();
-            }
-
-            @Override
-            public User fromString(String string) {
-                return createdUser.getItems().stream().filter(user ->
-                        user.getName().equals(string)).findFirst().orElse(null);
-            }
-        });
         // listener for focus change in order to validate entered time
         createdFromTime.focusedProperty().addListener((o, oldValue, newValue) -> timeFieldChanged(newValue, createdFromTime));
         createdUpToTime.focusedProperty().addListener((o, oldValue, newValue) -> timeFieldChanged(newValue, createdUpToTime));
@@ -104,70 +85,8 @@ public class ReportPanelUIController implements Initializable, UIPanelController
      */
     @FXML
     private void search() {
-        resultTable.getItems().clear();
-        resultTable.getColumns().clear();
         prepareFormData();
-        tableData.addAll(appDataController.getLogRecordsListByConditions(formData));
-        buildLogRecordResultTable(tableData);
-    }
-
-    /**
-     * Builds log record table from table data
-     * @param tableData table data
-     */
-    private void buildLogRecordResultTable(ObservableList<LogRecord> tableData) {
-        TableColumn<LogRecord, Integer> idCol = new TableColumn<>("Id");
-        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-
-        TableColumn<LogRecord, ZonedDateTime> createdCol = new TableColumn<>("Created");
-        createdCol.setCellValueFactory(new PropertyValueFactory<>("created"));
-
-        TableColumn<LogRecord, ZonedDateTime> lastChangedCol = new TableColumn<>("Last changed");
-        lastChangedCol.setCellValueFactory(new PropertyValueFactory<>("lastChanged"));
-
-        TableColumn<LogRecord, User> createdUserColumn = new TableColumn<>("User");
-        createdUserColumn.setCellValueFactory(new PropertyValueFactory<>("user"));
-
-        // omit unique_identifier, not relevant
-        TableColumn<LogRecord, ZonedDateTime> timestampCol = new TableColumn<>("Timestamp");
-        timestampCol.setCellValueFactory(new PropertyValueFactory<>("timestamp"));
-
-        TableColumn<LogRecord, Integer> millisecondsCol = new TableColumn<>("Milliseconds");
-        millisecondsCol.setCellValueFactory(new PropertyValueFactory<>("milliseconds"));
-
-        TableColumn<LogRecord, Site> siteCol = new TableColumn<>("Site");
-        siteCol.setCellValueFactory(new PropertyValueFactory<>("site"));
-
-        TableColumn<LogRecord, Busline> busLineCol = new TableColumn<>("Busline");
-        busLineCol.setCellValueFactory(new PropertyValueFactory<>("busline"));
-
-        TableColumn<LogRecord, Integer> addressCol = new TableColumn<>("Address");
-        addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
-
-        TableColumn<LogRecord, String> eventTypeCol = new TableColumn<>("Type of event");
-        eventTypeCol.setCellValueFactory(new PropertyValueFactory<>("eventType"));
-
-        TableColumn<LogRecord, String> messageCol = new TableColumn<>("Message");
-        messageCol.setCellValueFactory(new PropertyValueFactory<>("message"));
-
-        resultTable.getColumns().addAll(idCol, createdCol, lastChangedCol,
-                createdUserColumn, timestampCol, millisecondsCol, siteCol,
-                busLineCol, addressCol, eventTypeCol, messageCol);
-        resultTable.setItems(tableData);
-    }
-
-    /**
-     * Exports current resultTable to Excel. Default file name is Export_[currentDateTime].xlsx.
-     */
-    @FXML
-    private void exportResultTable() {
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Export table");
-        chooser.setInitialFileName("Export_" + DateUtil.getCurrentDateTimeString("yyyy-MM-dd_HHmm") + ".xlsx");
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel files (*.xlsx)", "*.xlsx"));
-        File file = chooser.showSaveDialog(exportButton.getScene().getWindow());
-        appDataController.exportToExcel(resultTable, file);
-        appDataController.setMessage("File successfully saved to " + file.getAbsolutePath());
+        resultPanelUIController.showTableData(appDataController.getLogRecordsListByConditions(formData));
     }
 
     /**
@@ -212,19 +131,30 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     private void prepareFormData() {
         formData = new HashMap<>();
         if (createdFrom.getValue() != null) {
-            formData.put(createdFrom.getId(),
-                    DateUtil.getZonedDateTimeFromDateTimeString(createdFrom.getValue() + createdFromTime.getText(),REPORT_PANEL_DATETIME_PATTERN));
+            formData.put(createdFrom.getId(), createdFromTime.getText().trim().isEmpty() ?
+                    DateUtil.getSystemTimezoneStartOfDayFromDate(createdFrom.getValue()) :
+                    DateUtil.getZonedDateTimeFromDateTimeString(createdFrom.getValue() +
+                            createdFromTime.getText(), REPORT_PANEL_DATETIME_PATTERN));
         }
         if (createdUpTo.getValue() != null) {
             formData.put(createdUpTo.getId(),
-                    DateUtil.getZonedDateTimeFromDateTimeString(createdUpTo.getValue() + createdUpToTime.getText(),REPORT_PANEL_DATETIME_PATTERN));
+                    createdUpToTime.getText().trim().isEmpty() ?
+                            DateUtil.getSystemTimezoneEndOfDayFromDate(createdUpTo.getValue()) :
+                            DateUtil.getZonedDateTimeFromDateTimeString(createdUpTo.getValue() +
+                                    createdUpToTime.getText(), REPORT_PANEL_DATETIME_PATTERN));
         }
         if (loggedTimestampFrom.getValue() != null) {
             formData.put(loggedTimestampFrom.getId(),
-                    DateUtil.getZonedDateTimeFromDateTimeString(loggedTimestampFrom.getValue() + loggedTimestampFromTime.getText(), REPORT_PANEL_DATETIME_PATTERN));
+                    loggedTimestampFromTime.getText().trim().isEmpty() ?
+                            DateUtil.getSystemTimezoneStartOfDayFromDate(loggedTimestampFrom.getValue()) :
+                            DateUtil.getZonedDateTimeFromDateTimeString(loggedTimestampFrom.getValue() +
+                                    loggedTimestampFromTime.getText(), REPORT_PANEL_DATETIME_PATTERN));
         }
         if (loggedTimestampUpTo.getValue() != null) {
-            formData.put(loggedTimestampUpTo.getId(), DateUtil.getZonedDateTimeFromDateTimeString(loggedTimestampUpTo.getValue() + loggedTimestampUpToTime.getText(),REPORT_PANEL_DATETIME_PATTERN));
+            formData.put(loggedTimestampUpTo.getId(), loggedTimestampUpToTime.getText().trim().isEmpty() ?
+                    DateUtil.getSystemTimezoneEndOfDayFromDate(loggedTimestampUpTo.getValue()) :
+                    DateUtil.getZonedDateTimeFromDateTimeString(loggedTimestampUpTo.getValue() +
+                            loggedTimestampUpToTime.getText(), REPORT_PANEL_DATETIME_PATTERN));
         }
         if (createdUser.getCheckModel().getCheckedItems().size() > 0) {
             formData.put(createdUser.getId(), createdUser.getCheckModel().getCheckedItems());
@@ -246,6 +176,7 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     /**
      * Validates entered time and sets style class 'invalid' if entered
      * time has unexpected format
+     *
      * @param textField text field containing time
      * @param focus     defines if focus is set. only when focus was removed (focus = false),
      *                  time is validated
