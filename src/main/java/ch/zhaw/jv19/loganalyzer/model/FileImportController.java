@@ -14,6 +14,7 @@ public class FileImportController {
     private List<LogFile> logFileList;
     private List<LogRecord> logRecordList;
 
+
     public FileImportController() {}
 
     public FileImportController(User user, Site site, Busline busline, List<File> fileList) {
