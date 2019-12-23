@@ -1,10 +1,12 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.model.*;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 
 
@@ -31,6 +33,9 @@ public class ImportPanelUIController implements Initializable, UIPanelController
 
     @FXML
     private Button importData;
+
+    @FXML
+    private TableView showFileList;
 
     public ImportPanelUIController() {
     }
@@ -63,5 +68,6 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         else if(busline == null){appDataController.setMessage("Select Busline!");}
         else if(fileList == null){appDataController.setMessage("No files selected!");}
         else {new FileImportController(user, site, busline, fileList);}
+        appDataController.setMessage("Data Import completed");
     }
 }
