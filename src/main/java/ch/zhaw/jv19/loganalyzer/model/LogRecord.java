@@ -33,22 +33,6 @@ public class LogRecord {
         this.busline = busline;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setCreated(ZonedDateTime created) {
-        this.created = created;
-    }
-
-    public void setUniqueIdentifier(String uniqueIdentifier) {
-        this.uniqueIdentifier = uniqueIdentifier;
-    }
-
-    public void setAddress(int address) {
-        this.address = address;
-    }
-
     public ZonedDateTime getTimestamp() {
         return timestamp;
     }
@@ -81,6 +65,34 @@ public class LogRecord {
         return site;
     }
 
+    public Busline getBusline() {
+        return busline;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public ZonedDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(ZonedDateTime created) {
+        this.created = created;
+    }
+
+    public ZonedDateTime getLastChanged() {
+        return lastChanged;
+    }
+
+    public void setLastChanged(ZonedDateTime lastChanged) {
+        this.lastChanged = lastChanged;
+    }
+
     public void setTimestamp(ZonedDateTime timestamp) {
         this.timestamp = timestamp;
     }
@@ -105,35 +117,24 @@ public class LogRecord {
         this.site = site;
     }
 
-    public Busline getBusline() {
-        return busline;
-    }
-
     public void setBusline(Busline busline) {
         this.busline = busline;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public ZonedDateTime getCreated() {
-        return created;
-    }
-
-    public ZonedDateTime getLastChanged() {
-        return lastChanged;
     }
 
     public String getUniqueIdentifier() {
         return uniqueIdentifier;
     }
 
+    public void setUniqueIdentifier(int address) {
+        this.uniqueIdentifier = uniqueIdentifier;
+    }
+
     public int getAddress() {
         return address;
     }
 
-    public void setLastChanged(ZonedDateTime lastChanged) {
-        this.lastChanged = lastChanged;
+    public void setAddress(int address) {
+        this.address = address;
     }
+
 }

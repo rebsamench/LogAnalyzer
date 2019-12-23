@@ -14,7 +14,6 @@ public class FileImportController {
     private List<LogFile> logFileList;
     private List<LogRecord> logRecordList;
 
-
     public FileImportController() {}
 
     public FileImportController(User user, Site site, Busline busline, List<File> fileList) {
@@ -36,14 +35,25 @@ public class FileImportController {
                 DataInputStream in = new DataInputStream(fstream);
                 BufferedReader br = new BufferedReader(new InputStreamReader(in));
                 String strLine;
-                int logRecordCount = 1;
-                while ((strLine = br.readLine()) != null) {
-
+                READ_RECORDS: while ((strLine = br.readLine()) != null) {
                     String[] tokens = strLine.split("\t");
                     LogRecord record = new LogRecord(tokens[0], convertMilliSeconds(tokens[1]), tokens[2], tokens[3], tokens[4], user, site, busline);
-                    logFile.addLogRecord(record);
-                    logFile.enrichAddress();
-                    logFile.enrichUniqueIdentifier();
+                    if (record.getMessage().contains("address") == false && logFile.isAddressSet() == false) {
+                        break READ_RECORDS;
+                    }
+                    else {
+                        if (record.getMessage().contains("address")) {
+                            logFile.setAddress(record.getMessage());
+                            record.setUniqueIdentifier(logFile.getAddress());
+                            logFile.enrichIDAddress();
+                            logFile.addLogRecord(record);
+                        }
+                        else {
+                            record.setUniqueIdentifier(logFile.getAddress());
+                            logFile.enrichIDAddress();
+                            logFile.addLogRecord(record);
+                        }
+                    }
                 }
             logFileList.add(logFile);
             }

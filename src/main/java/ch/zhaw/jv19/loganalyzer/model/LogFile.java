@@ -7,6 +7,7 @@ public class LogFile {
 
     private List<LogRecord> recordlist;
     private int address;
+    private boolean addressSet;
 
     public LogFile() {
         recordlist = new ArrayList<>();
@@ -20,20 +21,32 @@ public class LogFile {
         return recordlist;
     }
 
-    private void createUniqueIdentifier() {
+    public void enrichIDAddress() {
 
     }
 
-    public void enrichUniqueIdentifier() {
-
+    public List<LogRecord> getRecordlist() {
+        return recordlist;
     }
 
-    private void findAddress() {
-
+    public void setRecordlist(List<LogRecord> recordlist) {
+        this.recordlist = recordlist;
     }
 
-    public void enrichAddress() {
+    public int getAddress() {
+        return address;
+    }
 
+    public void setAddress(String message) {
+        this.address = Integer.parseInt(message.substring(34, 37).replace(',', ' ').trim());
+    }
+
+    public boolean isAddressSet() {
+        return addressSet;
+    }
+
+    public void setAddressSet(boolean addressSet) {
+        this.addressSet = addressSet;
     }
 }
 
