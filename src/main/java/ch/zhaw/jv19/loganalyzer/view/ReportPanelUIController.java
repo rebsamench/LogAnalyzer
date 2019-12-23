@@ -68,7 +68,8 @@ public class ReportPanelUIController implements Initializable, UIPanelController
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // fill comboboxes on first use, since appdatacontroller is not yet set when initialize method is called
+        appDataController = AppDataController.getInstance();
+        // fill comboboxes on first use
         createdUser.addEventHandler(ComboBox.ON_SHOWING, event -> fillUserComboBox());
         type.addEventHandler(ComboBox.ON_SHOWING, event -> fillRecordTypeComboBox());
         site.addEventHandler(ComboBox.ON_SHOWING, event -> fillSiteComboBox());
@@ -176,7 +177,6 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     /**
      * Validates entered time and sets style class 'invalid' if entered
      * time has unexpected format
-     *
      * @param textField text field containing time
      * @param focus     defines if focus is set. only when focus was removed (focus = false),
      *                  time is validated
@@ -203,10 +203,5 @@ public class ReportPanelUIController implements Initializable, UIPanelController
      */
     public boolean isTimeValid(String timeString) {
         return (timeString.matches("(?:[01]\\d|2[0123]):(?:[012345]\\d):(?:[012345]\\d)"));
-    }
-
-    @Override
-    public void setAppDataController(AppDataController appDataController) {
-        this.appDataController = appDataController;
     }
 }

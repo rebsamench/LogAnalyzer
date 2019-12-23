@@ -23,13 +23,10 @@ public class SQLPanelUIController implements Initializable, UIPanelController {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        appDataController = AppDataController.getInstance();
         exportButton.disableProperty().bind(
                 Bindings.isEmpty(resultTable.getItems())
         );
     }
 
-    @Override
-    public void setAppDataController(AppDataController appDataController) {
-        this.appDataController = appDataController;
-    }
 }

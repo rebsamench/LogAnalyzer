@@ -125,7 +125,7 @@ public class LogRecord {
         return uniqueIdentifier;
     }
 
-    public void setUniqueIdentifier(int address) {
+    public void setUniqueIdentifier(String uniqueIdentifier) {
         this.uniqueIdentifier = uniqueIdentifier;
     }
 
