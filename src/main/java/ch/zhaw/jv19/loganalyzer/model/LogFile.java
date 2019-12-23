@@ -21,28 +21,20 @@ public class LogFile {
         return recordlist;
     }
 
-    public void enrichIDAddress() {
-
-    }
-
-    public List<LogRecord> getRecordlist() {
-        return recordlist;
-    }
-
-    public void setRecordlist(List<LogRecord> recordlist) {
-        this.recordlist = recordlist;
-    }
-
     public int getAddress() {
         return address;
+    }
+
+    public boolean isAddressSet() {
+        return addressSet;
     }
 
     public void setAddress(String message) {
         this.address = Integer.parseInt(message.substring(34, 37).replace(',', ' ').trim());
     }
 
-    public boolean isAddressSet() {
-        return addressSet;
+    public void setRecordlist(List<LogRecord> recordlist) {
+        this.recordlist = recordlist;
     }
 
     public void setAddressSet(boolean addressSet) {

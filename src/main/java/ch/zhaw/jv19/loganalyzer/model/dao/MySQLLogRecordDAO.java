@@ -71,7 +71,7 @@ public class MySQLLogRecordDAO implements LogRecordDAO {
                 // INSERT INTO logrecord (createduser,unique_identifier,timestamp,site,busline,address,milliseconds,type,source, message) values ('admin', 'hueresiech', '2019-11-13 16:31:08', 1, 1, 1, 798420, 'Warning', 'Controller', 'Errors: +Mechanical')
                 ps.setString(1, logRecord.getUser().getName());
                 ps.setString(2, logRecord.getUniqueIdentifier());
-                ps.setString(3, DateUtil.convertDateTimeToUtcString(logRecord.getTimestamp(), MySQLConst.DATETIMEPATTERN));
+                ps.setString(3, DateUtil.convertDateTimeToString(logRecord.getTimestamp(), MySQLConst.DATETIMEPATTERN));
                 ps.setInt(4, (logRecord.getSite().getId()));
                 ps.setInt(5, logRecord.getBusline().getId());
                 ps.setInt(6, logRecord.getAddress());

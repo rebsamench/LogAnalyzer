@@ -57,10 +57,6 @@ public class LogRecord {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Site getSite() {
         return site;
     }
@@ -73,20 +69,39 @@ public class LogRecord {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public ZonedDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(ZonedDateTime created) {
-        this.created = created;
-    }
-
     public ZonedDateTime getLastChanged() {
         return lastChanged;
+    }
+
+    public String getUniqueIdentifier() {
+        return uniqueIdentifier;
+    }
+
+    public void setUniqueIdentifier(int address) {
+        this.uniqueIdentifier = site.getId() +
+                busline.getId() +
+                Integer.toString(address) +
+                DateUtil.convertDateTimeToString(timestamp, MySQLConst.DATETIMEPATTERN);
+    }
+
+    public void setUniqueIdentifier(String uniqueIdentifier) {
+        this.uniqueIdentifier = uniqueIdentifier;
+    }
+
+    public int getAddress() {
+        return address;
+    }
+
+    public void setAddress(int address) {
+        this.address = address;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setLastChanged(ZonedDateTime lastChanged) {
@@ -121,20 +136,11 @@ public class LogRecord {
         this.busline = busline;
     }
 
-    public String getUniqueIdentifier() {
-        return uniqueIdentifier;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setUniqueIdentifier(int address) {
-        this.uniqueIdentifier = uniqueIdentifier;
+    public void setCreated(ZonedDateTime created) {
+        this.created = created;
     }
-
-    public int getAddress() {
-        return address;
-    }
-
-    public void setAddress(int address) {
-        this.address = address;
-    }
-
 }

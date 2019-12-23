@@ -45,12 +45,10 @@ public class FileImportController {
                         if (record.getMessage().contains("address")) {
                             logFile.setAddress(record.getMessage());
                             record.setUniqueIdentifier(logFile.getAddress());
-                            logFile.enrichIDAddress();
                             logFile.addLogRecord(record);
                         }
                         else {
                             record.setUniqueIdentifier(logFile.getAddress());
-                            logFile.enrichIDAddress();
                             logFile.addLogRecord(record);
                         }
                     }
