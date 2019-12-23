@@ -40,16 +40,18 @@ public class FileImportController {
                     String[] tokens = strLine.split("\t");
                     LogRecord record = new LogRecord(tokens[0], convertMilliSeconds(tokens[1]), tokens[2], tokens[3], tokens[4], user, site, busline);
                     if (record.getMessage().contains("address") == false && logFile.isAddressSet() == false) {
-                        break READ_RECORDS;
+                        continue READ_RECORDS;
                     }
                     else {
                         if (record.getMessage().contains("address")) {
                             logFile.setAddress(record.getMessage());
+                            record.setAddress(logFile.getAddress());
                             record.setUniqueIdentifier(logFile.getAddress());
                             logFile.addLogRecord(record);
                         }
                         else {
-                            record.setUniqueIdentifier(logFile.getAddress());
+                            record.setAddress(logFile.getAddress());
+                            record.setUniqueIdentifier(record.getAddress());
                             logFile.addLogRecord(record);
                         }
                     }

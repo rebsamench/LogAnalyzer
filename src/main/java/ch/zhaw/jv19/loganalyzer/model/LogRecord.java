@@ -1,6 +1,7 @@
 package ch.zhaw.jv19.loganalyzer.model;
 
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
+import ch.zhaw.jv19.loganalyzer.util.datatype.ImportFileConst;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
 
 import java.time.ZonedDateTime;
@@ -23,7 +24,7 @@ public class LogRecord {
     public LogRecord(){}
 
     public LogRecord(String timestamp, int milliseconds, String eventType, String source, String message, User user, Site site, Busline busline) {
-        this.timestamp = DateUtil.getZonedDateTimeFromDateTimeString(timestamp, MySQLConst.DATETIMEPATTERN);
+        this.timestamp = DateUtil.getZonedDateTimeFromDateTimeString(timestamp, ImportFileConst.DATETIMEPATTERNIMPORT);
         this.milliseconds = milliseconds;
         this.eventType = eventType;
         this.source = source;
@@ -82,10 +83,11 @@ public class LogRecord {
     }
 
     public void setUniqueIdentifier(int address) {
-        this.uniqueIdentifier = site.getId() +
-                busline.getId() +
-                Integer.toString(address) +
-                DateUtil.convertDateTimeToString(timestamp, MySQLConst.DATETIMEPATTERN);
+        this.uniqueIdentifier = site.getId() + "-" +
+                busline.getId() + "-" +
+                Integer.toString(address) + "-" +
+                DateUtil.convertDateTimeToString(timestamp, MySQLConst.DATETIMEPATTERN) + "-" +
+                milliseconds;
     }
 
     public void setUniqueIdentifier(String uniqueIdentifier) {

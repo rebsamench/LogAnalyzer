@@ -38,9 +38,9 @@ public class ImportPanelUIController implements Initializable, UIPanelController
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appDataController = AppDataController.getInstance();
-        chooseCreatedUser.addEventHandler(ComboBox.ON_SHOWING, event -> fillUserList());
-        chooseSite.addEventHandler(ComboBox.ON_SHOWING, event -> fillSiteList());
-        chooseBusline.addEventHandler(ComboBox.ON_SHOWING, event -> fillBuslineList());
+        chooseCreatedUser.getItems().addAll(appDataController.getUserList());
+        chooseSite.getItems().addAll(appDataController.getSiteList());
+        chooseBusline.getItems().addAll(appDataController.getBuslineList());
     }
 
     @FXML
@@ -63,23 +63,5 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         else if(busline == null){appDataController.setMessage("Select Busline!");}
         else if(fileList == null){appDataController.setMessage("No files selected!");}
         else {new FileImportController(user, site, busline, fileList);}
-    }
-
-    private void fillUserList() {
-        if (chooseCreatedUser.getItems().size() == 0) {
-            chooseCreatedUser.getItems().addAll(appDataController.getUserList());
-        }
-    }
-
-    private void fillSiteList() {
-        if (chooseSite.getItems().size() == 0) {
-            chooseSite.getItems().addAll(appDataController.getSiteList());
-        }
-    }
-
-    private void fillBuslineList() {
-        if (chooseBusline.getItems().size() == 0) {
-            chooseBusline.getItems().addAll(appDataController.getBuslineList());
-        }
     }
 }

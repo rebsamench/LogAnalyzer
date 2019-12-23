@@ -2,6 +2,7 @@ package ch.zhaw.jv19.loganalyzer.model.dao;
 
 import ch.zhaw.jv19.loganalyzer.model.LogRecord;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
+import ch.zhaw.jv19.loganalyzer.util.datatype.ImportFileConst;
 import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
 import javafx.collections.FXCollections;
@@ -81,6 +82,7 @@ public class MySQLLogRecordDAO implements LogRecordDAO {
                 ps.setString(10, logRecord.getMessage());
 
                 ps.addBatch();
+                ps.executeBatch();
 
                 int i = ps.executeUpdate();
                 if (i == 1) {

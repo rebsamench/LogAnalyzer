@@ -7,7 +7,7 @@ public class LogFile {
 
     private List<LogRecord> recordlist;
     private int address;
-    private boolean addressSet;
+    private boolean addressSet = false;
 
     public LogFile() {
         recordlist = new ArrayList<>();
@@ -31,14 +31,11 @@ public class LogFile {
 
     public void setAddress(String message) {
         this.address = Integer.parseInt(message.substring(34, 37).replace(',', ' ').trim());
+        this.addressSet = true;
     }
 
     public void setRecordlist(List<LogRecord> recordlist) {
         this.recordlist = recordlist;
-    }
-
-    public void setAddressSet(boolean addressSet) {
-        this.addressSet = addressSet;
     }
 }
 
