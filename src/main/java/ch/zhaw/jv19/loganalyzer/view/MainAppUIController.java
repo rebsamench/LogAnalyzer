@@ -1,5 +1,4 @@
 package ch.zhaw.jv19.loganalyzer.view;
-
 import ch.zhaw.jv19.loganalyzer.MainApp;
 import ch.zhaw.jv19.loganalyzer.model.AppDataController;
 import javafx.fxml.FXML;
@@ -17,7 +16,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
-
+/**
+ * Controls ui interactions of main app. Provides main menu and handles creation and selection of panels.
+ * @author Simon Rizzi, rizzisim@students.zhaw.ch
+ */
 public class MainAppUIController implements Initializable {
     @FXML
     AnchorPane contentPane;
@@ -62,6 +64,10 @@ public class MainAppUIController implements Initializable {
         addPanelToPanelList("BaseDataPanel");
     }
 
+    /**
+     * Handles clicks on menu buttons. Each menu button must be bound with the according panel in this method.
+     * @param event Mouse event of the clicked button.
+     */
     @FXML
     public void handleMenuButtonClicks(MouseEvent event) {
         if (event.getSource() == btnHome) {
@@ -77,8 +83,16 @@ public class MainAppUIController implements Initializable {
         } else if (event.getSource() == btnBaseData) {
             selectPanel("BaseDataPanel");
         }
+        else {
+            appDataController.setMessage("Button " + " not bound with a panel id. Check MainAppUIController.");
+        }
     }
 
+    /**
+     * Selects panel in uiPanels list by panel id and displays it.
+     * @param panelId ID of panel to show. ID must correspond with
+     *                an id attribute of a Pane (root element) in uiPanels list.
+     */
     private void selectPanel(String panelId) {
         Iterator<AnchorPane> it = uiPanels.iterator();
         boolean panelFound = false;
@@ -95,6 +109,10 @@ public class MainAppUIController implements Initializable {
         }
     }
 
+    /**
+     * Creates panel by loading given FXMl file and adds it to panel list
+     * @param fxmlName name of FXML file without (.fxml) file extension
+     */
     private void addPanelToPanelList(String fxmlName) {
         AnchorPane pane;
         try {

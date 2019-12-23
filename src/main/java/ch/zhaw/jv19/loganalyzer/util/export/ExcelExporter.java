@@ -1,7 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.util.export;
 
 import ch.zhaw.jv19.loganalyzer.model.LogRecord;
-import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -10,8 +9,17 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileOutputStream;
 
+/**
+ * Exports TableView of log records to a Microsoft Excel file (XLSX).
+ * @author Simon Rizzi, rizzisim@students.zhaw.ch
+ */
 public class ExcelExporter {
 
+    /**
+     * Saves given table to given file.
+     * @param table table view of log records to be exported.
+     * @param file file to which table is exported.
+     */
     //TODO make more generic
     public void saveTable(TableView<LogRecord> table, File file) {
         String filepath = file.getAbsolutePath();

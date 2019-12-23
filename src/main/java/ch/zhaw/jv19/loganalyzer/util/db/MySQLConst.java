@@ -1,5 +1,9 @@
 package ch.zhaw.jv19.loganalyzer.util.db;
 
+/**
+ * Provides string constants for MySQL databases
+ * @author Simon Rizzi, rizzisim@students.zhaw.ch
+ */
 public class MySQLConst {
     public static final String WHERE = " WHERE ";
     public static final String AND = " AND ";

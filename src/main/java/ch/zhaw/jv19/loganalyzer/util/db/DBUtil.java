@@ -1,16 +1,24 @@
 package ch.zhaw.jv19.loganalyzer.util.db;
 
-import ch.zhaw.jv19.loganalyzer.model.PropertyHandler;
+import ch.zhaw.jv19.loganalyzer.util.properties.PropertyHandler;
 import ch.zhaw.jv19.loganalyzer.util.datatype.StringUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Provides methods to interact with database.
+ * @author Simon Rizzi, rizzisim@students.zhaw.ch
+ */
 public class DBUtil {
     private static Connection con;
     private static final PropertyHandler propHandler = PropertyHandler.getInstance();
 
+    /**
+     * Gets connection from database defined in properties file.
+     * @return database connection
+     */
     public static Connection getConnection() {
         try {
             Class.forName(propHandler.getValue("db.driver.class"));
