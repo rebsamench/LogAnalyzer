@@ -1,0 +1,177 @@
+13.11.2019 17:17:510	2000 ms	Event	BKN230-24-MOD-BAC	v 21.2.0.9
+13.11.2019 17:17:51	2007 ms	Info	Input	Input CLOSED changed to 1
+13.11.2019 17:17:51	2014 ms	Info	Input	Input ADDR0 changed to 1
+13.11.2019 17:17:51	2021 ms	Info	Input	Input BAUD1 changed to 1
+13.11.2019 17:17:52	2096 ms	Info	DeviceConfiguration	------------- DeviceConfig -------------
+13.11.2019 17:17:52	2106 ms	Info	DeviceConfiguration	config_state: AA
+13.11.2019 17:17:52	2113 ms	Info	DeviceConfiguration	device_config_revision: 5
+13.11.2019 17:17:52	2121 ms	Info	DeviceConfiguration	mem_errors: 0
+13.11.2019 17:17:52	2128 ms	Info	DeviceConfiguration	bus_timeout_enabled: 1
+13.11.2019 17:17:52	2136 ms	Info	DeviceConfiguration	bus_timeout: 300
+13.11.2019 17:17:52	2144 ms	Info	DeviceConfiguration	sn 1: 0
+13.11.2019 17:17:52	2150 ms	Info	DeviceConfiguration	sn 2: 0
+13.11.2019 17:17:52	2157 ms	Info	DeviceConfiguration	sn 3: 0
+13.11.2019 17:17:52	2164 ms	Info	DeviceConfiguration	bacnet_max_master: 127
+13.11.2019 17:17:52	2172 ms	Info	DeviceConfiguration	bacnet_device_id_offset: 1000
+13.11.2019 17:17:52	2180 ms	Info	DeviceConfiguration	bacnet_database_revision: 0
+13.11.2019 17:17:52	2189 ms	Info	DeviceConfiguration	bacnet_device_name: 
+13.11.2019 17:17:52	2196 ms	Info	DeviceConfiguration	bacnet_location: 
+13.11.2019 17:17:52	2204 ms	Info	DeviceConfiguration	bacnet_description: 
+13.11.2019 17:17:52	2212 ms	Info	DeviceConfiguration	bacnet_apdu_timeout: 3000
+13.11.2019 17:17:52	2220 ms	Info	DeviceConfiguration	bacnet_apdu_retries: 3
+13.11.2019 17:17:52	2228 ms	Info	DeviceConfiguration	bacnet_max_info_frames: 1
+13.11.2019 17:17:52	2236 ms	Event	Modbus App	initializing modbus with address: 1, baud: 38400, parity: n, stop bits: 2
+13.11.2019 17:18:06	16757 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:18:06	16825 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:18:07	17669 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:18:07	17753 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:18:07	17762 ms	Event	controller	Output changed to 1
+13.11.2019 17:18:08	18817 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:18:08	18854 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:18:08	18863 ms	Event	controller	Output changed to 0
+13.11.2019 17:18:09	19467 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:18:09	19554 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:18:09	19563 ms	Event	controller	Output changed to 1
+13.11.2019 17:18:11	21781 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:18:11	21855 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:18:11	21864 ms	Event	controller	Output changed to 0
+13.11.2019 17:18:12	22788 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:18:12	22855 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:18:12	22864 ms	Event	controller	Output changed to 1
+13.11.2019 17:18:14	24982 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:18:14	25056 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:18:14	25065 ms	Event	controller	Output changed to 0
+13.11.2019 17:18:22	32802 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:18:22	32859 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:18:22	32868 ms	Event	controller	Output changed to 1
+13.11.2019 17:18:23	33196 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:18:23	33259 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:18:23	33268 ms	Event	controller	Output changed to 0
+13.11.2019 17:18:24	34282 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:18:24	34359 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:18:24	34368 ms	Event	controller	Output changed to 1
+13.11.2019 17:18:24	34520 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:18:24	34559 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:18:24	34568 ms	Event	controller	Output changed to 0
+13.11.2019 17:18:31	42085 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:18:32	42132 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:18:33	43573 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:18:33	43661 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:18:33	43671 ms	Event	controller	Output changed to 1
+13.11.2019 17:18:41	51504 ms	Info	Input	Input CLOSED changed to 0
+13.11.2019 17:19:00	70156 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:19:00	70174 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:19:00	70183 ms	Event	controller	Output changed to 0
+13.11.2019 17:19:00	70987 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:19:00	71074 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:19:00	71083 ms	Event	controller	Output changed to 1
+13.11.2019 17:19:08	78787 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:19:08	78878 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:19:08	78887 ms	Event	controller	Output changed to 0
+13.11.2019 17:19:09	79846 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:19:09	79878 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:19:09	79887 ms	Event	controller	Output changed to 1
+13.11.2019 17:19:10	80355 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:19:10	80378 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:19:10	80387 ms	Event	controller	Output changed to 0
+13.11.2019 17:19:10	80855 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:19:10	80878 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:19:10	80887 ms	Event	controller	Output changed to 1
+13.11.2019 17:19:10	80939 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:19:10	80978 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:19:10	80987 ms	Event	controller	Output changed to 0
+13.11.2019 17:19:11	81826 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:19:11	81878 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:19:11	81887 ms	Event	controller	Output changed to 1
+13.11.2019 17:19:13	83238 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:19:13	83279 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:19:13	83288 ms	Event	controller	Output changed to 0
+13.11.2019 17:19:13	83631 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:19:13	83679 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:19:13	83688 ms	Event	controller	Output changed to 1
+13.11.2019 17:19:13	83981 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:19:13	84079 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:19:13	84088 ms	Event	controller	Output changed to 0
+13.11.2019 17:19:14	84281 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:19:14	84323 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:19:17	87960 ms	Info	Input	Input CLOSED changed to 1
+13.11.2019 17:19:18	88654 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:19:18	88680 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:19:18	88689 ms	Event	controller	Output changed to 1
+13.11.2019 17:19:20	90671 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:19:20	90681 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:19:20	90690 ms	Event	controller	Output changed to 0
+13.11.2019 17:19:34	104697 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:19:34	104787 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:19:34	104796 ms	Event	controller	Output changed to 1
+13.11.2019 17:19:37	107353 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:19:37	107388 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:19:37	107397 ms	Event	controller	Output changed to 0
+13.11.2019 17:22:52	302249 ms	Event	Modbus App	bus watchdog timeout
+13.11.2019 17:26:02	492585 ms	Event	Modbus App	Forced Control changed to 1
+13.11.2019 17:26:02	492603 ms	Event	controller	Output changed to 1
+13.11.2019 17:26:10	500389 ms	Info	Input	Input CLOSED changed to 0
+13.11.2019 17:26:21	512086 ms	Event	Modbus App	Command changed to 2
+13.11.2019 17:26:22	512110 ms	Event	controller	state change from 'idle' to 'auto test'
+13.11.2019 17:26:22	512119 ms	Event	controller	Output changed to 0
+13.11.2019 17:26:25	515746 ms	Info	Input	Input CLOSED changed to 1
+13.11.2019 17:26:35	525815 ms	Event	controller	state change from 'auto test' to 'idle'
+13.11.2019 17:26:35	525915 ms	Event	controller	Output changed to 1
+13.11.2019 17:26:42	532286 ms	Event	Modbus App	Command changed to 4
+13.11.2019 17:26:42	532317 ms	Event	controller	reset (bus)
+13.11.2019 17:26:43	533983 ms	Info	Input	Input CLOSED changed to 0
+13.11.2019 17:26:44	534569 ms	Event	Modbus App	Command changed to 4
+13.11.2019 17:26:44	534618 ms	Event	controller	reset (bus)
+13.11.2019 17:26:44	534743 ms	Event	Modbus App	Command changed to 4
+13.11.2019 17:26:44	534818 ms	Event	controller	reset (bus)
+13.11.2019 17:27:12	562131 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:27:12	562228 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:27:12	562237 ms	Event	controller	Output changed to 0
+13.11.2019 17:27:12	562963 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:27:12	563028 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:27:12	563037 ms	Event	controller	Output changed to 1
+13.11.2019 17:27:15	565997 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:27:15	566030 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:27:15	566039 ms	Event	controller	Output changed to 0
+13.11.2019 17:27:16	566488 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:27:16	566530 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:27:16	566539 ms	Event	controller	Output changed to 1
+13.11.2019 17:27:16	566757 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:27:16	566830 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:27:16	566839 ms	Event	controller	Output changed to 0
+13.11.2019 17:27:17	567128 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:27:17	567136 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:27:17	567145 ms	Event	controller	Output changed to 1
+13.11.2019 17:27:38	589092 ms	Info	Input	Input OPEN changed to 1
+13.11.2019 17:29:40	710285 ms	Warning	controller	Errors: +BAE
+13.11.2019 17:29:40	710292 ms	Warning	controller	Mem Errors: +BAE
+13.11.2019 17:29:40	710657 ms	Info	Input	Input OPEN changed to 0
+13.11.2019 17:29:40	710886 ms	Warning	controller	Errors: -BAE
+13.11.2019 17:29:40	710986 ms	Event	controller	Output changed to 0
+13.11.2019 17:29:50	720341 ms	Event	DeviceConfiguration	saved config
+13.11.2019 17:29:50	720449 ms	Info	Input	Input BUTTON changed to 1
+13.11.2019 17:29:50	720489 ms	Event	controller	reset (self)
+13.11.2019 17:29:50	720495 ms	Event	controller	state change from 'idle' to 'test (self)'
+13.11.2019 17:29:50	720504 ms	Warning	controller	Mem Errors: -BAE
+13.11.2019 17:29:50	721085 ms	Info	Input	Input BUTTON changed to 0
+13.11.2019 17:29:50	721093 ms	Event	controller	state change from 'test (self)' to 'idle'
+13.11.2019 17:29:50	721102 ms	Event	controller	Output changed to 1
+13.11.2019 17:30:00	730553 ms	Event	DeviceConfiguration	saved config
+13.11.2019 17:30:29	759620 ms	Info	Input	Input OPEN changed to 1
+13.11.2019 17:31:07	797350 ms	Info	Input	Input OPEN changed to 0
+13.11.2019 17:31:08	798420 ms	Warning	controller	Errors: +Mechanical
+13.11.2019 17:31:08	798427 ms	Warning	controller	Mem Errors: +Mechanical
+13.11.2019 17:31:11	801805 ms	Info	Input	Input OPEN changed to 1
+13.11.2019 17:31:11	801821 ms	Warning	controller	Errors: -Mechanical
+13.11.2019 17:31:17	807840 ms	Event	Modbus App	Command changed to 4
+13.11.2019 17:31:17	807924 ms	Event	controller	reset (bus)
+13.11.2019 17:31:17	807930 ms	Warning	controller	Mem Errors: -Mechanical
+13.11.2019 17:31:27	817980 ms	Event	DeviceConfiguration	saved config
+13.11.2019 17:32:02	852722 ms	Event	Modbus App	bus watchdog timeout
+13.11.2019 17:32:02	852740 ms	Event	controller	Output changed to 0
+13.11.2019 17:32:04	854969 ms	Info	Input	Input OPEN changed to 0
+13.11.2019 17:32:17	867397 ms	Info	Input	Input CLOSED changed to 1
+13.11.2019 17:32:28	879099 ms	Event	Modbus App	Forced Control changed to 1
+13.11.2019 17:32:29	879149 ms	Event	controller	Output changed to 1
+13.11.2019 17:32:37	887256 ms	Info	Input	Input CLOSED changed to 0
+13.11.2019 17:33:23	933832 ms	Info	Input	Input OPEN changed to 1
