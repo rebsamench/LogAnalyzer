@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.StringConverter;
@@ -34,7 +35,7 @@ public class ResultPanelUIController implements Initializable, UIPanelController
     @FXML
     private Button exportButton;
     @FXML
-    private VBox furtherAnalysisPanel;
+    private VBox furtherAnalysisBox;
     @FXML
     private TextField secondsBefore;
     @FXML
@@ -47,7 +48,8 @@ public class ResultPanelUIController implements Initializable, UIPanelController
         // disable button when table is empty
         exportButton.disableProperty().bind(Bindings.isEmpty(tableData));
         //disable further analysis panel when no table row is selected
-        furtherAnalysisPanel.disableProperty().bind(Bindings.isEmpty(resultTable.getSelectionModel().getSelectedItems()));
+        furtherAnalysisBox.disableProperty().bind(Bindings.isEmpty(resultTable.getSelectionModel().getSelectedItems()));
+        appDataController = AppDataController.getInstance();
     }
 
     public void showTableData(ArrayList<LogRecord> logRecordList) {
@@ -114,10 +116,5 @@ public class ResultPanelUIController implements Initializable, UIPanelController
         File file = chooser.showSaveDialog(exportButton.getScene().getWindow());
         appDataController.exportToExcel(resultTable, file);
         appDataController.setMessage("File successfully saved to " + file.getAbsolutePath());
-    }
-
-    @Override
-    public void setAppDataController(AppDataController appDataController) {
-        this.appDataController = appDataController;
     }
 }

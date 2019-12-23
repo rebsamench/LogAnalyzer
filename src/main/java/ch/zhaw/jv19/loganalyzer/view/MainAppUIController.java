@@ -122,7 +122,6 @@ public class MainAppUIController implements Initializable {
             if(pane.getId() != null) {
                 // panels need to know app data controller in order to show global messages
                 UIPanelController uiPanelController = fxmlLoader.getController();
-                uiPanelController.setAppDataController(appDataController);
                 uiPanels.add(pane);
             }
             else {

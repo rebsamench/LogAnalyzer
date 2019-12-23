@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ImportPanelUIController implements Initializable, UIPanelController {
-
     private AppDataController appDataController;
     private List<File> fileList;
 
@@ -38,14 +37,10 @@ public class ImportPanelUIController implements Initializable, UIPanelController
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        appDataController = AppDataController.getInstance();
         chooseCreatedUser.addEventHandler(ComboBox.ON_SHOWING, event -> fillUserList());
         chooseSite.addEventHandler(ComboBox.ON_SHOWING, event -> fillSiteList());
         chooseBusline.addEventHandler(ComboBox.ON_SHOWING, event -> fillBuslineList());
-    }
-
-    @Override
-    public void setAppDataController(AppDataController appDataController) {
-        this.appDataController = appDataController;
     }
 
     @FXML
