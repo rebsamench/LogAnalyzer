@@ -245,25 +245,25 @@ public class ReportPanelUIController implements Initializable, UIPanelController
      */
     @FXML
     private void inspectSelectedRecords() {
-        for (LogRecord logRecord : reportResultPanelUIController.getSelectedItems()) {
-            final Stage inspectionDialog = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReportInspectionDialog.fxml"));
-            // secondsBefore and secondsAfter allow numeric values only, therefore parse exception impossible
-            Integer secondsBeforeInt = secondsBefore.getText().isEmpty() ? 0 : Integer.parseInt(secondsBefore.getText());
-            Integer secondsAfterInt = secondsBefore.getText().isEmpty() ? 0 : Integer.parseInt(secondsAfter.getText());
-            try {
-                Parent root = (Parent) fxmlLoader.load();
-                Scene inspectionScene = new Scene(root);
-                ReportInspectionDialogUIController uiPanelController = fxmlLoader.getController();
-                uiPanelController.showSurroundingLogRecords(logRecord, secondsBeforeInt, secondsAfterInt);
-                inspectionDialog.setTitle(logRecord.toString());
-                inspectionDialog.initModality(Modality.WINDOW_MODAL);
-                inspectionDialog.setScene(inspectionScene);
-                inspectionDialog.showAndWait();
-            } catch (IOException e) {
-                e.printStackTrace();
-
+        final Stage inspectionDialog = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReportInspectionDialog.fxml"));
+        // secondsBefore and secondsAfter allow numeric values only, therefore parse exception impossible
+        Integer secondsBeforeInt = secondsBefore.getText().isEmpty() ? 0 : Integer.parseInt(secondsBefore.getText());
+        Integer secondsAfterInt = secondsBefore.getText().isEmpty() ? 0 : Integer.parseInt(secondsAfter.getText());
+        Parent root = null;
+        try {
+            root = (Parent) fxmlLoader.load();
+            Scene inspectionScene = new Scene(root);
+            ReportInspectionDialogUIController uiPanelController = fxmlLoader.getController();
+            for (LogRecord logRecord : reportResultPanelUIController.getSelectedItems()) {
+                uiPanelController.showSurroundingLogRecordsTable(logRecord, secondsBeforeInt, secondsAfterInt);
             }
+            inspectionDialog.setTitle("Log Record Inspector");
+            inspectionDialog.initModality(Modality.WINDOW_MODAL);
+            inspectionDialog.setScene(inspectionScene);
+            inspectionDialog.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
