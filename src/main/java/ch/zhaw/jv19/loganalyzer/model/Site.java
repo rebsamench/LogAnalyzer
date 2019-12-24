@@ -44,11 +44,6 @@ public class Site {
         return createdUser;
     }
 
-    @Override
-    public String toString() {
-      return (getName() + ", " + getStreet() + ", " + getZipCode() + ", " + getCity());
-    }
-
     public void setCreatedUser(String createduser) {
         this.createdUser = createduser;
     }
@@ -79,5 +74,10 @@ public class Site {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    @Override
+    public String toString() {
+        return (getName() + ", " + getStreet() + ", " + getZipCode() + ", " + getCity());
     }
 }

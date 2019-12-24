@@ -39,7 +39,6 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
 
     /**
      * Gets a list of log records from data base
-     *
      * @param query SELECT statement
      * @return ArrayList of LogRecords
      */
@@ -67,7 +66,6 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
     /**
      * Builds query for log records which meet the given conditions.
      * Assembled query is set as current query of this DAO.
-     *
      * @param conditionsMap hash map of search conditions. key = db column,
      *                      value = String value, date or array list of multiple IN conditions (strings)
      */
@@ -83,6 +81,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
 
     /**
      * Creates a list of conditions
+     *
      * @param conditionsMap hash map of search conditions. key = db column,
      *                      value = String value, date or array list of multiple IN conditions (strings)
      * @return list of conditions as strings
@@ -116,12 +115,19 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
                             conditionSb.append(convertToString(entry.getValue()));
                         }
                         break;
+                    case "address":
+                        conditionSb.append(MySQLConst.EQUALS);
+                        conditionSb.append(convertToString(entry.getValue()));
+                        break;
                     case "message":
                         conditionSb.append(MySQLConst.LIKE);
                         String messageSubstring = entry.getValue().toString();
                         conditionSb.append(StringUtil.addQuotes.apply(StringUtil.addPercent.apply(messageSubstring)));
                         break;
-                    default: break;
+                    default:
+                        System.out.println(entry.getKey() + " with value " + entry.getValue() + " is not implemented in " +
+                                this.getClass().getName() + "." + new Throwable().getStackTrace()[0].getMethodName());
+                        break;
                 }
                 conditionsList.add(conditionSb.toString());
             }
@@ -189,13 +195,15 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
         } else if (object instanceof String) {
             // Wrap in %
             condition = StringUtil.addQuotes.apply(StringUtil.addPercent.apply((String) object));
+        } else if (object instanceof Integer) {
+            // Wrap in %
+            condition = String.valueOf(object);
         }
         return condition;
     }
 
     /**
      * Connects Conditions of conditionList with WHERE or AND.
-     *
      * @param conditionList list of conditions to connect
      * @return String of conditions (WHERE clauses) connected with WHERE and AND
      */

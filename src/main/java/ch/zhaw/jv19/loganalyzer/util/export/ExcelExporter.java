@@ -8,20 +8,20 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.lang.reflect.Type;
 
 /**
- * Exports TableView of log records to a Microsoft Excel file (XLSX).
+ * Exports TableView to a Microsoft Excel file (XLSX).
  * @author Simon Rizzi, rizzisim@students.zhaw.ch
  */
 public class ExcelExporter {
 
     /**
      * Saves given table to given file.
-     * @param table table view of log records to be exported.
+     * @param table table view to be exported.
      * @param file file to which table is exported.
      */
-    //TODO make more generic
-    public void saveTable(TableView<LogRecord> table, File file) {
+    public void saveTable(TableView<?> table, File file) {
         String filepath = file.getAbsolutePath();
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();

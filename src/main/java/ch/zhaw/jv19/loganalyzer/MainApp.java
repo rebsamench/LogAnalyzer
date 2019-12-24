@@ -37,7 +37,7 @@ public class MainApp extends Application {
                 primaryStage.setY(mouseEvent.getScreenY() - y);
             });
 
-            Scene scene = new Scene(rootLayout, 1200, 600);
+            Scene scene = new Scene(rootLayout, 1200, 750);
             MainAppUIController controller = loader.getController();
             controller.setMainApp(this);
             primaryStage.setScene(scene);

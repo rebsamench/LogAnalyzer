@@ -83,11 +83,11 @@ public class LogRecord {
     }
 
     public void setUniqueIdentifier(int address) {
-        this.uniqueIdentifier = site.getId() + "-" +
-                busline.getId() + "-" +
-                Integer.toString(address) + "-" +
-                DateUtil.convertDateTimeToString(timestamp, MySQLConst.DATETIMEPATTERN) + "-" +
-                milliseconds;
+        this.uniqueIdentifier = (site.getId() +
+                busline.getId() +
+                Integer.toString(address) +
+                DateUtil.convertDateTimeToString(timestamp, MySQLConst.DATETIMEPATTERN) +
+                milliseconds).replaceAll("[^A-Za-z0-9]","");
     }
 
     public void setUniqueIdentifier(String uniqueIdentifier) {
@@ -144,5 +144,30 @@ public class LogRecord {
 
     public void setCreated(ZonedDateTime created) {
         this.created = created;
+    }
+
+    @Override
+    public String toString() {
+        return (getEventType() + ": " + getMessage());
+    }
+
+    /**
+     * Overrides comparison of log records. Needed e. g. to find and select log record in table.
+     * @param o log record
+     * @return true, if unique_identifier is equal
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof LogRecord) {
+            //id comparison
+            LogRecord logRecord = (LogRecord) o;
+            return (logRecord.uniqueIdentifier.equals(uniqueIdentifier));
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hashCode(uniqueIdentifier);
     }
 }

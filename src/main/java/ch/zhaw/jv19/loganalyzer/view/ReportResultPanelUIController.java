@@ -1,21 +1,20 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.model.*;
-import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.util.StringConverter;
-import org.controlsfx.control.CheckComboBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -25,37 +24,34 @@ import java.util.ResourceBundle;
 /**
  * Controls ui interactions of report panel. Provides form to select criteria for log record
  * search and displaying search results.
+ *
  * @author Simon Rizzi, rizzisim@students.zhaw.ch
  */
-public class ResultPanelUIController implements Initializable, UIPanelController {
-    private HashMap<String, Object> formData;
+public class ReportResultPanelUIController extends ExportPanelUIController implements Initializable, UIPanelController {
     @FXML
     private TableView<LogRecord> resultTable;
     private ObservableList<LogRecord> tableData = FXCollections.observableArrayList();
     @FXML
     private Button exportButton;
-    @FXML
-    private VBox furtherAnalysisBox;
-    @FXML
-    private TextField secondsBefore;
-    @FXML
-    private TextField secondsAfter;
-    private static final String REPORT_PANEL_DATETIME_PATTERN = "yyyy-MM-ddHH:mm:ss";
     private AppDataController appDataController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        appDataController = AppDataController.getInstance();
         // disable button when table is empty
         exportButton.disableProperty().bind(Bindings.isEmpty(tableData));
-        //disable further analysis panel when no table row is selected
-        furtherAnalysisBox.disableProperty().bind(Bindings.isEmpty(resultTable.getSelectionModel().getSelectedItems()));
-        appDataController = AppDataController.getInstance();
+        resultTable.getSelectionModel().setSelectionMode(
+                SelectionMode.MULTIPLE
+        );
     }
 
+    /**
+     * Displays given log record list in resultTable
+     * @param logRecordList ArrayList of log records to display in table
+     */
     public void showTableData(ArrayList<LogRecord> logRecordList) {
+        tableData.clear();
         tableData.addAll(logRecordList);
-        resultTable.getItems().clear();
-        resultTable.getColumns().clear();
         buildLogRecordResultTable(tableData);
     }
 
@@ -109,12 +105,21 @@ public class ResultPanelUIController implements Initializable, UIPanelController
      */
     @FXML
     private void exportResultTable() {
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Export table");
-        chooser.setInitialFileName("Export_" + DateUtil.getCurrentDateTimeString("yyyy-MM-dd_HHmm") + ".xlsx");
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel files (*.xlsx)", "*.xlsx"));
-        File file = chooser.showSaveDialog(exportButton.getScene().getWindow());
-        appDataController.exportToExcel(resultTable, file);
-        appDataController.setMessage("File successfully saved to " + file.getAbsolutePath());
+        super.exportTable(resultTable);
     }
+
+    public ObservableList<LogRecord> getSelectedItems() {
+        ObservableList<LogRecord> selectedItemsList = FXCollections.observableArrayList();
+        selectedItemsList = resultTable.getSelectionModel().getSelectedItems();
+        return selectedItemsList;
+    }
+
+    /**
+     * Selects given LogRecord in resultTable
+     * @param logRecord log record to select
+     */
+    public void selectLogRecord(LogRecord logRecord) {
+        resultTable.getSelectionModel().select(logRecord);
+    }
+
 }

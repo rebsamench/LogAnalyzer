@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ch.zhaw.jv19.loganalyzer.view.ReportInspectionDialogUIController"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <!-- fx:id must correspond (controller name without "Controller") with name of controller, see https://riptutorial.com/javafx/example/7285/nested-controllers-->
+        <fx:include fx:id="reportResultPanelUI" source="ReportResultPanel.fxml" />
+    </children>
+</AnchorPane>

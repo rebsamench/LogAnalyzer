@@ -1,8 +1,8 @@
 package ch.zhaw.jv19.loganalyzer.model.dao;
 
-import ch.zhaw.jv19.loganalyzer.model.AppDataController;
 import ch.zhaw.jv19.loganalyzer.model.LogRecord;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
+import ch.zhaw.jv19.loganalyzer.util.datatype.ImportFileConst;
 import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
 import javafx.collections.FXCollections;
@@ -67,8 +67,8 @@ public class MySQLLogRecordDAO implements LogRecordDAO {
     public int[] insertLogRecords(List<LogRecord> logRecordList){
         Connection connection = DBUtil.getConnection();
         try {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO logrecord (createduser,unique_identifier,timestamp,site,busline,address,milliseconds,type,source,message) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             for (LogRecord logRecord: logRecordList){
-                PreparedStatement ps = connection.prepareStatement("INSERT IGNORE INTO logrecord (createduser,unique_identifier,timestamp,site,busline,address,milliseconds,type,source,message) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 // INSERT INTO logrecord (createduser,unique_identifier,timestamp,site,busline,address,milliseconds,type,source, message) values ('admin', 'hueresiech', '2019-11-13 16:31:08', 1, 1, 1, 798420, 'Warning', 'Controller', 'Errors: +Mechanical')
                 ps.setString(1, logRecord.getUser().getName());
                 ps.setString(2, logRecord.getUniqueIdentifier());
@@ -82,14 +82,14 @@ public class MySQLLogRecordDAO implements LogRecordDAO {
                 ps.setString(10, logRecord.getMessage());
 
                 ps.addBatch();
-                ps.executeBatch();
-
-                int i = ps.executeUpdate();
-                if (i == 1) {
-                    return ps.executeBatch();
-                }
-
+//                ps.executeBatch();
+//
+//                int i = ps.executeUpdate();
+//                if (i == 1) {
+//                    return ps.executeBatch();
+//                }
             }
+            return ps.executeBatch();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

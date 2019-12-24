@@ -106,8 +106,7 @@ public class AppDataController {
     }
 
     /**
-     * Gets log records from responsible DAO as table view.
-     *
+     * Gets log records from responsible DAO as array list.
      * @param searchConditions: HashMap(columnName, conditionValue): conditionValues can either be simple Strings,
      *                          ZonedDateTime-Objects or ArrayLists of Strings for IN conditions etc. For Details see
      *                          methods in DAO
@@ -123,7 +122,7 @@ public class AppDataController {
     /**
      * Exports TableView as Excel file
      */
-    public void exportToExcel(TableView<LogRecord> table, File file) {
+    public void exportToExcel(TableView<?> table, File file) {
         ExcelExporter exporter = new ExcelExporter();
         exporter.saveTable(table, file);
     }

@@ -3,21 +3,22 @@ package ch.zhaw.jv19.loganalyzer.view;
 import ch.zhaw.jv19.loganalyzer.model.*;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.util.StringConverter;
-import javafx.util.converter.LocalDateTimeStringConverter;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
 
-import java.io.File;
+import java.io.IOException;
 import java.net.URL;
-import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -57,13 +58,20 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     @FXML
     private CheckComboBox<Busline> busLine;
     @FXML
+    private TextField address;
+    @FXML
     private TextField message;
     @FXML
     private TextArea sqlStatement;
     @FXML
-    private ResultPanelUIController resultPanelUIController; // controller of included sub panel
+    private VBox furtherAnalysisBox;
+    @FXML
+    private TextField secondsBefore;
+    @FXML
+    private TextField secondsAfter;
+    @FXML
+    private ReportResultPanelUIController reportResultPanelUIController; // controller of included sub panel
     private static final String REPORT_PANEL_DATETIME_PATTERN = "yyyy-MM-ddHH:mm:ss";
-    private static final String REPORT_PANEL_DATE_PATTERN = "yyyy-MM-dd";
     private AppDataController appDataController;
 
     @Override
@@ -79,6 +87,12 @@ public class ReportPanelUIController implements Initializable, UIPanelController
         createdUpToTime.focusedProperty().addListener((o, oldValue, newValue) -> timeFieldChanged(newValue, createdUpToTime));
         loggedTimestampFromTime.focusedProperty().addListener((o, oldValue, newValue) -> timeFieldChanged(newValue, loggedTimestampFromTime));
         loggedTimestampUpToTime.focusedProperty().addListener((o, oldValue, newValue) -> timeFieldChanged(newValue, loggedTimestampUpToTime));
+        //disable further analysis box when no table row is selected
+        furtherAnalysisBox.disableProperty().bind(Bindings.isEmpty(reportResultPanelUIController.getSelectedItems()));
+        // allow numeric values only
+        addNumericEventfilter(secondsBefore);
+        addNumericEventfilter(secondsAfter);
+        addNumericEventfilter(address);
     }
 
     /**
@@ -87,7 +101,7 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     @FXML
     private void search() {
         prepareFormData();
-        resultPanelUIController.showTableData(appDataController.getLogRecordsListByConditions(formData));
+        reportResultPanelUIController.showTableData(appDataController.getLogRecordsListByConditions(formData));
     }
 
     /**
@@ -169,6 +183,9 @@ public class ReportPanelUIController implements Initializable, UIPanelController
         if (busLine.getCheckModel().getCheckedItems().size() > 0) {
             formData.put(busLine.getId(), busLine.getCheckModel().getCheckedItems());
         }
+        if (!address.getText().isEmpty()) {
+            formData.put(address.getId(), Integer.parseInt(address.getText()));
+        }
         if (!message.getText().isEmpty()) {
             formData.put(message.getId(), message.getText());
         }
@@ -177,6 +194,7 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     /**
      * Validates entered time and sets style class 'invalid' if entered
      * time has unexpected format
+     *
      * @param textField text field containing time
      * @param focus     defines if focus is set. only when focus was removed (focus = false),
      *                  time is validated
@@ -201,7 +219,51 @@ public class ReportPanelUIController implements Initializable, UIPanelController
      * @param timeString time string to be validated
      * @return true if time string is valid and false if not
      */
-    public boolean isTimeValid(String timeString) {
+    private boolean isTimeValid(String timeString) {
         return (timeString.matches("(?:[01]\\d|2[0123]):(?:[012345]\\d):(?:[012345]\\d)"));
+    }
+
+    /**
+     * Restricts input values on node to numeric values
+     * https://stackoverflow.com/questions/7555564/what-is-the-recommended-way-to-make-a-numeric-textfield-in-javafx
+     *
+     * @param node numeric node (e. g. TextField)
+     */
+    private void addNumericEventfilter(Node node) {
+        node.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (!"0123456789".contains(keyEvent.getCharacter())) {
+                    keyEvent.consume();
+                }
+            }
+        });
+    }
+
+    /**
+     * Opens an inspection dialog for each selected log record (multiple selection allowed).
+     */
+    @FXML
+    private void inspectSelectedRecords() {
+        for (LogRecord logRecord : reportResultPanelUIController.getSelectedItems()) {
+            final Stage inspectionDialog = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReportInspectionDialog.fxml"));
+            // secondsBefore and secondsAfter allow numeric values only, therefore parse exception impossible
+            Integer secondsBeforeInt = secondsBefore.getText().isEmpty() ? 0 : Integer.parseInt(secondsBefore.getText());
+            Integer secondsAfterInt = secondsBefore.getText().isEmpty() ? 0 : Integer.parseInt(secondsAfter.getText());
+            try {
+                Parent root = (Parent) fxmlLoader.load();
+                Scene inspectionScene = new Scene(root);
+                ReportInspectionDialogUIController uiPanelController = fxmlLoader.getController();
+                uiPanelController.showSurroundingLogRecords(logRecord, secondsBeforeInt, secondsAfterInt);
+                inspectionDialog.setTitle(logRecord.toString());
+                inspectionDialog.initModality(Modality.WINDOW_MODAL);
+                inspectionDialog.setScene(inspectionScene);
+                inspectionDialog.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+        }
     }
 }
