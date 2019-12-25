@@ -82,12 +82,6 @@ public class MySQLLogRecordDAO implements LogRecordDAO {
                 ps.setString(10, logRecord.getMessage());
 
                 ps.addBatch();
-//                ps.executeBatch();
-//
-//                int i = ps.executeUpdate();
-//                if (i == 1) {
-//                    return ps.executeBatch();
-//                }
             }
             return ps.executeBatch();
         } catch (SQLException ex) {

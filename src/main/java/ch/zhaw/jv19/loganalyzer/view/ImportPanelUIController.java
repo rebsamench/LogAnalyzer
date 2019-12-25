@@ -1,17 +1,20 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.model.*;
+import ch.zhaw.jv19.loganalyzer.util.FileWrapper;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 
 
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -35,7 +38,8 @@ public class ImportPanelUIController implements Initializable, UIPanelController
     private Button importData;
 
     @FXML
-    private TableView showFileList;
+    private TableView<FileWrapper> showSelectedFiles;
+    private ObservableList<Files> selectedFiles = FXCollections.observableArrayList();
 
     public ImportPanelUIController() {
     }
@@ -56,6 +60,25 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         fileChooser.getExtensionFilters().add(extFilter);
         // Show open file dialog to select multiple files.
         fileList = fileChooser.showOpenMultipleDialog(null);
+        showSelectedFiles(fileList);
+    }
+
+    @FXML
+    public void showSelectedFiles(List<File> fileList) {
+        ArrayList listToArrayList = new ArrayList();
+        for (File file : fileList) {
+            listToArrayList.add(new FileWrapper(file));
+        }
+        selectedFiles.clear();
+        selectedFiles.addAll(listToArrayList);
+        buildSelectedFilesTable(selectedFiles);
+    }
+
+    public void buildSelectedFilesTable (ObservableList selectedFiles) {
+        TableColumn <FileWrapper, String> fileColumn  = new TableColumn<>("selected files");
+        fileColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        showSelectedFiles.getColumns().add(fileColumn);
+        showSelectedFiles.setItems(selectedFiles);
     }
 
     @FXML
