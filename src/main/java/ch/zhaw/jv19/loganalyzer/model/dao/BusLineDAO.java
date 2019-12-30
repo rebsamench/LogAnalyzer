@@ -7,8 +7,7 @@ import javafx.scene.control.TableView;
 import java.sql.SQLException;
 
 public interface BusLineDAO {
-    Busline getBuslineByName(String name) throws SQLException;
-    ObservableList<Busline> getAllBuslinesList() throws SQLException;
-    TableView<Busline> getAllBuslinesTable();
-    int saveBusline(Busline busline) throws SQLException;
+    Busline getBuslineByName(String name) throws SQLException, Exception;
+    ObservableList<Busline> getAllBuslinesList() throws SQLException, Exception;
+    int saveBusline(Busline busline) throws SQLException, Exception;
 }

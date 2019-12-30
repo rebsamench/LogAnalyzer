@@ -40,7 +40,6 @@ public class AppDataController {
 
     /**
      * Sets current global message on AppData.
-     *
      * @param message String message to be set
      */
     public void setMessage(String message) {
@@ -50,7 +49,6 @@ public class AppDataController {
     /**
      * Returns message as String Property. UI Elements can be bound to this method
      * in order to observe global messages.
-     *
      * @return message as property
      */
     public SimpleStringProperty getMessage() {
@@ -68,7 +66,7 @@ public class AppDataController {
             appData.setUserList(userDao.getAllUsersList());
             appData.setSiteList(siteDAO.getAllSitesList());
             appData.setBusLineList(busLineDAO.getAllBuslinesList());
-        } catch (SQLException e) {
+        } catch (Exception e) {
             setMessage(e.getMessage());
         }
     }

@@ -1,6 +1,7 @@
 package ch.zhaw.jv19.loganalyzer.view;
 import ch.zhaw.jv19.loganalyzer.MainApp;
 import ch.zhaw.jv19.loganalyzer.model.AppDataController;
+import ch.zhaw.jv19.loganalyzer.util.properties.PropertyHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -105,6 +106,9 @@ public class MainAppUIController implements Initializable {
                 pane.minWidthProperty().bind(contentPane.widthProperty());
                 pane.minHeightProperty().bind(contentPane.heightProperty());
                 contentPane.getChildren().add(pane);
+            }
+            if (PropertyHandler.getInstance().getValue("clearMessageBoxOnPanelChange").equals("true")) {
+                appDataController.setMessage("");
             }
         }
     }

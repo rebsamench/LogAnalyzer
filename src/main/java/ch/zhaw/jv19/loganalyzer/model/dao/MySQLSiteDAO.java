@@ -17,36 +17,36 @@ import java.sql.SQLException;
 public class MySQLSiteDAO implements SiteDAO {
 
     @Override
-    public Site getSiteByName(String name) throws SQLException {
+    public Site getSiteByName(String name) throws Exception {
         Site site = null;
         Connection con = DBUtil.getConnection();
-        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM site WHERE name = '?';");
-        ResultSet rs = pstmt.executeQuery();
-        return extractSiteFromResultSet(rs);
+        if (con != null) {
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM site WHERE name = '?';");
+            ResultSet rs = pstmt.executeQuery();
+            site = extractSiteFromResultSet(rs);
+        }
+        return site;
     }
 
     @Override
-    public ObservableList<Site> getAllSitesList() throws SQLException {
+    public ObservableList<Site> getAllSitesList() throws Exception {
         ObservableList<Site> siteList = FXCollections.observableArrayList();
         Connection con = DBUtil.getConnection();
-        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM site;");
-        ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
-            siteList.add(extractSiteFromResultSet(rs));
+        if (con != null) {
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM site;");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                siteList.add(extractSiteFromResultSet(rs));
+            }
         }
         return siteList;
     }
 
     @Override
-    public TableView<Site> getAllSitesTable() {
-        return null;
-    }
-
-    @Override
-    public int saveSites(Site site) throws SQLException {
+    public int saveSite(Site site) throws Exception {
         String[] values = {
                 StringUtil.addQuotes.apply(site.getCreatedUser()),
-                };
+        };
         String statementTemplate =
                 "INSERT INTO user (createdUser, password, isadmin) " +
                         "VALUES (" +

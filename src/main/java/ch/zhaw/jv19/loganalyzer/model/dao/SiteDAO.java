@@ -7,8 +7,7 @@ import javafx.scene.control.TableView;
 import java.sql.SQLException;
 
 public interface SiteDAO {
-    Site getSiteByName(String name) throws SQLException;
-    ObservableList<Site> getAllSitesList() throws SQLException;
-    TableView<Site> getAllSitesTable();
-    int saveSites(Site site) throws SQLException;
+    Site getSiteByName(String name) throws SQLException, Exception;
+    ObservableList<Site> getAllSitesList() throws SQLException, Exception;
+    int saveSite(Site site) throws SQLException, Exception;
 }

@@ -53,7 +53,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
                 LogRecord logRecord = extractLogRecordFromResultSet(resultSet);
                 resultList.add(logRecord);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             DBUtil.dbDisconnect();
