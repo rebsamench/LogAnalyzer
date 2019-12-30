@@ -25,12 +25,15 @@ public class MySQLUserDAO implements UserDAO {
      * @throws SQLException database exception
      */
     @Override
-    public User getUserByName(String name) throws SQLException {
+    public User getUserByName(String name) throws Exception {
         User user = null;
         Connection con = DBUtil.getConnection();
-        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user WHERE name = '?';");
-        ResultSet rs = pstmt.executeQuery();
-        return extractUserFromResultSet(rs);
+        if(con != null) {
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user WHERE name = '?';");
+            ResultSet rs = pstmt.executeQuery();
+            user = extractUserFromResultSet(rs);
+        }
+        return user;
     }
 
     /**
@@ -39,13 +42,15 @@ public class MySQLUserDAO implements UserDAO {
      * @throws SQLException database exception
      */
     @Override
-    public ObservableList<User> getAllUsersList() throws SQLException {
+    public ObservableList<User> getAllUsersList() throws Exception {
         ObservableList<User> userList = FXCollections.observableArrayList();
         Connection con = DBUtil.getConnection();
-        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user;");
-        ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
-            userList.add(extractUserFromResultSet(rs));
+        if(con != null) {
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user;");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                userList.add(extractUserFromResultSet(rs));
+            }
         }
         return userList;
     }
@@ -57,7 +62,7 @@ public class MySQLUserDAO implements UserDAO {
      * @throws SQLException database exception
      */
     @Override
-    public int saveUser(User user) throws SQLException {
+    public int saveUser(User user) throws Exception {
         String[] values = {
                 StringUtil.addQuotes.apply(user.getCreatedUser()),
                 StringUtil.addQuotes.apply(user.getName()),

@@ -23,7 +23,11 @@ public class FileImportController {
         this.busline = busline;
         createLogFiles(fileList);
         createLogRecordList(logFileList);
-        saveToDB(logRecordList);
+        try {
+            saveToDB(logRecordList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void createLogFiles(List<File> fileList) {
@@ -73,7 +77,7 @@ public class FileImportController {
         }
     }
 
-    private void saveToDB(List<LogRecord> logRecordList) {
+    private void saveToDB(List<LogRecord> logRecordList) throws Exception {
         MySQLLogRecordDAO logRecordDAOWriter = new MySQLLogRecordDAO(logRecordList);
     }
 

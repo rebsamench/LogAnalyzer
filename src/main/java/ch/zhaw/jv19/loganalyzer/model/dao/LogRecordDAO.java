@@ -7,7 +7,7 @@ import javafx.scene.control.TableView;
 import java.sql.SQLException;
 
 public interface LogRecordDAO {
-    ObservableList<LogRecord> getAllLogRecordsList() throws SQLException;
+    ObservableList<LogRecord> getAllLogRecordsList() throws Exception;
     TableView<LogRecord> getAllLogRecordsTable();
     void saveLogRecord(LogRecord logRecord);
     void updateLogRecord(LogRecord logRecord);

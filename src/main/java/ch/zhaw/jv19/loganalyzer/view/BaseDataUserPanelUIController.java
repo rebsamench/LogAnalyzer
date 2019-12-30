@@ -142,6 +142,8 @@ public class BaseDataUserPanelUIController implements Initializable {
             mySQLUserDAO.saveUser(newUser);
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 

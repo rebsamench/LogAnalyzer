@@ -17,33 +17,33 @@ import java.sql.SQLException;
 public class MySQLBuslineDAO implements BusLineDAO {
 
     @Override
-    public Busline getBuslineByName(String name) throws SQLException {
+    public Busline getBuslineByName(String name) throws Exception {
         Busline busline = null;
         Connection con = DBUtil.getConnection();
-        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM busline WHERE name = '?';");
-        ResultSet rs = pstmt.executeQuery();
-        return extractBuslineFromResultSet(rs);
+        if (con != null) {
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM busline WHERE name = '?';");
+            ResultSet rs = pstmt.executeQuery();
+            busline = extractBuslineFromResultSet(rs);
+        }
+        return busline;
     }
 
     @Override
-    public ObservableList<Busline> getAllBuslinesList() throws SQLException {
+    public ObservableList<Busline> getAllBuslinesList() throws Exception {
         ObservableList<Busline> buslineList = FXCollections.observableArrayList();
         Connection con = DBUtil.getConnection();
-        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM busline;");
-        ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
-            buslineList.add(extractBuslineFromResultSet(rs));
+        if (con != null) {
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM busline;");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                buslineList.add(extractBuslineFromResultSet(rs));
+            }
         }
         return buslineList;
     }
 
     @Override
-    public TableView<Busline> getAllBuslinesTable() {
-        return null;
-    }
-
-    @Override
-    public int saveBusline(Busline busline) throws SQLException {
+    public int saveBusline(Busline busline) throws Exception {
         String[] values = {
                 StringUtil.addQuotes.apply(busline.getCreatedUser()),
         };

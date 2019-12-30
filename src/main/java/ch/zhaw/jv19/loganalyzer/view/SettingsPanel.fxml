@@ -1,39 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<AnchorPane id="SettingsPanel" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.jv19.loganalyzer.view.SettingsPanelUIController">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="SettingsPanel" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.jv19.loganalyzer.view.SettingsPanelUIController">
    <children>
-      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab text="DB">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane>
                      <children>
-                        <GridPane layoutX="15.0" layoutY="26.0" prefHeight="180.0" prefWidth="574.0">
+                        <GridPane layoutX="15.0" layoutY="26.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="285.5999755859375" minWidth="10.0" prefWidth="148.79998779296875" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="480.0" minWidth="10.0" prefWidth="451.20001220703125" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" prefWidth="120.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="480.0" minWidth="0.0" prefWidth="0.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.399999999999977" minWidth="10.0" prefWidth="10.399999999999977" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" prefWidth="120.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints maxHeight="52.8" minHeight="10.0" prefHeight="52.8" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="20.799993896484374" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="JDBC" />
-                              <Label text="Passwort" GridPane.rowIndex="3" />
-                              <TextArea prefHeight="47.0" prefWidth="406.0" GridPane.columnIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Label text="Benutzer" GridPane.rowIndex="2" />
-                              <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                              <Label text="JDBC URL" />
+                              <Label text="Password" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                              <TextArea fx:id="dbJDBC" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.hgrow="ALWAYS">
+                                 <GridPane.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </GridPane.margin></TextArea>
+                              <TextField fx:id="dbPassword" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                              <TextField fx:id="dbUsername" onAction="#applyChanges" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                              <Label text="User" GridPane.rowIndex="1" />
+                              <ButtonBar GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2">
                                 <buttons>
-                                  <Button mnemonicParsing="false" text="Testen" />
-                                    <Button mnemonicParsing="false" text="Datenmodell erstellen" />
+                                  <Button fx:id="dbTestConnectionButton" mnemonicParsing="false" onAction="#testDbConnection" text="Test Connection" />
+                                    <Button fx:id="dbApplyChangesButton" mnemonicParsing="false" onAction="#applyChanges" text="Apply" />
                                 </buttons>
                               </ButtonBar>
                            </children>
@@ -42,9 +59,26 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Untitled Tab 2">
+          <Tab text="App">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane>
+                     <children>
+                        <GridPane layoutY="14.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="282.79998779296875" minWidth="10.0" prefWidth="203.99998779296874" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="473.20001220703125" minWidth="10.0" prefWidth="376.80001220703133" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <CheckBox fx:id="clearMessageBoxOnPanelChangeCb" mnemonicParsing="false" GridPane.columnIndex="1" />
+                              <Label text="Clear message box on panel change" />
+                           </children>
+                        </GridPane>
+                     </children></AnchorPane>
             </content>
           </Tab>
         </tabs>

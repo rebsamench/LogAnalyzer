@@ -19,14 +19,15 @@ public class DBUtil {
      * Gets connection from database defined in properties file.
      * @return database connection
      */
-    public static Connection getConnection() {
+    public static Connection getConnection() throws SQLException {
+        Connection con = null;
         try {
             Class.forName(propHandler.getValue("db.driver.class"));
             try {
                 con = DriverManager.getConnection(propHandler.getValue("db.conn.url"),
                         propHandler.getValue("db.username"), propHandler.getValue("db.password"));
             } catch (SQLException e) {
-                System.out.println("Datenbank " + propHandler.getValue("db.conn.url") + " nicht erreichbar: " + e.getMessage());
+                throw new SQLException("Failed to connect to " + propHandler.getValue("db.conn.url") + ": " + e.getMessage());
             }
         } catch (ClassNotFoundException e) {
             System.out.println("Driver not found.");
@@ -34,7 +35,7 @@ public class DBUtil {
         return con;
     }
 
-    private static void dbConnect() {
+    private static void dbConnect() throws Exception {
         con = getConnection();
     }
 
@@ -48,7 +49,7 @@ public class DBUtil {
         }
     }
 
-    public static int[] executeMultipleUpsertWithStatementTemplate(ArrayList<String[]> valueList, String statementTemplate) throws SQLException {
+    public static int[] executeMultipleUpsertWithStatementTemplate(ArrayList<String[]> valueList, String statementTemplate) throws SQLException, Exception {
         int[] rowsAffected;
         dbConnect();
         int parameterCount = StringUtil.countCharacterOcurrenceInString(statementTemplate, '?');
@@ -67,7 +68,7 @@ public class DBUtil {
         return pstmt.executeBatch();
     }
 
-    public static int executeUpdate(String query) throws SQLException {
+    public static int executeUpdate(String query) throws SQLException, Exception {
         int affectedRows;
         dbConnect();
         PreparedStatement pstmt = con.prepareStatement(query);
@@ -76,7 +77,7 @@ public class DBUtil {
         return affectedRows;
     }
 
-    public static void executeMultipleUpdate(String query) throws SQLException {
+    public static void executeMultipleUpdate(String query) throws Exception {
         ArrayList<String> queryList = new ArrayList<>(Arrays.asList(query.split("(?<=;)")));
         int[] affectedRows;
         if (queryList.size() > 1) {
@@ -86,7 +87,7 @@ public class DBUtil {
         }
     }
 
-    private static void dbExecuteBatchUpdate(ArrayList<String> queryList) {
+    private static void dbExecuteBatchUpdate(ArrayList<String> queryList) throws Exception {
         Statement stmt = null;
         try {
             dbConnect();

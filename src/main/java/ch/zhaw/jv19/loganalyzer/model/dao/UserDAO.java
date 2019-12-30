@@ -7,7 +7,7 @@ import javafx.scene.control.TableView;
 import java.sql.SQLException;
 
 public interface UserDAO {
-    User getUserByName(String name) throws SQLException;
-    ObservableList<User> getAllUsersList() throws SQLException;
-    int saveUser(User user) throws SQLException;
+    User getUserByName(String name) throws SQLException, Exception;
+    ObservableList<User> getAllUsersList() throws SQLException, Exception;
+    int saveUser(User user) throws SQLException, Exception;
 }

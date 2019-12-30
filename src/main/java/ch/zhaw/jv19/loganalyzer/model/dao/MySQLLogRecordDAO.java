@@ -16,13 +16,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class MySQLLogRecordDAO implements LogRecordDAO {
-
-    public MySQLLogRecordDAO(List<LogRecord> logRecordList) {
+    //TODO refactor: Insert should not happen in constructor
+    public MySQLLogRecordDAO(List<LogRecord> logRecordList) throws Exception {
         insertLogRecords(logRecordList);
     }
 
     @Override
-    public ObservableList<LogRecord> getAllLogRecordsList() throws SQLException {
+    public ObservableList<LogRecord> getAllLogRecordsList() throws Exception {
         ObservableList<LogRecord> logRecordList = FXCollections.observableArrayList();
         Connection con = DBUtil.getConnection();
         PreparedStatement pstmt = con.prepareStatement("SELECT * FROM logrecord;");
@@ -38,7 +38,7 @@ public class MySQLLogRecordDAO implements LogRecordDAO {
         TableView<LogRecord> allLogRecordsTable = null;
         try {
             allLogRecordsTable = new TableView<>(getAllLogRecordsList());
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return allLogRecordsTable;
@@ -64,7 +64,7 @@ public class MySQLLogRecordDAO implements LogRecordDAO {
         return logRecord;
     }
 
-    public int[] insertLogRecords(List<LogRecord> logRecordList){
+    public int[] insertLogRecords(List<LogRecord> logRecordList) throws Exception {
         Connection connection = DBUtil.getConnection();
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO logrecord (createduser,unique_identifier,timestamp,site,busline,address,milliseconds,type,source,message) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
