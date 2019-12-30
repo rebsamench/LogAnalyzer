@@ -1,22 +1,23 @@
-package ch.zhaw.jv19.loganalyzer.model;
+package ch.zhaw.jv19.loganalyzer.util;
 
+import ch.zhaw.jv19.loganalyzer.model.User;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class BaseDataUserTableData {
+public class UserWrapper {
 
     private SimpleStringProperty createdUser;
     private SimpleStringProperty name;
     private SimpleStringProperty password;
     private SimpleIntegerProperty isadmin;
 
-    public BaseDataUserTableData(User user) {
+    public UserWrapper(User user) {
         this.createdUser = new SimpleStringProperty(user.getCreatedUser());
         this.name = new SimpleStringProperty(user.getName());
         this.password = new SimpleStringProperty(user.getPassword());
         this.isadmin = new SimpleIntegerProperty(user.getIsadmin());
     }
-    public BaseDataUserTableData(final String createdUser, final String name, final String password, final int isadmin) {
+    public UserWrapper(final String createdUser, final String name, final String password, final int isadmin) {
         this.createdUser = new SimpleStringProperty(createdUser);
         this.name = new SimpleStringProperty(name);
         this.password = new SimpleStringProperty(password);

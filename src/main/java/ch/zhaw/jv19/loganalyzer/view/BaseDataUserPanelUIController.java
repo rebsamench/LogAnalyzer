@@ -1,10 +1,10 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
-import ch.zhaw.jv19.loganalyzer.model.AppData;
 import ch.zhaw.jv19.loganalyzer.model.AppDataController;
-import ch.zhaw.jv19.loganalyzer.model.BaseDataUserTableData;
+import ch.zhaw.jv19.loganalyzer.util.UserWrapper;
 import ch.zhaw.jv19.loganalyzer.model.User;
 import ch.zhaw.jv19.loganalyzer.model.dao.MySQLUserDAO;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,13 +18,16 @@ import javafx.scene.control.cell.TextFieldTableCell;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class BaseDataUserPanelUIController implements Initializable {
 
-    private ObservableList<BaseDataUserTableData> tableData = FXCollections.observableArrayList();
+    private ObservableList<UserWrapper> tableData = FXCollections.observableArrayList();
     private AppDataController appDataController;
     private MySQLUserDAO mySQLUserDAO;
+    private boolean doesNameExist;
 
     @FXML
     private TextField fieldCreatedUser;
@@ -42,19 +45,19 @@ public class BaseDataUserPanelUIController implements Initializable {
     private Button submitt;
 
     @FXML
-    private TableView<BaseDataUserTableData> baseDataUserTable;
+    private TableView<UserWrapper> baseDataUserTable;
 
     @FXML
-    private TableColumn<BaseDataUserTableData, String> createdUserColumn;
+    private TableColumn<UserWrapper, String> createdUserColumn;
 
     @FXML
-    private TableColumn<BaseDataUserTableData, String> nameColumn;
+    private TableColumn<UserWrapper, String> nameColumn;
 
     @FXML
-    private TableColumn<BaseDataUserTableData, String> passwordColumn;
+    private TableColumn<UserWrapper, String> passwordColumn;
 
     @FXML
-    private TableColumn<BaseDataUserTableData, Integer> isadminColumn;
+    private TableColumn<UserWrapper, Integer> isadminColumn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -70,17 +73,17 @@ public class BaseDataUserPanelUIController implements Initializable {
 
     private void populate() {
         for (User user : appDataController.getUserList()) {
-            tableData.add(new BaseDataUserTableData(user));
+            tableData.add(new UserWrapper(user));
         }
     }
 
     private void setupCreatedUserColumn() {
-        TableColumn<BaseDataUserTableData, String> createdUserColumn = new TableColumn<>("Created User");
+        TableColumn<UserWrapper, String> createdUserColumn = new TableColumn<>("Created User");
         createdUserColumn.setCellValueFactory(new PropertyValueFactory<>("createdUser"));
         createdUserColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         baseDataUserTable.getColumns().add(createdUserColumn);
         createdUserColumn.setOnEditCommit(
-                (TableColumn.CellEditEvent<BaseDataUserTableData, String> t) ->
+                (TableColumn.CellEditEvent<UserWrapper, String> t) ->
                         (t.getTableView().getItems().get(
                                 t.getTablePosition().getRow())
                         ).setCreatedUser(t.getNewValue())
@@ -88,12 +91,12 @@ public class BaseDataUserPanelUIController implements Initializable {
     }
 
     private void setupNameColumn() {
-        TableColumn<BaseDataUserTableData, String> nameColumn = new TableColumn<>("Name");
+        TableColumn<UserWrapper, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         baseDataUserTable.getColumns().add(nameColumn);
         nameColumn.setOnEditCommit(
-                (TableColumn.CellEditEvent<BaseDataUserTableData, String> t) ->
+                (TableColumn.CellEditEvent<UserWrapper, String> t) ->
                         (t.getTableView().getItems().get(
                                 t.getTablePosition().getRow())
                         ).setName(t.getNewValue())
@@ -101,12 +104,12 @@ public class BaseDataUserPanelUIController implements Initializable {
     }
 
     private void setupPasswordColumn() {
-        TableColumn<BaseDataUserTableData, String> passwordColumn = new TableColumn<>("Password");
+        TableColumn<UserWrapper, String> passwordColumn = new TableColumn<>("Password");
         passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
         passwordColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         baseDataUserTable.getColumns().add(passwordColumn);
         passwordColumn.setOnEditCommit(
-                (TableColumn.CellEditEvent<BaseDataUserTableData, String> t) ->
+                (TableColumn.CellEditEvent<UserWrapper, String> t) ->
                         (t.getTableView().getItems().get(
                                 t.getTablePosition().getRow())
                         ).setPassword(t.getNewValue())
@@ -114,36 +117,58 @@ public class BaseDataUserPanelUIController implements Initializable {
     }
 
     private void setupIsadminColumn() {
-        TableColumn<BaseDataUserTableData, Integer> isadminColumn = new TableColumn<>("Is Admin?");
+        TableColumn<UserWrapper, Integer> isadminColumn = new TableColumn<>("Is Admin?");
         isadminColumn.setCellValueFactory(new PropertyValueFactory<>("isadmin"));
         //TODO not working properly
         //isadminColumn.setCellFactory(TextFieldTableCell.forTableColumn();
         baseDataUserTable.getColumns().add(isadminColumn);
         isadminColumn.setOnEditCommit(
-                (TableColumn.CellEditEvent<BaseDataUserTableData, Integer> t) ->
+                (TableColumn.CellEditEvent<UserWrapper, Integer> t) ->
                         (t.getTableView().getItems().get(
                                 t.getTablePosition().getRow())
                         ).setIsadmin(t.getNewValue())
         );
     }
 
-    // TODO not working
+    // TODO: does not work with empty fields
     @FXML
-    private void submitt () {
+    private void submitt() {
         String createdUser = fieldCreatedUser.getText();
         String name = fieldName.getText();
         String password = fieldPassword.getText();
         String isAdmin = fieldIsadmin.getText();
         User newUser = new User(createdUser, name, password, Integer.parseInt(isAdmin));
-        appDataController.addUserToUserList(newUser);
-        tableData.add(new BaseDataUserTableData(newUser));
-        try {
-            mySQLUserDAO = new MySQLUserDAO();
-            mySQLUserDAO.saveUser(newUser);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        UserWrapper newWrappedUser = new UserWrapper(newUser);
+        checkUserDublicates(newWrappedUser);
+        fieldCreatedUser.clear();
+        fieldName.clear();
+        fieldPassword.clear();
+        fieldIsadmin.clear();
+        if (doesNameExist) {
+            appDataController.setMessage("User already exists!");
+        } else {
+            appDataController.addUserToUserList(newUser);
+            tableData.add(newWrappedUser);
+            try {
+                mySQLUserDAO = new MySQLUserDAO();
+                mySQLUserDAO.saveUser(newUser);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                appDataController.setMessage("SQL Error");
+            }
         }
-
-
     }
+
+    private void checkUserDublicates(UserWrapper newWrappedUser) {
+        List listOfNames = new ArrayList();
+        for (UserWrapper user : tableData) {
+            listOfNames.add(user.getName());
+        }
+        if (listOfNames.contains(newWrappedUser.getName())) {
+            doesNameExist = true;
+        }
+        else {
+            doesNameExist = false;
+            }
+        }
 }
