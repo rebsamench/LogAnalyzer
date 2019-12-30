@@ -10,7 +10,6 @@ public class BaseDataUserTableData {
     private SimpleStringProperty password;
     private SimpleIntegerProperty isadmin;
 
-    // added to create the model from the Person object, which might be data retrieved from a database
     public BaseDataUserTableData(User user) {
         this.createdUser = new SimpleStringProperty(user.getCreatedUser());
         this.name = new SimpleStringProperty(user.getName());

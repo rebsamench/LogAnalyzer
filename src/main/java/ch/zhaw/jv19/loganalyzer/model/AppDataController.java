@@ -165,4 +165,8 @@ public class AppDataController {
                 .findAny()
                 .orElse(null);
     }
+
+    public void addUserToUserList(User user) {
+        appData.addUser(user);
+    }
 }

@@ -60,18 +60,21 @@ public class MySQLUserDAO implements UserDAO {
     public int saveUser(User user) throws SQLException {
         String[] values = {
                 StringUtil.addQuotes.apply(user.getCreatedUser()),
+                StringUtil.addQuotes.apply(user.getName()),
                 StringUtil.addQuotes.apply(user.getPassword()),
                 StringUtil.addQuotes.apply(String.valueOf(user.getIsadmin()))};
         String statementTemplate =
-                "INSERT INTO user (createdUser, password, isadmin) " +
+                "INSERT INTO user (createdUser, name, password, isadmin) " +
                         "VALUES (" +
                         values[0] + "," +
                         values[1] + "," +
-                        values[2] +
+                        values[2] + "," +
+                        values[3] +
                         ") ON DUPLICATE KEY UPDATE " +
                         " createdUser" + MySQLConst.EQUALS + values[0] +
-                        " password " + MySQLConst.EQUALS + values[1] +
-                        " isadmin " + MySQLConst.EQUALS + values[2] +
+                        " name " + MySQLConst.EQUALS + values[1] +
+                        " password " + MySQLConst.EQUALS + values[2] +
+                        " isadmin " + MySQLConst.EQUALS + values[3] +
                         MySQLConst.ENDQUERY;
         return DBUtil.executeUpdate(statementTemplate);
     }
