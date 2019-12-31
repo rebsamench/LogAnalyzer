@@ -2,8 +2,6 @@ package ch.zhaw.jv19.loganalyzer.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.apache.poi.ss.formula.functions.Even;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

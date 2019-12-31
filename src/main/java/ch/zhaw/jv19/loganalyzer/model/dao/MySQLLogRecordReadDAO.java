@@ -21,10 +21,10 @@ import java.util.stream.Collectors;
  */
 public class MySQLLogRecordReadDAO implements LogRecordReadDAO {
     private String currentQuery;
-    private final AppDataController controller;
+    private final AppDataController appDataController;
 
-    public MySQLLogRecordReadDAO(AppDataController controller) {
-        this.controller = controller;
+    public MySQLLogRecordReadDAO() {
+        appDataController = AppDataController.getInstance();
     }
 
     @Override
@@ -163,10 +163,12 @@ public class MySQLLogRecordReadDAO implements LogRecordReadDAO {
 
     /**
      * Converts input to string based on input type
+     * Note: Type safety of lists is guaranteed by instanceof checks of list items, therefore unchecked warnings are supressed
      *
      * @param object object to convert to string
      * @return Condition as String.
      */
+    @SuppressWarnings("unchecked")
     private String convertToString(Object object) {
         String condition = null;
         if (object instanceof ZonedDateTime) {
@@ -262,20 +264,25 @@ public class MySQLLogRecordReadDAO implements LogRecordReadDAO {
      * @throws SQLException database exception
      */
     private LogRecord extractLogRecordFromResultSet(ResultSet rs) throws SQLException {
-        LogRecord logRecord = new LogRecord();
-        logRecord.setId(rs.getInt("id"));
-        logRecord.setCreated(DateUtil.getZonedDateTimeFromDateTimeString(rs.getDate("created") + " " + rs.getTime("created"), MySQLConst.DATETIMEPATTERN));
-        logRecord.setLastChanged(DateUtil.getZonedDateTimeFromDateTimeString(rs.getDate("created") + " " + rs.getTime("created"), MySQLConst.DATETIMEPATTERN));
-        logRecord.setUser(controller.getUserByName(rs.getString("createduser")));
-        logRecord.setUniqueIdentifier(rs.getString("unique_identifier"));
-        logRecord.setTimestamp(DateUtil.getZonedDateTimeFromDateTimeString(rs.getDate("timestamp") + " " + rs.getTime("timestamp"), MySQLConst.DATETIMEPATTERN));
-        logRecord.setSite(controller.getSiteById(rs.getInt("site")));
-        logRecord.setBusline(controller.getBuslineById(rs.getInt("busline")));
-        logRecord.setSource(rs.getString("source"));
-        logRecord.setAddress(rs.getInt("address"));
-        logRecord.setMilliseconds(rs.getInt("milliseconds"));
-        logRecord.setEventType(rs.getString("type"));
-        logRecord.setMessage(rs.getString("message"));
+        LogRecord logRecord = null;
+        try {
+            logRecord = new LogRecord();
+            logRecord.setId(rs.getInt("id"));
+            logRecord.setCreated(DateUtil.getZonedDateTimeFromDateTimeString(rs.getDate("created") + " " + rs.getTime("created"), MySQLConst.DATETIMEPATTERN));
+            logRecord.setLastChanged(DateUtil.getZonedDateTimeFromDateTimeString(rs.getDate("created") + " " + rs.getTime("created"), MySQLConst.DATETIMEPATTERN));
+            logRecord.setUser(appDataController.getUserByName(rs.getString("createduser")));
+            logRecord.setUniqueIdentifier(rs.getString("unique_identifier"));
+            logRecord.setTimestamp(DateUtil.getZonedDateTimeFromDateTimeString(rs.getDate("timestamp") + " " + rs.getTime("timestamp"), MySQLConst.DATETIMEPATTERN));
+            logRecord.setSite(appDataController.getSiteById(rs.getInt("site")));
+            logRecord.setBusline(appDataController.getBuslineById(rs.getInt("busline")));
+            logRecord.setSource(rs.getString("source"));
+            logRecord.setAddress(rs.getInt("address"));
+            logRecord.setMilliseconds(rs.getInt("milliseconds"));
+            logRecord.setEventType(rs.getString("type"));
+            logRecord.setMessage(rs.getString("message"));
+        } catch (Exception e) {
+            appDataController.setMessage(e.getMessage());
+        }
         return logRecord;
     }
 

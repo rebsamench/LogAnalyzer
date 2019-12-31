@@ -2,7 +2,6 @@ package ch.zhaw.jv19.loganalyzer.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +15,8 @@ import java.util.stream.Stream;
 public enum Source {
     INPUT("Input"),
     CONTROLLER("Controller"),
-    MODBUS("Modbus App");
+    MODBUS_APP("Modbus App"),
+    DEVICE_CONFIGURATION("DeviceConfiguration");
 
     private String source;
     private static final Map<String, Source> lookup = new HashMap<>();

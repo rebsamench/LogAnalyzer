@@ -31,8 +31,6 @@ public class MainAppUIController implements Initializable {
     @FXML
     private ToggleButton btnReports;
     @FXML
-    private ToggleButton btnSQL;
-    @FXML
     private ToggleButton btnSettings;
     @FXML
     private ToggleButton btnBaseData;
@@ -51,7 +49,6 @@ public class MainAppUIController implements Initializable {
         btnHome.setToggleGroup(mainMenu);
         btnImport.setToggleGroup(mainMenu);
         btnReports.setToggleGroup(mainMenu);
-        btnSQL.setToggleGroup(mainMenu);
         btnSettings.setToggleGroup(mainMenu);
         btnBaseData.setToggleGroup(mainMenu);
         // bind message box to message in app data
@@ -60,7 +57,6 @@ public class MainAppUIController implements Initializable {
         addPanelToPanelList("HomePanel");
         addPanelToPanelList("ImportPanel");
         addPanelToPanelList("ReportPanel");
-        addPanelToPanelList("SQLPanel");
         addPanelToPanelList("SettingsPanel");
         addPanelToPanelList("BaseDataPanel");
     }
@@ -77,8 +73,6 @@ public class MainAppUIController implements Initializable {
             selectPanel("ImportPanel");
         } else if (event.getSource() == btnReports) {
             selectPanel("ReportPanel");
-        } else if (event.getSource() == btnSQL) {
-            selectPanel("SQLPanel");
         } else if (event.getSource() == btnSettings) {
             selectPanel("SettingsPanel");
         } else if (event.getSource() == btnBaseData) {

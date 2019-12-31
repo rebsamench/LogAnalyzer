@@ -4,7 +4,6 @@ import ch.zhaw.jv19.loganalyzer.model.AppDataController;
 import ch.zhaw.jv19.loganalyzer.util.UserWrapper;
 import ch.zhaw.jv19.loganalyzer.model.User;
 import ch.zhaw.jv19.loganalyzer.model.dao.MySQLUserDAO;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -139,7 +138,7 @@ public class BaseDataUserPanelUIController implements Initializable {
         String isAdmin = fieldIsadmin.getText();
         User newUser = new User(createdUser, name, password, Integer.parseInt(isAdmin));
         UserWrapper newWrappedUser = new UserWrapper(newUser);
-        checkUserDublicates(newWrappedUser);
+        checkUserDuplicates(newWrappedUser);
         fieldCreatedUser.clear();
         fieldName.clear();
         fieldPassword.clear();
@@ -161,7 +160,7 @@ public class BaseDataUserPanelUIController implements Initializable {
         }
     }
 
-    private void checkUserDublicates(UserWrapper newWrappedUser) {
+    private void checkUserDuplicates(UserWrapper newWrappedUser) {
         List listOfNames = new ArrayList();
         for (UserWrapper user : tableData) {
             listOfNames.add(user.getName());

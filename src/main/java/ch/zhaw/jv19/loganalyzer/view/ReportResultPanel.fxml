@@ -11,7 +11,7 @@
    <children>
       <VBox layoutY="300.0" prefHeight="118.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TableView fx:id="resultTable" editable="true" />
+            <TableView fx:id="resultTable" />
             <ButtonBar prefHeight="40.0">
               <buttons>
                 <Button fx:id="exportButton" mnemonicParsing="false" onAction="#exportResultTable" text="Export" />

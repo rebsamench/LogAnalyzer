@@ -118,12 +118,22 @@ public class LogRecord {
         this.milliseconds = milliseconds;
     }
 
-    public void setEventType(String eventType) {
+    public void setEventType(String eventType) throws Exception {
+        if(EventType.get(eventType) != null) {
+            this.eventType = EventType.get(eventType);
+        } else {
+            throw new Exception("Event type '" + source + "' unknown in EventType enum. Extend EventType enum.");
+        }
+
         this.eventType = EventType.get(eventType);
     }
 
-    public void setSource(String source) {
-        this.source = Source.get(source);
+    public void setSource(String source) throws Exception {
+        if(Source.get(source) != null) {
+            this.source = Source.get(source);
+        } else {
+            throw new Exception("Source '" + source + "' unknown in Source enum. Extend source enum.");
+        }
     }
 
     public void setMessage(String message) {

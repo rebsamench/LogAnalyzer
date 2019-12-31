@@ -117,7 +117,7 @@ public class AppDataController {
      * @return ArrayList of log records that meet search conditions
      */
     public ArrayList<LogRecord> getLogRecordsListByConditions(HashMap<String, Object> searchConditions) {
-        LogRecordReadDAO logRecordReadDAO = new MySQLLogRecordReadDAO(this);
+        LogRecordReadDAO logRecordReadDAO = new MySQLLogRecordReadDAO();
         ArrayList<LogRecord> resultList = logRecordReadDAO.getLogRecordsListByConditions(searchConditions);
         setMessage(logRecordReadDAO.getCurrentQuery());
         return resultList;

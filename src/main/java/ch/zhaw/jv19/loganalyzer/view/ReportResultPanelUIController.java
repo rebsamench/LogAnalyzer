@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.poi.ss.formula.functions.Even;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,24 +45,26 @@ public class ReportResultPanelUIController extends ExportPanelUIController imple
         resultTable.getSelectionModel().setSelectionMode(
                 SelectionMode.MULTIPLE
         );
-        resultTable.getSelectionModel().cellSelectionEnabledProperty().set(true);
     }
 
     /**
      * Displays given log record list in resultTable
-     * @param logRecordList ArrayList of log records to display in table
+     * @param logRecordList   ArrayList of log records to display in table
+     * @param showMetaColumns determines, weather technical meta columns are displayed
      */
-    public void showTableData(ArrayList<LogRecord> logRecordList) {
+    public void showTableData(ArrayList<LogRecord> logRecordList, boolean showMetaColumns) {
         tableData.clear();
+        resultTable.getColumns().clear();
         tableData.addAll(logRecordList);
-        buildLogRecordResultTable(tableData);
+        buildLogRecordResultTable(tableData, showMetaColumns);
     }
 
     /**
      * Builds log record table from table data
-     * @param tableData table data
+     * @param tableData       table data
+     * @param showMetaColumns determines, weather technical meta columns are displayed
      */
-    private void buildLogRecordResultTable(ObservableList<LogRecord> tableData) {
+    private void buildLogRecordResultTable(ObservableList<LogRecord> tableData, boolean showMetaColumns) {
         TableColumn<LogRecord, Integer> idCol = new TableColumn<>("Id");
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 
@@ -90,29 +93,38 @@ public class ReportResultPanelUIController extends ExportPanelUIController imple
         TableColumn<LogRecord, Integer> addressCol = new TableColumn<>("Address");
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
 
-        TableColumn<LogRecord, Integer> sourceCol = new TableColumn<>("Source");
+        TableColumn<LogRecord, Source> sourceCol = new TableColumn<>("Source");
         sourceCol.setCellValueFactory(new PropertyValueFactory<>("source"));
 
-        TableColumn<LogRecord, String> eventTypeCol = new TableColumn<>("Type of event");
+        TableColumn<LogRecord, EventType> eventTypeCol = new TableColumn<>("Type of event");
         eventTypeCol.setCellValueFactory(new PropertyValueFactory<>("eventType"));
 
         TableColumn<LogRecord, String> messageCol = new TableColumn<>("Message");
         messageCol.setCellValueFactory(new PropertyValueFactory<>("message"));
 
-        resultTable.getColumns().addAll(idCol, createdCol, lastChangedCol,
-                createdUserColumn, timestampCol, millisecondsCol, siteCol,
-                busLineCol, addressCol, sourceCol, eventTypeCol, messageCol);
+        if (showMetaColumns) {
+            resultTable.getColumns().addAll(idCol, createdCol, lastChangedCol,
+                    createdUserColumn, timestampCol, millisecondsCol, siteCol,
+                    busLineCol, addressCol, sourceCol, eventTypeCol, messageCol);
+        } else {
+            resultTable.getColumns().addAll(timestampCol, millisecondsCol, siteCol,
+                    busLineCol, addressCol, sourceCol, eventTypeCol, messageCol);
+        }
         resultTable.setItems(tableData);
     }
 
     /**
-     * Exports current resultTable to Excel. Default file name is Export_[currentDateTime].xlsx.
+     * Exports current resultTable to Excel.
      */
     @FXML
     private void exportResultTable() {
         super.exportTable(resultTable);
     }
 
+    /**
+     * Gets List of log records, which the user selected
+     * @return Observable list of selected log records
+     */
     public ObservableList<LogRecord> getSelectedItems() {
         ObservableList<LogRecord> selectedItemsList = FXCollections.observableArrayList();
         selectedItemsList = resultTable.getSelectionModel().getSelectedItems();

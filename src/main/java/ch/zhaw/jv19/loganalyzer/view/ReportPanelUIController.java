@@ -16,7 +16,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -102,7 +101,7 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     @FXML
     private void search() {
         prepareFormData();
-        reportResultPanelUIController.showTableData(appDataController.getLogRecordsListByConditions(formData));
+        reportResultPanelUIController.showTableData(appDataController.getLogRecordsListByConditions(formData), true);
     }
 
     /**

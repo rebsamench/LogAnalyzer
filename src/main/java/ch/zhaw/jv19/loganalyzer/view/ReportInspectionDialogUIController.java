@@ -36,7 +36,7 @@ public class ReportInspectionDialogUIController extends ExportPanelUIController 
         try {
             AnchorPane resultTablePanel = fxmlLoader.load();
             ReportResultPanelUIController uiPanelController = fxmlLoader.getController();
-            uiPanelController.showTableData(appDataController.getLogRecordsListByConditions(searchConditions));
+            uiPanelController.showTableData(appDataController.getLogRecordsListByConditions(searchConditions), false);
             // reselect log record from which analysis started
             uiPanelController.selectLogRecord(logRecord);
             resultPanelContainer.getChildren().add(resultTablePanel);

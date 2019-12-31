@@ -30,11 +30,6 @@
                   <Insets left="20.0" />
                </padding>
             </ToggleButton>
-            <ToggleButton fx:id="btnSQL" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="312.0" mnemonicParsing="false" onMouseClicked="#handleMenuButtonClicks" styleClass="main_menu_button" text="SQL">
-               <padding>
-                  <Insets left="20.0" />
-               </padding>
-            </ToggleButton>
             <ToggleButton fx:id="btnSettings" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="363.0" mnemonicParsing="false" onMouseClicked="#handleMenuButtonClicks" styleClass="main_menu_button" text="Settings">
                <padding>
                   <Insets left="20.0" />

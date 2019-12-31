@@ -17,16 +17,6 @@ public class MySQLLogRecordWriteDAO implements LogRecordWriteDAO {
         insertLogRecords(logRecordList);
     }
 
-    private LogRecord extractLogRecordFromResultSet(ResultSet rs) throws SQLException {
-        LogRecord logRecord = new LogRecord();
-        logRecord.setTimestamp(DateUtil.getZonedDateTimeFromDateTimeString(rs.getString("timestamp"), MySQLConst.DATETIMEPATTERN ));
-        logRecord.setMilliseconds( rs.getInt("milliseconds") );
-        logRecord.setEventType(rs.getString("type"));
-        logRecord.setSource(rs.getString("source"));
-        logRecord.setMessage( rs.getString("message"));
-        return logRecord;
-    }
-
     @Override
     public int[] insertLogRecords(List<LogRecord> logRecordList) throws Exception {
         Connection connection = DBUtil.getConnection();
