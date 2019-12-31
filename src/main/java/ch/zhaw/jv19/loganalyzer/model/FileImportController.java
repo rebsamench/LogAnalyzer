@@ -1,6 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.model;
 
-import ch.zhaw.jv19.loganalyzer.model.dao.MySQLLogRecordDAO;
+import ch.zhaw.jv19.loganalyzer.model.dao.MySQLLogRecordWriteDAO;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class FileImportController {
     }
 
     private void saveToDB(List<LogRecord> logRecordList) throws Exception {
-        MySQLLogRecordDAO logRecordDAOWriter = new MySQLLogRecordDAO(logRecordList);
+        MySQLLogRecordWriteDAO logRecordDAOWriter = new MySQLLogRecordWriteDAO(logRecordList);
     }
 
     private int convertMilliSeconds(String milliseconds) {

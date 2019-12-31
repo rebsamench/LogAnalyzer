@@ -17,8 +17,8 @@ public class LogRecord {
     private Busline busline;
     private int address;
     private int milliseconds;
-    private String eventType;
-    private String source;
+    private EventType eventType;
+    private Source source;
     private String message;
 
     public LogRecord(){}
@@ -26,8 +26,8 @@ public class LogRecord {
     public LogRecord(String timestamp, int milliseconds, String eventType, String source, String message, User user, Site site, Busline busline) {
         this.timestamp = DateUtil.getZonedDateTimeFromDateTimeString(timestamp, ImportFileConst.DATETIMEPATTERNIMPORT);
         this.milliseconds = milliseconds;
-        this.eventType = eventType;
-        this.source = source;
+        this.eventType = EventType.get(eventType);
+        this.source = Source.get(source);
         this.message = message;
         this.user = user;
         this.site = site;
@@ -43,11 +43,11 @@ public class LogRecord {
     }
 
     public String getEventType() {
-        return eventType;
+        return eventType.toString();
     }
 
     public String getSource() {
-        return source;
+        return source.toString();
     }
 
     public String getMessage() {
@@ -119,11 +119,11 @@ public class LogRecord {
     }
 
     public void setEventType(String eventType) {
-        this.eventType = eventType;
+        this.eventType = EventType.get(eventType);
     }
 
     public void setSource(String source) {
-        this.source = source;
+        this.source = Source.get(source);
     }
 
     public void setMessage(String message) {

@@ -155,6 +155,8 @@ public class BaseDataUserPanelUIController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
                 appDataController.setMessage("SQL Error");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

@@ -16,31 +16,16 @@ public class AppData {
     private ObservableList<User> userList;
     private ObservableList<Site> siteList;
     private ObservableList<Busline> busLineList;
+    private ObservableList<EventType> eventTypeList;
+    private ObservableList<Source> sourceList;
     private final SimpleStringProperty message;
     private static AppData instance;
 
     //Singleton: AppData can only be instantiated once
     private AppData () {
+        eventTypeList = EventType.getEventTypeList();
+        sourceList = Source.getSourceList();
         message = new SimpleStringProperty();
-    }
-
-    /**
-     * Enum of valid values for log record types
-     */
-    public enum RecordType {
-        INFO("Info"),
-        EVENT("Event"),
-        WARNING("Warning");
-
-        private String recordType;
-
-        RecordType(String recordType) {
-            this.recordType = recordType;
-        }
-
-        public String getRecordType() {
-            return recordType;
-        }
     }
 
     /**
@@ -86,17 +71,12 @@ public class AppData {
         return siteList;
     }
 
-    /**
-     * Getsa list of record types defined in enum as strings.
-     * @return ObservableList of record types
-     */
-    public ObservableList<String> getRecordTypeList() {
-        ObservableList<String> recordTypeList = FXCollections.observableArrayList();
-        ArrayList<String> itemList = Stream.of(RecordType.values())
-                .map(RecordType::getRecordType)
-                .collect(Collectors.toCollection(ArrayList::new));
-        recordTypeList.addAll(itemList);
-        return recordTypeList;
+    public ObservableList<EventType> getEventTypeList() {
+        return eventTypeList;
+    }
+
+    public ObservableList<Source> getSourceList() {
+        return sourceList;
     }
 
     public void addUser(User user) {

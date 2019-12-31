@@ -50,6 +50,7 @@ public class SettingsPanelUIController implements Initializable, UIPanelControll
         observeTextAreaChanges(dbJDBC);
         observeTextFieldChanges(dbUsername);
         observeTextFieldChanges(dbPassword);
+        clearMessageBoxOnPanelChangeCb.setSelected(Boolean.parseBoolean(propHandler.getValue("clearMessageBoxOnPanelChange")));
     }
 
     /**

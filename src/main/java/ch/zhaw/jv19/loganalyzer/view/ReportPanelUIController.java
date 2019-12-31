@@ -52,7 +52,9 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     @FXML
     private TextField loggedTimestampUpToTime;
     @FXML
-    private CheckComboBox<String> type;
+    private CheckComboBox<EventType> eventType;
+    @FXML
+    private CheckComboBox<Source> source;
     @FXML
     private CheckComboBox<Site> site;
     @FXML
@@ -61,8 +63,6 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     private TextField address;
     @FXML
     private TextField message;
-    @FXML
-    private TextArea sqlStatement;
     @FXML
     private VBox furtherAnalysisBox;
     @FXML
@@ -79,9 +79,10 @@ public class ReportPanelUIController implements Initializable, UIPanelController
         appDataController = AppDataController.getInstance();
         // fill comboboxes on first use
         createdUser.addEventHandler(ComboBox.ON_SHOWING, event -> fillUserComboBox());
-        type.addEventHandler(ComboBox.ON_SHOWING, event -> fillRecordTypeComboBox());
+        eventType.addEventHandler(ComboBox.ON_SHOWING, event -> fillEventTypeComboBox());
         site.addEventHandler(ComboBox.ON_SHOWING, event -> fillSiteComboBox());
         busLine.addEventHandler(ComboBox.ON_SHOWING, event -> fillBusLineComboBox());
+        source.addEventHandler(ComboBox.ON_SHOWING, event -> fillSourceComboBox());
         // listener for focus change in order to validate entered time
         createdFromTime.focusedProperty().addListener((o, oldValue, newValue) -> timeFieldChanged(newValue, createdFromTime));
         createdUpToTime.focusedProperty().addListener((o, oldValue, newValue) -> timeFieldChanged(newValue, createdUpToTime));
@@ -125,9 +126,9 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     /**
      * Fills record type combobox if it is empty
      */
-    private void fillRecordTypeComboBox() {
-        if (type.getItems().size() == 0) {
-            type.getItems().addAll(appDataController.getRecordTypeList());
+    private void fillEventTypeComboBox() {
+        if (eventType.getItems().size() == 0) {
+            eventType.getItems().addAll(appDataController.getEventTypeList());
         }
     }
 
@@ -137,6 +138,15 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     private void fillBusLineComboBox() {
         if (busLine.getItems().size() == 0) {
             busLine.getItems().addAll(appDataController.getBuslineList());
+        }
+    }
+
+    /**
+     * Fills source combobox if it is empty
+     */
+    private void fillSourceComboBox() {
+        if (source.getItems().size() == 0) {
+            source.getItems().addAll(appDataController.getSourceList());
         }
     }
 
@@ -174,14 +184,17 @@ public class ReportPanelUIController implements Initializable, UIPanelController
         if (createdUser.getCheckModel().getCheckedItems().size() > 0) {
             formData.put(createdUser.getId(), createdUser.getCheckModel().getCheckedItems());
         }
-        if (type.getCheckModel().getCheckedItems().size() > 0) {
-            formData.put(type.getId(), type.getCheckModel().getCheckedItems());
+        if (eventType.getCheckModel().getCheckedItems().size() > 0) {
+            formData.put(eventType.getId(), eventType.getCheckModel().getCheckedItems());
         }
         if (site.getCheckModel().getCheckedItems().size() > 0) {
             formData.put(site.getId(), site.getCheckModel().getCheckedItems());
         }
         if (busLine.getCheckModel().getCheckedItems().size() > 0) {
             formData.put(busLine.getId(), busLine.getCheckModel().getCheckedItems());
+        }
+        if (source.getCheckModel().getCheckedItems().size() > 0) {
+            formData.put(source.getId(), source.getCheckModel().getCheckedItems());
         }
         if (!address.getText().isEmpty()) {
             formData.put(address.getId(), Integer.parseInt(address.getText()));
@@ -194,7 +207,6 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     /**
      * Validates entered time and sets style class 'invalid' if entered
      * time has unexpected format
-     *
      * @param textField text field containing time
      * @param focus     defines if focus is set. only when focus was removed (focus = false),
      *                  time is validated

@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -43,6 +44,7 @@ public class ReportResultPanelUIController extends ExportPanelUIController imple
         resultTable.getSelectionModel().setSelectionMode(
                 SelectionMode.MULTIPLE
         );
+        resultTable.getSelectionModel().cellSelectionEnabledProperty().set(true);
     }
 
     /**
@@ -88,6 +90,9 @@ public class ReportResultPanelUIController extends ExportPanelUIController imple
         TableColumn<LogRecord, Integer> addressCol = new TableColumn<>("Address");
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
 
+        TableColumn<LogRecord, Integer> sourceCol = new TableColumn<>("Source");
+        sourceCol.setCellValueFactory(new PropertyValueFactory<>("source"));
+
         TableColumn<LogRecord, String> eventTypeCol = new TableColumn<>("Type of event");
         eventTypeCol.setCellValueFactory(new PropertyValueFactory<>("eventType"));
 
@@ -96,7 +101,7 @@ public class ReportResultPanelUIController extends ExportPanelUIController imple
 
         resultTable.getColumns().addAll(idCol, createdCol, lastChangedCol,
                 createdUserColumn, timestampCol, millisecondsCol, siteCol,
-                busLineCol, addressCol, eventTypeCol, messageCol);
+                busLineCol, addressCol, sourceCol, eventTypeCol, messageCol);
         resultTable.setItems(tableData);
     }
 

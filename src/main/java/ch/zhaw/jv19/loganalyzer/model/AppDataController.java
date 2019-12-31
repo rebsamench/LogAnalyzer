@@ -1,6 +1,5 @@
 package ch.zhaw.jv19.loganalyzer.model;
 
-import ch.zhaw.jv19.loganalyzer.MainApp;
 import ch.zhaw.jv19.loganalyzer.model.dao.*;
 import ch.zhaw.jv19.loganalyzer.util.export.ExcelExporter;
 import javafx.beans.property.SimpleStringProperty;
@@ -8,7 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 
 import java.io.File;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -99,8 +97,16 @@ public class AppDataController {
      * Gets a list of record types defined in enum as strings.
      * @return ObservableList of record types
      */
-    public ObservableList<String> getRecordTypeList() {
-        return appData.getRecordTypeList();
+    public ObservableList<EventType> getEventTypeList() {
+        return appData.getEventTypeList();
+    }
+
+    /**
+     * Gets a list of sources defined in enum as strings.
+     * @return ObservableList of sources
+     */
+    public ObservableList<Source> getSourceList() {
+        return appData.getSourceList();
     }
 
     /**
@@ -111,7 +117,7 @@ public class AppDataController {
      * @return ArrayList of log records that meet search conditions
      */
     public ArrayList<LogRecord> getLogRecordsListByConditions(HashMap<String, Object> searchConditions) {
-        LogRecordReadDAO logRecordReadDAO = new MySQLLogRecordReportDAO(this);
+        LogRecordReadDAO logRecordReadDAO = new MySQLLogRecordReadDAO(this);
         ArrayList<LogRecord> resultList = logRecordReadDAO.getLogRecordsListByConditions(searchConditions);
         setMessage(logRecordReadDAO.getCurrentQuery());
         return resultList;

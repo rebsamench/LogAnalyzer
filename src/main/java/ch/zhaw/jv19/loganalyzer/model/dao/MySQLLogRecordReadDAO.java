@@ -16,13 +16,14 @@ import java.util.stream.Collectors;
 
 /**
  * Provides interactions with MySQL database and to build queries dynamically from UI form data.
+ *
  * @author Simon Rizzi, rizzisim@students.zhaw.ch
  */
-public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
+public class MySQLLogRecordReadDAO implements LogRecordReadDAO {
     private String currentQuery;
     private final AppDataController controller;
 
-    public MySQLLogRecordReportDAO(AppDataController controller) {
+    public MySQLLogRecordReadDAO(AppDataController controller) {
         this.controller = controller;
     }
 
@@ -39,6 +40,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
 
     /**
      * Gets a list of log records from data base
+     *
      * @param query SELECT statement
      * @return ArrayList of LogRecords
      */
@@ -66,6 +68,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
     /**
      * Builds query for log records which meet the given conditions.
      * Assembled query is set as current query of this DAO.
+     *
      * @param conditionsMap hash map of search conditions. key = db column,
      *                      value = String value, date or array list of multiple IN conditions (strings)
      */
@@ -108,8 +111,9 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
                     //list types -> IN conditions
                     case "createdUser":
                     case "site":
-                    case "type":
+                    case "eventType":
                     case "busLine":
+                    case "source":
                         if (entry.getValue() instanceof ObservableList) {
                             conditionSb.append(MySQLConst.IN);
                             conditionSb.append(convertToString(entry.getValue()));
@@ -145,13 +149,13 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
     private String mapKeyToTableColumn(String key) {
         switch (key) {
             case "createdFrom":
-            case "createdUpTo": {
+            case "createdUpTo":
                 return "created";
-            }
+            case "eventType":
+                return "type";
             case "loggedTimestampFrom":
-            case "loggedTimestampUpTo": {
+            case "loggedTimestampUpTo":
                 return "timestamp";
-            }
             default:
                 return key;
         }
@@ -183,9 +187,19 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
                             .map(site -> String.valueOf(site.getId()))
                             .collect(Collectors.toCollection(ArrayList::new));
                 } else if (inConditionList.get(0) instanceof Busline) {
-                    ObservableList<Busline> inConditionListSite = (ObservableList<Busline>) inConditionList;
-                    inConditionListString = inConditionListSite.stream()
-                            .map(site -> String.valueOf(site.getId()))
+                    ObservableList<Busline> inConditionListBusline = (ObservableList<Busline>) inConditionList;
+                    inConditionListString = inConditionListBusline.stream()
+                            .map(busLine -> String.valueOf(busLine.getId()))
+                            .collect(Collectors.toCollection(ArrayList::new));
+                } else if (inConditionList.get(0) instanceof EventType) {
+                    ObservableList<EventType> inConditionListEventType = (ObservableList<EventType>) inConditionList;
+                    inConditionListString = inConditionListEventType.stream()
+                            .map(eventType -> String.valueOf(eventType.toString()))
+                            .collect(Collectors.toCollection(ArrayList::new));
+                } else if (inConditionList.get(0) instanceof Source) {
+                    ObservableList<Source> inConditionListEventType = (ObservableList<Source>) inConditionList;
+                    inConditionListString = inConditionListEventType.stream()
+                            .map(source -> String.valueOf(source.toString()))
                             .collect(Collectors.toCollection(ArrayList::new));
                 } else if (inConditionList.get(0) instanceof String) {
                     inConditionListString = new ArrayList<String>((ObservableList<String>) inConditionList);
@@ -204,6 +218,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
 
     /**
      * Connects Conditions of conditionList with WHERE or AND.
+     *
      * @param conditionList list of conditions to connect
      * @return String of conditions (WHERE clauses) connected with WHERE and AND
      */
@@ -256,6 +271,7 @@ public class MySQLLogRecordReportDAO implements LogRecordReadDAO {
         logRecord.setTimestamp(DateUtil.getZonedDateTimeFromDateTimeString(rs.getDate("timestamp") + " " + rs.getTime("timestamp"), MySQLConst.DATETIMEPATTERN));
         logRecord.setSite(controller.getSiteById(rs.getInt("site")));
         logRecord.setBusline(controller.getBuslineById(rs.getInt("busline")));
+        logRecord.setSource(rs.getString("source"));
         logRecord.setAddress(rs.getInt("address"));
         logRecord.setMilliseconds(rs.getInt("milliseconds"));
         logRecord.setEventType(rs.getString("type"));

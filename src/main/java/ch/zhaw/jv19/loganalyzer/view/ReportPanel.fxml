@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.Tooltip?>
@@ -118,23 +117,19 @@
                                        <Label text="Created until" GridPane.columnIndex="4" />
                                        <Label text="Logged until" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                        <CheckComboBox fx:id="createdUser" minWidth="180.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
-                                       <CheckComboBox fx:id="type" minWidth="180.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                                       <CheckComboBox fx:id="eventType" minWidth="180.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
                                        <Label text="Record type" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                                        <Label text="Site" GridPane.rowIndex="3" />
-                                       <Label text="Messge substring" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                                       <TextField fx:id="message" minWidth="-Infinity" prefWidth="180.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-                                       <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#search" prefWidth="70.0" text="Search" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                                       <Label text="Message substring" GridPane.rowIndex="5" />
+                                       <TextField fx:id="message" minWidth="-Infinity" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                       <Button defaultButton="true" minWidth="-Infinity" mnemonicParsing="false" onAction="#search" prefWidth="70.0" text="Search" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="5" />
                                        <CheckComboBox fx:id="site" minWidth="180.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
-                                       <Label prefHeight="18.0" prefWidth="118.0" text="SQL (Test)" GridPane.rowIndex="5" />
-                                       <TextArea fx:id="sqlStatement" minWidth="-Infinity" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.rowSpan="2147483647">
-                                          <GridPane.margin>
-                                             <Insets top="2.0" />
-                                          </GridPane.margin>
-                                       </TextArea>
+                                       <Label prefHeight="18.0" prefWidth="118.0" text="Source" GridPane.rowIndex="4" />
                                  <Label text="Busline" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                                  <CheckComboBox fx:id="busLine" minWidth="180.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                                 <Label text="Address" GridPane.rowIndex="4" />
-                                 <TextField fx:id="address" promptText="0-127" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                 <Label text="Address" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                                 <TextField fx:id="address" maxWidth="-Infinity" prefWidth="180.0" promptText="0-127" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                                 <CheckComboBox fx:id="source" minWidth="180.0" title="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                     </children>
                                  </GridPane>
                                   <VBox fx:id="furtherAnalysisBox" alignment="BOTTOM_LEFT" prefHeight="50.0">
@@ -163,9 +158,6 @@
                                               </VBox.margin>
                                           </HBox>
                                       </children>
-                                      <padding>
-                                          <Insets left="10.0" />
-                                      </padding>
                               <VBox.margin>
                                  <Insets top="10.0" />
                               </VBox.margin>
