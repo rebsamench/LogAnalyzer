@@ -76,10 +76,10 @@ public class MySQLUserDAO implements UserDAO {
                         values[2] + "," +
                         values[3] +
                         ") ON DUPLICATE KEY UPDATE " +
-                        " createdUser" + MySQLConst.EQUALS + values[0] +
-                        " name " + MySQLConst.EQUALS + values[1] +
-                        " password " + MySQLConst.EQUALS + values[2] +
-                        " isadmin " + MySQLConst.EQUALS + values[3] +
+                        " createduser" + MySQLConst.EQUALS + values[0] +
+                        ", name " + MySQLConst.EQUALS + values[1] +
+                        ", password " + MySQLConst.EQUALS + values[2] +
+                        ", isadmin " + MySQLConst.EQUALS + values[3] +
                         MySQLConst.ENDQUERY;
         return DBUtil.executeUpdate(statementTemplate);
     }
@@ -96,6 +96,7 @@ public class MySQLUserDAO implements UserDAO {
         user.setName(rs.getString("name"));
         user.setCreated(DateUtil.getZonedDateTimeFromDateTimeString(rs.getString("created"), MySQLConst.DATETIMEPATTERN));
         user.setCreatedUser(rs.getString("createduser"));
+        user.setPassword(rs.getString("password"));
         user.setIsadmin(rs.getInt("isadmin"));
         return user;
     }
