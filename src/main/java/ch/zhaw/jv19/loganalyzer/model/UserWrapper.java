@@ -1,4 +1,4 @@
-package ch.zhaw.jv19.loganalyzer.util;
+package ch.zhaw.jv19.loganalyzer.model;
 
 import ch.zhaw.jv19.loganalyzer.model.User;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class UserWrapper {
 
+    private User user;
     private SimpleStringProperty createdUser;
     private SimpleStringProperty name;
     private SimpleStringProperty password;
@@ -16,6 +17,7 @@ public class UserWrapper {
         this.name = new SimpleStringProperty(user.getName());
         this.password = new SimpleStringProperty(user.getPassword());
         this.isadmin = new SimpleIntegerProperty(user.getIsadmin());
+        this.user = user;
     }
     public UserWrapper(final String createdUser, final String name, final String password, final int isadmin) {
         this.createdUser = new SimpleStringProperty(createdUser);
@@ -30,6 +32,7 @@ public class UserWrapper {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser.set(createdUser);
+        user.setCreatedUser(createdUser);
     }
 
     public String getName() {
@@ -38,6 +41,7 @@ public class UserWrapper {
 
     public void setName(String name) {
         this.name.set(name);
+        user.setName(name);
     }
 
     public String getPassword() {
@@ -46,6 +50,7 @@ public class UserWrapper {
 
     public void setPassword(String password) {
         this.password.set(password);
+        user.setPassword(password);
     }
 
     public int getIsadmin() {
@@ -54,6 +59,6 @@ public class UserWrapper {
 
     public void setIsadmin(int isadmin) {
         this.isadmin.set(isadmin);
+        user.setIsadmin(isadmin);
     }
-
 }

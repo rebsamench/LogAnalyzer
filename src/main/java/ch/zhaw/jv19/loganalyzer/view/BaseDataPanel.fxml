@@ -24,8 +24,9 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                            <TableView fx:id="baseDataUserTable" prefHeight="206.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <TableView fx:id="baseDataUserTable" maxWidth="400.0" minWidth="400.0" prefHeight="206.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 </TableView>
+                                    <Button fx:id="updateData" layoutX="412.0" layoutY="14.0" mnemonicParsing="false" onAction="#updateData" text="Update Data in DB" AnchorPane.leftAnchor="415.0" AnchorPane.topAnchor="15.0" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="131.0" prefWidth="598.0">
@@ -54,7 +55,7 @@
                                           <TextField fx:id="fieldName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <TextField fx:id="fieldPassword" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <TextField fx:id="fieldIsadmin" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                          <Button mnemonicParsing="false" onAction="#submitt" text="Submitt" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                          <Button fx:id="submit" mnemonicParsing="false" onAction="#submit" text="Submit" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                        </children>
                                     </GridPane>
                                  </children>

@@ -1,9 +1,10 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.model.AppDataController;
-import ch.zhaw.jv19.loganalyzer.util.UserWrapper;
+import ch.zhaw.jv19.loganalyzer.model.UserWrapper;
 import ch.zhaw.jv19.loganalyzer.model.User;
 import ch.zhaw.jv19.loganalyzer.model.dao.MySQLUserDAO;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -41,7 +43,10 @@ public class BaseDataUserPanelUIController implements Initializable {
     private TextField fieldIsadmin;
 
     @FXML
-    private Button submitt;
+    private Button submit;
+
+    @FXML
+    private Button updateData;
 
     @FXML
     private TableView<UserWrapper> baseDataUserTable;
@@ -68,6 +73,12 @@ public class BaseDataUserPanelUIController implements Initializable {
         setupPasswordColumn();
         setupIsadminColumn();
         baseDataUserTable.setEditable(true);
+        BooleanBinding booleanBind = fieldCreatedUser.textProperty().isEmpty()
+                .or(fieldName.textProperty().isEmpty())
+                .or(fieldPassword.textProperty().isEmpty())
+                        .or(fieldIsadmin.textProperty().isEmpty());
+
+        submit.disableProperty().bind(booleanBind);
     }
 
     private void populate() {
@@ -92,14 +103,7 @@ public class BaseDataUserPanelUIController implements Initializable {
     private void setupNameColumn() {
         TableColumn<UserWrapper, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         baseDataUserTable.getColumns().add(nameColumn);
-        nameColumn.setOnEditCommit(
-                (TableColumn.CellEditEvent<UserWrapper, String> t) ->
-                        (t.getTableView().getItems().get(
-                                t.getTablePosition().getRow())
-                        ).setName(t.getNewValue())
-        );
     }
 
     private void setupPasswordColumn() {
@@ -116,10 +120,19 @@ public class BaseDataUserPanelUIController implements Initializable {
     }
 
     private void setupIsadminColumn() {
-        TableColumn<UserWrapper, Integer> isadminColumn = new TableColumn<>("Is Admin?");
+        TableColumn<UserWrapper, Integer> isadminColumn = new TableColumn<>("Admin");
         isadminColumn.setCellValueFactory(new PropertyValueFactory<>("isadmin"));
-        //TODO not working properly
-        //isadminColumn.setCellFactory(TextFieldTableCell.forTableColumn();
+        isadminColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
+            @Override
+            public String toString(Integer integer) {
+                return Integer.toString(integer);
+            }
+
+            @Override
+            public Integer fromString(String s) {
+                return Integer.parseInt(s);
+            }
+        }));
         baseDataUserTable.getColumns().add(isadminColumn);
         isadminColumn.setOnEditCommit(
                 (TableColumn.CellEditEvent<UserWrapper, Integer> t) ->
@@ -129,9 +142,8 @@ public class BaseDataUserPanelUIController implements Initializable {
         );
     }
 
-    // TODO: does not work with empty fields
     @FXML
-    private void submitt() {
+    private void submit() {
         String createdUser = fieldCreatedUser.getText();
         String name = fieldName.getText();
         String password = fieldPassword.getText();
@@ -160,6 +172,16 @@ public class BaseDataUserPanelUIController implements Initializable {
         }
     }
 
+    @FXML
+    private void updateData() {
+        mySQLUserDAO = new MySQLUserDAO();
+        try {
+            mySQLUserDAO.updateUserData(appDataController.getUserList());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void checkUserDuplicates(UserWrapper newWrappedUser) {
         List listOfNames = new ArrayList();
         for (UserWrapper user : tableData) {
@@ -167,9 +189,8 @@ public class BaseDataUserPanelUIController implements Initializable {
         }
         if (listOfNames.contains(newWrappedUser.getName())) {
             doesNameExist = true;
-        }
-        else {
+        } else {
             doesNameExist = false;
-            }
         }
+    }
 }

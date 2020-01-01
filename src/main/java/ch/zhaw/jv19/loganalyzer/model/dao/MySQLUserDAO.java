@@ -7,6 +7,8 @@ import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,12 +16,14 @@ import java.sql.SQLException;
 
 /**
  * Provides interactions with MySQL database to get and write user data to database
+ *
  * @author Simon Rizzi, rizzisim@students.zhaw.ch
  */
 public class MySQLUserDAO implements UserDAO {
 
     /**
      * Gets user by name (primary key) from user table.
+     *
      * @param name user name
      * @return user object
      * @throws SQLException database exception
@@ -28,7 +32,7 @@ public class MySQLUserDAO implements UserDAO {
     public User getUserByName(String name) throws Exception {
         User user = null;
         Connection con = DBUtil.getConnection();
-        if(con != null) {
+        if (con != null) {
             PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user WHERE name = '?';");
             ResultSet rs = pstmt.executeQuery();
             user = extractUserFromResultSet(rs);
@@ -38,6 +42,7 @@ public class MySQLUserDAO implements UserDAO {
 
     /**
      * Gets all users from user table.
+     *
      * @return observable list of users
      * @throws SQLException database exception
      */
@@ -45,7 +50,7 @@ public class MySQLUserDAO implements UserDAO {
     public ObservableList<User> getAllUsersList() throws Exception {
         ObservableList<User> userList = FXCollections.observableArrayList();
         Connection con = DBUtil.getConnection();
-        if(con != null) {
+        if (con != null) {
             PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user;");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -57,7 +62,8 @@ public class MySQLUserDAO implements UserDAO {
 
     /**
      * Saves user in data base
-     * @param  user to be saved to data base
+     *
+     * @param user to be saved to data base
      * @return number of rows affected. if > 0 -> user has been saved.
      * @throws SQLException database exception
      */
@@ -86,6 +92,7 @@ public class MySQLUserDAO implements UserDAO {
 
     /**
      * Extracts user from Resultset.
+     *
      * @param rs result set
      * @return user object
      * @throws SQLException database exception
@@ -99,5 +106,24 @@ public class MySQLUserDAO implements UserDAO {
         user.setPassword(rs.getString("password"));
         user.setIsadmin(rs.getInt("isadmin"));
         return user;
+    }
+
+    public int[] updateUserData(ObservableList<User> userList) throws SQLException {
+        Connection connection = DBUtil.getConnection();
+        try {
+            // update user set createduser = 'a', password = 'a', isadmin = 1 where id = 17
+            PreparedStatement ps = connection.prepareStatement("UPDATE USER SET createduser = ?, password = ?, isadmin = ? WHERE id = ?");
+            for (User user : userList) {
+                ps.setString(1, user.getCreatedUser());
+                ps.setString(2, user.getPassword());
+                ps.setInt(3, user.getIsadmin());
+                ps.setInt(4, user.getId());
+                ps.addBatch();
+            }
+            return ps.executeBatch();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 }

@@ -12,10 +12,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class MySQLLogRecordWriteDAO implements LogRecordWriteDAO {
-    //TODO refactor: Insert should not happen in constructor
-    public MySQLLogRecordWriteDAO(List<LogRecord> logRecordList) throws Exception {
-        insertLogRecords(logRecordList);
-    }
+
+    public MySQLLogRecordWriteDAO() {}
 
     @Override
     public int[] insertLogRecords(List<LogRecord> logRecordList) throws Exception {

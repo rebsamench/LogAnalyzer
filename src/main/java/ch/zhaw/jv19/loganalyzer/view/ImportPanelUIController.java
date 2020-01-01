@@ -1,7 +1,7 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.model.*;
-import ch.zhaw.jv19.loganalyzer.util.FileWrapper;
+import ch.zhaw.jv19.loganalyzer.model.FileWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -74,13 +74,6 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         buildSelectedFilesTable(selectedFiles);
     }
 
-    public void buildSelectedFilesTable (ObservableList selectedFiles) {
-        TableColumn <FileWrapper, String> fileColumn  = new TableColumn<>("selected files");
-        fileColumn.setCellValueFactory(new PropertyValueFactory("name"));
-        showSelectedFiles.getColumns().add(fileColumn);
-        showSelectedFiles.setItems(selectedFiles);
-    }
-
     @FXML
     public void handleImportData() {
         User user = chooseCreatedUser.getSelectionModel().getSelectedItem();
@@ -93,4 +86,13 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         else {new FileImportController(user, site, busline, fileList);}
         appDataController.setMessage("Data Import completed");
     }
+
+    public void buildSelectedFilesTable (ObservableList selectedFiles) {
+        TableColumn <FileWrapper, String> fileColumn  = new TableColumn<>("selected files");
+        fileColumn.setCellValueFactory(new PropertyValueFactory("name"));
+        showSelectedFiles.getColumns().add(fileColumn);
+        showSelectedFiles.setItems(selectedFiles);
+    }
+
+
 }

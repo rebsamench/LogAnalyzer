@@ -78,7 +78,8 @@ public class FileImportController {
     }
 
     private void saveToDB(List<LogRecord> logRecordList) throws Exception {
-        MySQLLogRecordWriteDAO logRecordDAOWriter = new MySQLLogRecordWriteDAO(logRecordList);
+        MySQLLogRecordWriteDAO logRecordDAOWriter = new MySQLLogRecordWriteDAO();
+        logRecordDAOWriter.insertLogRecords(logRecordList);
     }
 
     private int convertMilliSeconds(String milliseconds) {

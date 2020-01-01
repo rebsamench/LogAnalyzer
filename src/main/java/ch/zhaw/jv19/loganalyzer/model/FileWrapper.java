@@ -1,4 +1,4 @@
-package ch.zhaw.jv19.loganalyzer.util;
+package ch.zhaw.jv19.loganalyzer.model;
 
 import javafx.beans.property.SimpleStringProperty;
 
