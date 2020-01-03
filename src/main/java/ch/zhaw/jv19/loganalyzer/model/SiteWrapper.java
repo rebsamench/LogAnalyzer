@@ -17,6 +17,7 @@ public class SiteWrapper {
         this.street = new SimpleStringProperty(site.getStreet());
         this.zipCode = new SimpleStringProperty(site.getZipCode());
         this.city = new SimpleStringProperty(site.getCity());
+        this.site = site;
     }
 
     public SiteWrapper (String createdUser, String name, String street, String zipCode, String city) {
@@ -33,6 +34,7 @@ public class SiteWrapper {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser.set(createdUser);
+        site.setCreatedUser(createdUser);
     }
 
     public String getName() {
@@ -41,6 +43,7 @@ public class SiteWrapper {
 
     public void setName(String name) {
         this.name.set(name);
+        site.setName(name);
     }
 
     public String getStreet() {
@@ -49,6 +52,7 @@ public class SiteWrapper {
 
     public void setStreet(String street) {
         this.street.set(street);
+        site.setStreet(street);
     }
 
     public String getZipCode() {
@@ -57,6 +61,7 @@ public class SiteWrapper {
 
     public void setZipCode(String zipCode) {
         this.zipCode.set(zipCode);
+        site.setZipCode(zipCode);
     }
 
     public String getCity() {
@@ -65,5 +70,6 @@ public class SiteWrapper {
 
     public void setCity(String city) {
         this.city.set(city);
+        site.setCity(city);
     }
 }

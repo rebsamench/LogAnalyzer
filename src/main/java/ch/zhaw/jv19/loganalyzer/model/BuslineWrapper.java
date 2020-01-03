@@ -13,6 +13,7 @@ public class BuslineWrapper {
         this.createdUser = new SimpleStringProperty(busline.getCreatedUser());
         this.name = new SimpleStringProperty(busline.getName());
         this.bustype = new SimpleStringProperty(busline.getBustype());
+        this.busline = busline;
     }
 
     public BuslineWrapper (String createdUser, String name, String bustype) {
@@ -27,6 +28,7 @@ public class BuslineWrapper {
 
     public void setCreatedUser(String createdUser) {
         this.createdUser.set(createdUser);
+        busline.setCreatedUser(createdUser);
     }
 
     public String getName() {
@@ -35,6 +37,7 @@ public class BuslineWrapper {
 
     public void setName(String name) {
         this.name.set(name);
+        busline.setName(name);
     }
 
     public String getBustype() {
@@ -43,5 +46,6 @@ public class BuslineWrapper {
 
     public void setBustype(String bustype) {
         this.bustype.set(bustype);
+        this.busline.setBustype(bustype);
     }
 }

@@ -82,4 +82,12 @@ public class AppData {
     public void addUser(User user) {
         userList.add(user);
     }
+
+    public void addSite(Site site) {
+        siteList.add(site);
+    }
+
+    public void addBusline(Busline busline) {
+        busLineList.add(busline);
+    }
 }

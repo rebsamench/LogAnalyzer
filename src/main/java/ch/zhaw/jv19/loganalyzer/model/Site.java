@@ -3,6 +3,7 @@ package ch.zhaw.jv19.loganalyzer.model;
 import java.time.ZonedDateTime;
 
 public class Site {
+
     private int id;
     private ZonedDateTime created;
     private String createdUser;
@@ -10,7 +11,17 @@ public class Site {
     private String street;
     private String zipCode;
     private String city;
-    private String timezone;
+    private String timezone = "UTC + 1";
+
+    public Site() {}
+
+    public Site(String createdUser, String name, String street, String zipCode, String city) {
+        this.createdUser = createdUser;
+        this.name = name;
+        this.street = street;
+        this.zipCode = zipCode;
+        this.city = city;
+    }
 
     public String getName() {
         return name;

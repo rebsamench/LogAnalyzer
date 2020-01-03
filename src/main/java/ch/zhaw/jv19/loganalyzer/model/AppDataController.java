@@ -173,4 +173,12 @@ public class AppDataController {
     public void addUserToUserList(User user) {
         appData.addUser(user);
     }
+
+    public void addSiteToSiteList(Site site) {
+        appData.addSite(site);
+    }
+
+    public void addBuslineToBuslineList(Busline busline) {
+        appData.addBusline(busline);
+    }
 }

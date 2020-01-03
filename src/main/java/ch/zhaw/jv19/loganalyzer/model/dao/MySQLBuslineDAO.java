@@ -1,6 +1,7 @@
 package ch.zhaw.jv19.loganalyzer.model.dao;
 
 import ch.zhaw.jv19.loganalyzer.model.Busline;
+import ch.zhaw.jv19.loganalyzer.model.User;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import ch.zhaw.jv19.loganalyzer.util.datatype.StringUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
@@ -46,17 +47,19 @@ public class MySQLBuslineDAO implements BusLineDAO {
     public int saveBusline(Busline busline) throws Exception {
         String[] values = {
                 StringUtil.addQuotes.apply(busline.getCreatedUser()),
+                StringUtil.addQuotes.apply(busline.getName()),
+                StringUtil.addQuotes.apply(busline.getBustype()),
         };
         String statementTemplate =
-                "INSERT INTO busline (createdUser, name, bustype) " +
+                "INSERT INTO busline (createduser, name, bustype) " +
                         "VALUES (" +
                         values[0] + "," +
                         values[1] + "," +
                         values[2] +
                         ") ON DUPLICATE KEY UPDATE " +
-                        " createdUser" + MySQLConst.EQUALS + values[0] +
-                        " name " + MySQLConst.EQUALS + values[1] +
-                        " bustype " + MySQLConst.EQUALS + values[2] +
+                        " createduser" + MySQLConst.EQUALS + values[0] +
+                        ", name " + MySQLConst.EQUALS + values[1] +
+                        ", bustype " + MySQLConst.EQUALS + values[2] +
                         MySQLConst.ENDQUERY;
         return DBUtil.executeUpdate(statementTemplate);
     }
@@ -69,6 +72,24 @@ public class MySQLBuslineDAO implements BusLineDAO {
         busline.setName(rs.getString("name"));
         busline.setBustype(rs.getString("bustype"));
         return busline;
+    }
+
+    public int[] updateBuslineData(ObservableList<Busline> buslineList) throws SQLException {
+        Connection connection = DBUtil.getConnection();
+        try {
+            PreparedStatement ps = connection.prepareStatement("UPDATE BUSLINE SET createduser = ?, name = ?, bustype = ? WHERE id = ?");
+            for (Busline busline : buslineList) {
+                ps.setString(1, busline.getCreatedUser());
+                ps.setString(2, busline.getName());
+                ps.setString(3, busline.getBustype());
+                ps.setInt(4, busline.getId());
+                ps.addBatch();
+            }
+            return ps.executeBatch();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
 }

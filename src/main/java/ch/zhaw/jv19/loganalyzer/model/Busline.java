@@ -9,6 +9,14 @@ public class Busline {
     String name;
     String bustype;
 
+    public Busline() {}
+
+    public Busline(String createdUser, String name, String bustype) {
+        this.createdUser = createdUser;
+        this.name = name;
+        this.bustype = bustype;
+    }
+
     public String getName() {
         return name;
     }

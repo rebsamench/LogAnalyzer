@@ -108,7 +108,7 @@
                                           <Button fx:id="buttonSubmitNewSite" mnemonicParsing="false" onAction="#submitNewSite" text="Submit" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                                           <Label text="Zip Code" GridPane.rowIndex="4" />
                                           <TextField fx:id="fieldZipCode" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                          <ComboBox fx:id="ComboBoxCreatedUserSite" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <ComboBox fx:id="comboBoxCreatedUserSite" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane>
                                  </children>
@@ -153,7 +153,7 @@
                                           <Label text="Bustype" GridPane.rowIndex="3" />
                                           <TextField fx:id="fieldBuslineName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <TextField fx:id="fieldBusType" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <Button mnemonicParsing="false" onAction="#submitNewBusline" text="Submit" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                          <Button fx:id="buttonSubmitNewBusline" mnemonicParsing="false" onAction="#submitNewBusline" text="Submit" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                           <ComboBox fx:id="comboBoxCreatedUserBusline" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane>
