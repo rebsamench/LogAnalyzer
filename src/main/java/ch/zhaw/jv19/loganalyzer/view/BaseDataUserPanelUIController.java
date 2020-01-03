@@ -1,18 +1,12 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
-import ch.zhaw.jv19.loganalyzer.model.AppDataController;
-import ch.zhaw.jv19.loganalyzer.model.UserWrapper;
-import ch.zhaw.jv19.loganalyzer.model.User;
+import ch.zhaw.jv19.loganalyzer.model.*;
 import ch.zhaw.jv19.loganalyzer.model.dao.MySQLUserDAO;
-import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
@@ -25,68 +19,151 @@ import java.util.ResourceBundle;
 
 public class BaseDataUserPanelUIController implements Initializable {
 
-    private ObservableList<UserWrapper> tableData = FXCollections.observableArrayList();
+    @FXML
+    Button buttonSubmitNewUser;
+    // Busline Tab Elements
+    @FXML
+    ComboBox comboBoxCreatedUserBusline;
+    private ObservableList<UserWrapper> userTableData = FXCollections.observableArrayList();
     private AppDataController appDataController;
     private MySQLUserDAO mySQLUserDAO;
     private boolean doesNameExist;
-
-    @FXML
-    private TextField fieldCreatedUser;
-
-    @FXML
-    private TextField fieldName;
+    private ObservableList<SiteWrapper> siteTableData = FXCollections.observableArrayList();
+    private ObservableList<BuslineWrapper> buslineTableData = FXCollections.observableArrayList();
 
     @FXML
     private TextField fieldPassword;
-
+    // User Tab Elements
     @FXML
-    private TextField fieldIsadmin;
-
+    private ComboBox comboBoxCreatedUserUser;
     @FXML
-    private Button submit;
-
+    private TextField fieldUserName;
     @FXML
-    private Button updateData;
-
+    private ComboBox comboBoxIsadmin;
     @FXML
     private TableView<UserWrapper> baseDataUserTable;
+    @FXML
+    private TableColumn<UserWrapper, String> columCreatedUserUser;
+    @FXML
+    private TableColumn<UserWrapper, String> columnNameUser;
+    @FXML
+    private TableColumn<UserWrapper, String> columnPassword;
+    @FXML
+    private TableColumn<UserWrapper, Integer> columnIsadmin;
+    // Site Tab Elements
+    @FXML
+    private ComboBox ComboBoxCreatedUserSite;
+    @FXML
+    private Button buttonSubmitNewSite;
+    @FXML
+    private TextField fieldSiteName;
+    @FXML
+    private TextField fieldStreetName;
+    @FXML
+    private TextField fieldZipCode;
+    @FXML
+    private TextField fieldCity;
+    @FXML
+    private TableView<SiteWrapper> baseDataSiteTable;
+    @FXML
+    private TableColumn<SiteWrapper, String> columnCreatedUserSite;
+    @FXML
+    private TableColumn<SiteWrapper, String> columnSiteName;
+    @FXML
+    private TableColumn<SiteWrapper, String> ColumnStreetname;
+    @FXML
+    private TableColumn<SiteWrapper, String> columnZipCode;
+    @FXML
+    private TableColumn<SiteWrapper, Integer> columnCity;
+    @FXML
+    private Button buttonSubmitNewBusline;
 
     @FXML
-    private TableColumn<UserWrapper, String> createdUserColumn;
+    private TextField fieldBuslineName;
 
     @FXML
-    private TableColumn<UserWrapper, String> nameColumn;
+    private TextField fieldBusType;
 
     @FXML
-    private TableColumn<UserWrapper, String> passwordColumn;
+    private TableView<BuslineWrapper> baseDataBuslineTable;
 
     @FXML
-    private TableColumn<UserWrapper, Integer> isadminColumn;
+    private TableColumn<BuslineWrapper, String> ColumnCreatedUserBusline;
+
+    @FXML
+    private TableColumn<BuslineWrapper, String> columnBuslineName;
+
+    @FXML
+    private TableColumn<BuslineWrapper, String> columnBusType;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appDataController = AppDataController.getInstance();
         populate();
-        baseDataUserTable.setItems(tableData);
-        setupCreatedUserColumn();
-        setupNameColumn();
-        setupPasswordColumn();
-        setupIsadminColumn();
-        baseDataUserTable.setEditable(true);
-        BooleanBinding booleanBind = fieldCreatedUser.textProperty().isEmpty()
-                .or(fieldName.textProperty().isEmpty())
-                .or(fieldPassword.textProperty().isEmpty())
-                        .or(fieldIsadmin.textProperty().isEmpty());
-
-        submit.disableProperty().bind(booleanBind);
+        initializeUserUserTab();
+        initializeSiteTab();
+        initializeBuslineTab();
     }
 
     private void populate() {
         for (User user : appDataController.getUserList()) {
-            tableData.add(new UserWrapper(user));
+            userTableData.add(new UserWrapper(user));
+        }
+        for (Site site : appDataController.getSiteList()) {
+            siteTableData.add(new SiteWrapper(site));
+        }
+        for (Busline busline : appDataController.getBuslineList()) {
+            buslineTableData.add(new BuslineWrapper(busline));
         }
     }
 
+    private void initializeUserUserTab() {
+        baseDataUserTable.setItems(userTableData);
+        comboBoxCreatedUserUser.getItems().addAll(appDataController.getUserList());
+        List<Integer> admin = new ArrayList();
+        admin.add(0);
+        admin.add(1);
+        comboBoxIsadmin.getItems().addAll(admin);
+        setupCreatedUserColumn();
+        setupUserNameColumn();
+        setupPasswordColumn();
+        setupIsadminColumn();
+        baseDataUserTable.setEditable(true);
+        buttonSubmitNewUser.disableProperty().bind((fieldUserName.textProperty().isEmpty())
+                .or(fieldPassword.textProperty().isEmpty())
+                .or(comboBoxIsadmin.valueProperty().isNull()));
+    }
+
+    private void initializeSiteTab() {
+        baseDataSiteTable.setItems(siteTableData);
+        ComboBoxCreatedUserSite.getItems().addAll(appDataController.getSiteList());
+        setupCreatedUserColumn();
+        setupSiteNameColumn();
+        setupStreetColumn();
+        setupZipCodeColumn();
+        setupCityColumn();
+        baseDataSiteTable.setEditable(true);
+        buttonSubmitNewSite.disableProperty().bind(
+                (fieldSiteName.textProperty().isEmpty())
+                        .or(fieldStreetName.textProperty().isEmpty())
+                        .or(fieldZipCode.textProperty().isEmpty())
+                        .or(fieldCity.textProperty().isEmpty()));
+    }
+
+    private void initializeBuslineTab() {
+        baseDataBuslineTable.setItems(buslineTableData);
+        comboBoxCreatedUserBusline.getItems().addAll(appDataController.getBuslineList());
+        setupCreatedUserColumn();
+        setupBuslineNameColumn();
+        setupBustypeColumn();
+        baseDataBuslineTable.setEditable(true);
+        buttonSubmitNewBusline.disableProperty().bind(
+                (fieldBuslineName.textProperty().isEmpty())
+                        .or(fieldBusType.textProperty().isEmpty()));
+    }
+
+    // Setup Columns
     private void setupCreatedUserColumn() {
         TableColumn<UserWrapper, String> createdUserColumn = new TableColumn<>("Created User");
         createdUserColumn.setCellValueFactory(new PropertyValueFactory<>("createdUser"));
@@ -100,7 +177,7 @@ public class BaseDataUserPanelUIController implements Initializable {
         );
     }
 
-    private void setupNameColumn() {
+    private void setupUserNameColumn() {
         TableColumn<UserWrapper, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         baseDataUserTable.getColumns().add(nameColumn);
@@ -142,38 +219,122 @@ public class BaseDataUserPanelUIController implements Initializable {
         );
     }
 
+    private void setupSiteNameColumn() {
+        TableColumn<SiteWrapper, String> columnSiteName = new TableColumn<>("Site Namen");
+        columnSiteName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnSiteName.setCellFactory(TextFieldTableCell.forTableColumn());
+        baseDataSiteTable.getColumns().add(columnSiteName);
+        columnSiteName.setOnEditCommit(
+                (TableColumn.CellEditEvent<SiteWrapper, String> t) ->
+                        (t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setName(t.getNewValue())
+        );
+    }
+
+    private void setupStreetColumn() {
+        TableColumn<SiteWrapper, String> columnStreetName = new TableColumn<>("Street");
+        columnStreetName.setCellValueFactory(new PropertyValueFactory<>("street"));
+        columnStreetName.setCellFactory(TextFieldTableCell.forTableColumn());
+        baseDataSiteTable.getColumns().add(columnStreetName);
+        columnStreetName.setOnEditCommit(
+                (TableColumn.CellEditEvent<SiteWrapper, String> t) ->
+                        (t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setStreet(t.getNewValue())
+        );
+    }
+
+    private void setupZipCodeColumn() {
+        TableColumn<SiteWrapper, String> columnZipCode = new TableColumn<>("ZIP Code");
+        columnZipCode.setCellValueFactory(new PropertyValueFactory<>("zipcode"));
+        columnZipCode.setCellFactory(TextFieldTableCell.forTableColumn());
+        baseDataSiteTable.getColumns().add(columnZipCode);
+        columnZipCode.setOnEditCommit(
+                (TableColumn.CellEditEvent<SiteWrapper, String> t) ->
+                        (t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setZipCode(t.getNewValue())
+        );
+    }
+
+    private void setupCityColumn() {
+        TableColumn<SiteWrapper, String> columnCity = new TableColumn<>("City");
+        columnCity.setCellValueFactory(new PropertyValueFactory<>("city"));
+        columnCity.setCellFactory(TextFieldTableCell.forTableColumn());
+        baseDataSiteTable.getColumns().add(columnCity);
+        columnCity.setOnEditCommit(
+                (TableColumn.CellEditEvent<SiteWrapper, String> t) ->
+                        (t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setCity(t.getNewValue())
+        );
+    }
+
+    private void setupBuslineNameColumn() {
+        TableColumn<BuslineWrapper, String> columnBuslineName = new TableColumn<>("Busline Name");
+        columnBuslineName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnBuslineName.setCellFactory(TextFieldTableCell.forTableColumn());
+        baseDataBuslineTable.getColumns().add(columnBuslineName);
+        columnBuslineName.setOnEditCommit(
+                (TableColumn.CellEditEvent<BuslineWrapper, String> t) ->
+                        (t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setName(t.getNewValue())
+        );
+    }
+
+    private void setupBustypeColumn() {
+        TableColumn<BuslineWrapper, String> columnBusType = new TableColumn<>("Bustyp");
+        columnBusType.setCellValueFactory(new PropertyValueFactory<>("bustype"));
+        columnBusType.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnBusType.getColumns().add(columnBusType);
+        columnBusType.setOnEditCommit(
+                (TableColumn.CellEditEvent<BuslineWrapper, String> t) ->
+                        (t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setBustype(t.getNewValue())
+        );
+    }
+
     @FXML
-    private void submit() {
-        String createdUser = fieldCreatedUser.getText();
-        String name = fieldName.getText();
+    private void submitNewUser() {
+        User createdUser = (User) comboBoxCreatedUserUser.getSelectionModel().getSelectedItem();
+        String cu = createdUser.getName();
+        String name = fieldUserName.getText();
         String password = fieldPassword.getText();
-        String isAdmin = fieldIsadmin.getText();
-        User newUser = new User(createdUser, name, password, Integer.parseInt(isAdmin));
+        int isAdmin = (int) comboBoxIsadmin.getSelectionModel().getSelectedItem();
+        User newUser = new User(cu, name, password, isAdmin);
         UserWrapper newWrappedUser = new UserWrapper(newUser);
         checkUserDuplicates(newWrappedUser);
-        fieldCreatedUser.clear();
-        fieldName.clear();
+        fieldUserName.clear();
         fieldPassword.clear();
-        fieldIsadmin.clear();
         if (doesNameExist) {
             appDataController.setMessage("User already exists!");
         } else {
             appDataController.addUserToUserList(newUser);
-            tableData.add(newWrappedUser);
+            userTableData.add(newWrappedUser);
             try {
                 mySQLUserDAO = new MySQLUserDAO();
                 mySQLUserDAO.saveUser(newUser);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                appDataController.setMessage("SQL Error");
+                appDataController.setMessage("New User successfully submitted");
             } catch (Exception e) {
                 e.printStackTrace();
+                appDataController.setMessage("SQL Error");
             }
         }
     }
 
     @FXML
-    private void updateData() {
+    private void submitNewSite() {
+    }
+
+    @FXML
+    private void submitNewBusline() {
+    }
+
+    @FXML
+    private void updateUserName() {
         mySQLUserDAO = new MySQLUserDAO();
         try {
             mySQLUserDAO.updateUserData(appDataController.getUserList());
@@ -182,9 +343,17 @@ public class BaseDataUserPanelUIController implements Initializable {
         }
     }
 
+    @FXML
+    private void updateSite() {
+    }
+
+    @FXML
+    private void updateBusline() {
+    }
+
     private void checkUserDuplicates(UserWrapper newWrappedUser) {
         List listOfNames = new ArrayList();
-        for (UserWrapper user : tableData) {
+        for (UserWrapper user : userTableData) {
             listOfNames.add(user.getName());
         }
         if (listOfNames.contains(newWrappedUser.getName())) {

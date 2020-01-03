@@ -1,6 +1,5 @@
 package ch.zhaw.jv19.loganalyzer.model;
 
-import ch.zhaw.jv19.loganalyzer.model.User;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
