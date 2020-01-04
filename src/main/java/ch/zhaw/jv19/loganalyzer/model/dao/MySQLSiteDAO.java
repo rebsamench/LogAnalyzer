@@ -1,7 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.model.dao;
 
 import ch.zhaw.jv19.loganalyzer.model.Site;
-import ch.zhaw.jv19.loganalyzer.model.User;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import ch.zhaw.jv19.loganalyzer.util.datatype.StringUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
@@ -71,7 +70,7 @@ public class MySQLSiteDAO implements SiteDAO {
         return DBUtil.executeUpdate(statementTemplate);
     }
 
-    private Site extractSiteFromResultSet(ResultSet rs) throws SQLException {
+    public Site extractSiteFromResultSet(ResultSet rs) throws SQLException {
         Site site = new Site();
         site.setId(rs.getInt("id"));
         site.setCreated(DateUtil.getZonedDateTimeFromDateTimeString(rs.getString("created"), MySQLConst.DATETIMEPATTERN));

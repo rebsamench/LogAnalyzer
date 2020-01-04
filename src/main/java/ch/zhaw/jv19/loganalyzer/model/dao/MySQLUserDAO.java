@@ -97,7 +97,7 @@ public class MySQLUserDAO implements UserDAO {
      * @return user object
      * @throws SQLException database exception
      */
-    private User extractUserFromResultSet(ResultSet rs) throws SQLException {
+    public User extractUserFromResultSet(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getInt("id"));
         user.setName(rs.getString("name"));

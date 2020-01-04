@@ -1,14 +1,12 @@
 package ch.zhaw.jv19.loganalyzer.model.dao;
 
 import ch.zhaw.jv19.loganalyzer.model.Busline;
-import ch.zhaw.jv19.loganalyzer.model.User;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import ch.zhaw.jv19.loganalyzer.util.datatype.StringUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -64,7 +62,7 @@ public class MySQLBuslineDAO implements BusLineDAO {
         return DBUtil.executeUpdate(statementTemplate);
     }
 
-    private Busline extractBuslineFromResultSet(ResultSet rs) throws SQLException {
+    public Busline extractBuslineFromResultSet(ResultSet rs) throws SQLException {
         Busline busline = new Busline();
         busline.setId(rs.getInt("id"));
         busline.setCreated(DateUtil.getZonedDateTimeFromDateTimeString(rs.getString("created"), MySQLConst.DATETIMEPATTERN));
@@ -91,5 +89,4 @@ public class MySQLBuslineDAO implements BusLineDAO {
         }
         return null;
     }
-
 }
