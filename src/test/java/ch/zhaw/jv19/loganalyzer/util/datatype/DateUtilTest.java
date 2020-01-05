@@ -1,24 +1,18 @@
 package ch.zhaw.jv19.loganalyzer.util.datatype;
 
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
+
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.Assert.*;
 
 public class DateUtilTest {
 
-    @org.junit.Before
-    public void setUp() throws Exception {
-    }
-
-    @org.junit.After
-    public void tearDown() throws Exception {
-    }
-
     @org.junit.Test
     public void getCurrentDateTimeString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        assertEquals(LocalDateTime.now().format(formatter),DateUtil.getCurrentDateTimeString("yyyy-MM-dd HH:mm:ss"));
     }
 
     @org.junit.Test
@@ -26,20 +20,6 @@ public class DateUtilTest {
         ZonedDateTime inputDateTime = ZonedDateTime.of(2020,1,1,15,59,0,0, ZoneId.systemDefault());
         String expectedResultDateTime = "2020-01-01 15:59:00";
         assertEquals(expectedResultDateTime, DateUtil.convertDateTimeToString(inputDateTime, "yyyy-MM-dd HH:mm:ss"));
-    }
-
-    @org.junit.Test (expected = DateTimeException.class)
-    public void convertDateTimeToStringInvalidMonth() {
-        // month out of range
-        ZonedDateTime inputDateTime = ZonedDateTime.of(2020,13,1,15,59,0,0, ZoneId.systemDefault());
-        DateUtil.convertDateTimeToString(inputDateTime, "yyyy-MM-dd HH:mm:ss");
-    }
-
-    @org.junit.Test (expected = DateTimeException.class)
-    public void convertDateTimeToStringInvalidHour() {
-        // minutes out of range
-        ZonedDateTime inputDateTime = ZonedDateTime.of(2020,1,1,15,60,0,0, ZoneId.systemDefault());
-        DateUtil.convertDateTimeToString(inputDateTime, "yyyy-MM-dd HH:mm:ss");
     }
 
     @org.junit.Test

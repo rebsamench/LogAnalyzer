@@ -1,10 +1,8 @@
 package ch.zhaw.jv19.loganalyzer.util.datatype;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * Provides date conversion methods.
@@ -29,8 +27,9 @@ public final class DateUtil {
      * Converts given ZonedDateTime to string with given pattern.
      * @param pattern pattern to format result
      * @return converted ZonedDateTime time as formatted string
+     * @throws DateTimeException if date is invalid (e. g. month is 13)
      */
-    public static String convertDateTimeToString(ZonedDateTime dateTime, String pattern) {
+    public static String convertDateTimeToString(ZonedDateTime dateTime, String pattern) throws DateTimeException  {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         return dateTime.format(formatter);
     }
@@ -65,8 +64,9 @@ public final class DateUtil {
      * Gets ZonedDateTime from String with given inputDateTimePattern
      * @param dateTime String representing date and time
      * @return ZonedDateTime with system time zone
+     * @throws DateTimeException if date is invalid (e. g. month is 13) or pattern doesnt match date
      */
-    public static ZonedDateTime getZonedDateTimeFromDateTimeString(String dateTime, String inputDateTimePattern) {
+    public static ZonedDateTime getZonedDateTimeFromDateTimeString(String dateTime, String inputDateTimePattern) throws DateTimeException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(inputDateTimePattern);
         return LocalDateTime.parse(dateTime, formatter).atZone(SYSTEM_ZONE);
     }
