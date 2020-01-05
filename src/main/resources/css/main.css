@@ -32,6 +32,21 @@
     -fx-border-color: darkgreen;
 }
 
+.t1 {
+    -fx-border-width: 1;
+    -fx-border-color: darkblue;
+}
+
+.b1 {
+    -fx-border-width: 1;
+    -fx-border-color: brown;
+}
+
+.v1 {
+    -fx-border-width: 1;
+    -fx-border-color: yellow;
+}
+
 .invalid {
     -fx-background-color: rgba(255,0,0,0.2);
 }

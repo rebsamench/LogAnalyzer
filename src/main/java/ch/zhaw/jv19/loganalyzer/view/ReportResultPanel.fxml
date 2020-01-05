@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.jv19.loganalyzer.view.ReportResultPanelUIController">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.jv19.loganalyzer.view.ReportResultPanelUIController">
    <children>
-      <VBox layoutY="300.0" prefHeight="118.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TableView fx:id="resultTable" />
+            <TableView fx:id="resultTable" VBox.vgrow="ALWAYS" />
             <ButtonBar prefHeight="40.0">
               <buttons>
                 <Button fx:id="exportButton" mnemonicParsing="false" onAction="#exportResultTable" text="Export" />

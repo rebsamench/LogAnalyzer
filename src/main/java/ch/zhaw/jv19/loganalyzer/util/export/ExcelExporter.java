@@ -12,14 +12,16 @@ import java.lang.reflect.Type;
 
 /**
  * Exports TableView to a Microsoft Excel file (XLSX).
+ *
  * @author Simon Rizzi, rizzisim@students.zhaw.ch
  */
 public class ExcelExporter {
 
     /**
      * Saves given table to given file.
+     *
      * @param table table view to be exported.
-     * @param file file to which table is exported.
+     * @param file  file to which table is exported.
      */
     public void saveTable(TableView<?> table, File file) {
         String filepath = file.getAbsolutePath();
@@ -56,7 +58,7 @@ public class ExcelExporter {
                     if (table.getColumns().get(j).getCellData(i) != null) {
                         Cell cell = row.createCell(j);
                         //set even columns color to grey
-                        if(i % 2 == 0) {
+                        if (i % 2 == 0) {
                             cell.setCellStyle(evenRowStyle);
                         } else {
                             cell.setCellStyle(oddRowStyle);
@@ -73,5 +75,6 @@ public class ExcelExporter {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 }

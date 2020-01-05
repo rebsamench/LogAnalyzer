@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -50,9 +49,6 @@
                                                 <HBox.margin>
                                                    <Insets left="5.0" />
                                                 </HBox.margin>
-                                          <tooltip>
-                                             <Tooltip text="Empty Tooltip" />
-                                          </tooltip>
                                              </TextField>
                                           </children>
                                           <GridPane.margin>
@@ -66,9 +62,6 @@
                                           <HBox.margin>
                                              <Insets left="5.0" />
                                           </HBox.margin>
-                                          <tooltip>
-                                             <Tooltip text="Empty Tooltip" />
-                                          </tooltip>
                                        </TextField>
                                     </children>
                                     <GridPane.margin>
@@ -82,9 +75,6 @@
                                           <HBox.margin>
                                              <Insets left="5.0" />
                                           </HBox.margin>
-                                          <tooltip>
-                                             <Tooltip text="Empty Tooltip" />
-                                          </tooltip>
                                        </TextField>
                                     </children>
                                     <GridPane.margin>
@@ -98,9 +88,6 @@
                                           <HBox.margin>
                                              <Insets left="5.0" />
                                           </HBox.margin>
-                                          <tooltip>
-                                             <Tooltip text="Empty Tooltip" />
-                                          </tooltip>
                                        </TextField>
                                     </children>
                                     <GridPane.margin>
@@ -167,14 +154,10 @@
                         </children>
                      </AnchorPane>
                </TitledPane>
-               <TitledPane id="tp2" text="Report">
+               <TitledPane id="tp2" text="Report" >
                   <content>
-                     <VBox>
-                        <children>
-                            <!-- fx:id must correspond (controller name without "Controller") with name of controller, see https://riptutorial.com/javafx/example/7285/nested-controllers-->
-                           <fx:include fx:id="reportResultPanelUI" source="ReportResultPanel.fxml" />
-                        </children>
-                     </VBox>
+                        <!-- fx:id must correspond (controller name without "Controller") with name of controller, see https://riptutorial.com/javafx/example/7285/nested-controllers-->
+                       <fx:include fx:id="reportResultPanelUI" source="ReportResultPanel.fxml" />
                   </content>
                </TitledPane>
             </children>

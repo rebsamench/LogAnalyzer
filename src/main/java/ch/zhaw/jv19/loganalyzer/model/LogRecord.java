@@ -1,7 +1,7 @@
 package ch.zhaw.jv19.loganalyzer.model;
 
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
-import ch.zhaw.jv19.loganalyzer.util.datatype.ImportFileConst;
+import ch.zhaw.jv19.loganalyzer.util.properties.ImportFileConst;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
 
 import java.time.ZonedDateTime;
