@@ -101,12 +101,12 @@ public class MySQLLogRecordReadDAO implements LogRecordReadDAO {
                     case "createdFrom":
                     case "loggedTimestampFrom":
                         conditionSb.append(MySQLConst.GT);
-                        conditionSb.append(StringUtil.addQuotes.apply(convertToString(entry.getValue())));
+                        conditionSb.append(StringUtil.wrapQuotes.apply(convertToString(entry.getValue())));
                         break;
                     case "createdUpTo":
                     case "loggedTimestampUpTo":
                         conditionSb.append(MySQLConst.LT);
-                        conditionSb.append(StringUtil.addQuotes.apply(convertToString(entry.getValue())));
+                        conditionSb.append(StringUtil.wrapQuotes.apply(convertToString(entry.getValue())));
                         break;
                     //list types -> IN conditions
                     case "createdUser":
@@ -126,7 +126,7 @@ public class MySQLLogRecordReadDAO implements LogRecordReadDAO {
                     case "message":
                         conditionSb.append(MySQLConst.LIKE);
                         String messageSubstring = entry.getValue().toString();
-                        conditionSb.append(StringUtil.addQuotes.apply(StringUtil.addPercent.apply(messageSubstring)));
+                        conditionSb.append(StringUtil.wrapQuotes.apply(StringUtil.wrapPercent.apply(messageSubstring)));
                         break;
                     default:
                         System.out.println(entry.getKey() + " with value " + entry.getValue() + " is not implemented in " +
@@ -210,7 +210,7 @@ public class MySQLLogRecordReadDAO implements LogRecordReadDAO {
             }
         } else if (object instanceof String) {
             // Wrap in %
-            condition = StringUtil.addQuotes.apply(StringUtil.addPercent.apply((String) object));
+            condition = StringUtil.wrapQuotes.apply(StringUtil.wrapPercent.apply((String) object));
         } else if (object instanceof Integer) {
             // Wrap in %
             condition = String.valueOf(object);
@@ -248,9 +248,9 @@ public class MySQLLogRecordReadDAO implements LogRecordReadDAO {
      * @return String
      */
     private String getInConditions(ArrayList<String> conditionList) {
-        return StringUtil.addBrackets.apply(
+        return StringUtil.wrapBrackets.apply(
                 conditionList.stream()
-                        .map(StringUtil.addQuotes)
+                        .map(StringUtil.wrapQuotes)
                         .collect(Collectors.joining(MySQLConst.SEPARATOR)
                         )
         );

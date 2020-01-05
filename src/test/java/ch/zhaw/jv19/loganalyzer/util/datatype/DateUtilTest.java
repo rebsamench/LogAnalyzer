@@ -1,12 +1,12 @@
 package ch.zhaw.jv19.loganalyzer.util.datatype;
-
-import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
-
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 import static org.junit.Assert.*;
-
+/**
+ * Provides unit tests for date conversion methods.
+ * @author Simon Rizzi, rizzisim@students.zhaw.ch
+ */
 public class DateUtilTest {
 
     @org.junit.Test

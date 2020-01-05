@@ -44,9 +44,9 @@ public class MySQLBuslineDAO implements BusLineDAO {
     @Override
     public int saveBusline(Busline busline) throws Exception {
         String[] values = {
-                StringUtil.addQuotes.apply(busline.getCreatedUser()),
-                StringUtil.addQuotes.apply(busline.getName()),
-                StringUtil.addQuotes.apply(busline.getBustype()),
+                StringUtil.wrapQuotes.apply(busline.getCreatedUser()),
+                StringUtil.wrapQuotes.apply(busline.getName()),
+                StringUtil.wrapQuotes.apply(busline.getBustype()),
         };
         String statementTemplate =
                 "INSERT INTO busline (createduser, name, bustype) " +

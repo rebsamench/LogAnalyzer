@@ -44,12 +44,12 @@ public class MySQLSiteDAO implements SiteDAO {
     @Override
     public int saveSite(Site site) throws Exception {
         String[] values = {
-                StringUtil.addQuotes.apply(site.getCreatedUser()),
-                StringUtil.addQuotes.apply(site.getName()),
-                StringUtil.addQuotes.apply(site.getStreet()),
-                StringUtil.addQuotes.apply(site.getZipCode()),
-                StringUtil.addQuotes.apply(site.getCity()),
-                StringUtil.addQuotes.apply(site.getTimezone())};
+                StringUtil.wrapQuotes.apply(site.getCreatedUser()),
+                StringUtil.wrapQuotes.apply(site.getName()),
+                StringUtil.wrapQuotes.apply(site.getStreet()),
+                StringUtil.wrapQuotes.apply(site.getZipCode()),
+                StringUtil.wrapQuotes.apply(site.getCity()),
+                StringUtil.wrapQuotes.apply(site.getTimezone())};
         String statementTemplate =
                 "INSERT INTO site (createduser, name, street, zipcode, city, timezone) " +
                         "VALUES (" +

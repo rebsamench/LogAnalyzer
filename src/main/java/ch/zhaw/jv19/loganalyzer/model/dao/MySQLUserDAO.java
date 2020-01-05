@@ -7,7 +7,6 @@ import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -70,10 +69,10 @@ public class MySQLUserDAO implements UserDAO {
     @Override
     public int saveUser(User user) throws Exception {
         String[] values = {
-                StringUtil.addQuotes.apply(user.getCreatedUser()),
-                StringUtil.addQuotes.apply(user.getName()),
-                StringUtil.addQuotes.apply(user.getPassword()),
-                StringUtil.addQuotes.apply(String.valueOf(user.getIsadmin()))};
+                StringUtil.wrapQuotes.apply(user.getCreatedUser()),
+                StringUtil.wrapQuotes.apply(user.getName()),
+                StringUtil.wrapQuotes.apply(user.getPassword()),
+                StringUtil.wrapQuotes.apply(String.valueOf(user.getIsadmin()))};
         String statementTemplate =
                 "INSERT INTO user (createdUser, name, password, isadmin) " +
                         "VALUES (" +
