@@ -21,6 +21,7 @@ public class PropertyHandler {
     private PropertyHandler() {
         InputStream input = null;
         try {
+            // when startup parameter -DCONFIG_DIR is set, use custom properties
             if (System.getProperty("CONFIG_DIR") != null) {
                 filepath = System.getProperty("CONFIG_DIR") + "/loganalyzer.properties";
             }

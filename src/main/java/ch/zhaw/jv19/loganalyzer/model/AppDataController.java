@@ -8,7 +8,7 @@ import javafx.scene.control.TableView;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * Provides access to base data for loganalyzer app from UI. Every UI panel has access to AppDataController
@@ -111,12 +111,12 @@ public class AppDataController {
 
     /**
      * Gets log records from responsible DAO as array list.
-     * @param searchConditions: HashMap(columnName, conditionValue): conditionValues can either be simple Strings,
+     * @param searchConditions: TreeMap(columnName, conditionValue): conditionValues can either be simple Strings,
      *                          ZonedDateTime-Objects or ArrayLists of Strings for IN conditions etc. For Details see
      *                          methods in DAO
      * @return ArrayList of log records that meet search conditions
      */
-    public ArrayList<LogRecord> getLogRecordsListByConditions(HashMap<String, Object> searchConditions) {
+    public ArrayList<LogRecord> getLogRecordsListByConditions(TreeMap<String, Object> searchConditions) {
         LogRecordReadDAO logRecordReadDAO = new MySQLLogRecordReadDAO();
         ArrayList<LogRecord> resultList = logRecordReadDAO.getLogRecordsListByConditions(searchConditions);
         setMessage(logRecordReadDAO.getCurrentQuery());

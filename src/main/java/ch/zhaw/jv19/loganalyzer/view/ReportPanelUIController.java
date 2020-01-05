@@ -18,8 +18,8 @@ import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 /**
  * Controls ui interactions of report panel. Provides form to select criteria for log record
@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  */
 // TODO DatePicker cannot be nulled after date is set
 public class ReportPanelUIController implements Initializable, UIPanelController {
-    private HashMap<String, Object> formData;
+    private TreeMap<String, Object> formData;
     @FXML
     private DatePicker createdFrom;
     @FXML
@@ -150,10 +150,10 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     }
 
     /**
-     * Collects all entered form data in a hashmap and stores map in instance variable formData
+     * Collects all entered form data in a tree map and stores map in instance variable formData
      */
     private void prepareFormData() {
-        formData = new HashMap<>();
+        formData = new TreeMap<>();
         if (createdFrom.getValue() != null) {
             formData.put(createdFrom.getId(), createdFromTime.getText().trim().isEmpty() ?
                     DateUtil.getSystemTimezoneStartOfDayFromDate(createdFrom.getValue()) :

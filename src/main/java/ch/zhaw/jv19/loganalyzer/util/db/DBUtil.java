@@ -30,7 +30,7 @@ public class DBUtil {
                 throw new SQLException("Failed to connect to " + propHandler.getValue("db.conn.url") + ": " + e.getMessage());
             }
         } catch (ClassNotFoundException e) {
-            System.out.println("Driver not found.");
+            System.out.println("Driver " + propHandler.getValue("db.driver.class") + " not found.");
         }
         return con;
     }

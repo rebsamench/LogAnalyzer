@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 public class ReportInspectionDialogUIController extends ExportPanelUIController implements Initializable, UIPanelController {
     @FXML
@@ -25,7 +26,7 @@ public class ReportInspectionDialogUIController extends ExportPanelUIController 
     }
 
     public void showSurroundingLogRecordsTable(LogRecord logRecord, int secondsBefore, int secondsAfter) {
-        HashMap<String, Object> searchConditions = new HashMap<>();
+        TreeMap<String, Object> searchConditions = new TreeMap<>();
         searchConditions.put("loggedTimestampFrom", logRecord.getTimestamp().minusSeconds(secondsBefore));
         searchConditions.put("loggedTimestampUpTo", logRecord.getTimestamp().plusSeconds(secondsAfter));
         searchConditions.put("site", FXCollections.observableArrayList(logRecord.getSite()));
