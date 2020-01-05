@@ -5,6 +5,7 @@ import ch.zhaw.jv19.loganalyzer.util.export.ExcelExporter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -170,15 +171,45 @@ public class AppDataController {
                 .orElse(null);
     }
 
+    /**
+     * Adds given user to user list.
+     * @param user to be added
+     */
     public void addUserToUserList(User user) {
         appData.addUser(user);
     }
 
+    /**
+     * Adds given site to site list.
+     * @param site to be added
+     */
     public void addSiteToSiteList(Site site) {
         appData.addSite(site);
     }
 
+    /**
+     * Adds given bus line to bus line list.
+     * @param busline to be added
+     */
     public void addBuslineToBuslineList(Busline busline) {
         appData.addBusline(busline);
     }
+
+    /**
+     * Fills panel list with available UI panels
+     * @param panelList
+     */
+    public void fillPanelList(ArrayList<AnchorPane> panelList) {
+        appData.fillPanelList(panelList);
+    }
+
+    /**
+     * Gets list ov available UI panels.
+     * @return
+     */
+    public ObservableList<String> getPanelList() {
+        return appData.getPanelList();
+    }
+
+
 }

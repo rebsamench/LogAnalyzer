@@ -6,10 +6,7 @@ import ch.zhaw.jv19.loganalyzer.util.properties.PropertyHandler;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -17,6 +14,7 @@ import java.util.ResourceBundle;
 
 /**
  * Controls changes to settings.
+ *
  * @author Simon Rizzi, rizzisim@students.zhaw.ch
  */
 public class SettingsPanelUIController implements Initializable, UIPanelController {
@@ -34,6 +32,8 @@ public class SettingsPanelUIController implements Initializable, UIPanelControll
     private Button dbApplyChangesButton;
     @FXML
     private CheckBox clearMessageBoxOnPanelChangeCb;
+    @FXML
+    private ComboBox<String> availablePanelComboBox;
     private HashMap<String, String> settingsMap = new HashMap<>();
     private SimpleBooleanProperty hasUnchangedSettings = new SimpleBooleanProperty();
 
@@ -45,12 +45,46 @@ public class SettingsPanelUIController implements Initializable, UIPanelControll
         dbTestConnectionButton.disableProperty().bind(hasUnchangedSettings);
         dbApplyChangesButton.disableProperty().bind(hasUnchangedSettings.not());
         dbJDBC.setText(propHandler.getValue("db.conn.url"));
+        dbJDBC.textProperty().addListener((obs, oldText, newText) -> {
+            hasUnchangedSettings.set(true);
+            settingsMap.put("db.conn.url", dbJDBC.getText());
+        });
         dbUsername.setText(propHandler.getValue("db.username"));
+        dbUsername.textProperty().addListener((obs, oldText, newText) -> {
+            hasUnchangedSettings.set(true);
+            settingsMap.put("db.username", dbUsername.getText());
+        });
         dbPassword.setText(propHandler.getValue("db.password"));
-        observeTextAreaChanges(dbJDBC);
-        observeTextFieldChanges(dbUsername);
-        observeTextFieldChanges(dbPassword);
+        dbUsername.textProperty().addListener((obs, oldText, newText) -> {
+            hasUnchangedSettings.set(true);
+            settingsMap.put("db.password", dbPassword.getText());
+        });
         clearMessageBoxOnPanelChangeCb.setSelected(Boolean.parseBoolean(propHandler.getValue("clearMessageBoxOnPanelChange")));
+        clearMessageBoxOnPanelChangeCb.selectedProperty().addListener((obs, oldValue, newValue) -> {
+            settingsMap.put("clearMessageBoxOnPanelChange", clearMessageBoxOnPanelChangeCb.selectedProperty().getValue().toString());
+            propHandler.writePropertiesFromMap(settingsMap);
+            settingsMap.clear();
+        });
+        // when initialize method is called by fxml loader, panelList in AppData is still empty
+        availablePanelComboBox.addEventHandler(ComboBox.ON_SHOWING, event -> {
+            fillPanelComboBox();
+        });
+        availablePanelComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
+            settingsMap.put("selectedPanelOnStartup", availablePanelComboBox.getSelectionModel().getSelectedItem());
+            propHandler.writePropertiesFromMap(settingsMap);
+            settingsMap.clear();
+        });
+    }
+
+    /**
+     * Fills panel combobox and selects default panel on first click,
+     * since panel list in appdata is not filled, when panel is initialized
+     */
+    private void fillPanelComboBox() {
+        if (availablePanelComboBox.getItems().size() == 0) {
+            availablePanelComboBox.setItems(appDataController.getPanelList());
+            availablePanelComboBox.getSelectionModel().select(propHandler.getValue("selectedPanelOnStartup"));
+        }
     }
 
     /**
@@ -61,7 +95,7 @@ public class SettingsPanelUIController implements Initializable, UIPanelControll
         try {
             DBUtil.getConnection();
             appDataController.setMessage("Database successfully connected.");
-            } catch (Exception e) {
+        } catch (Exception e) {
             appDataController.setMessage("Connection failed. Check connection settings." + "\n" +
                     e.getMessage());
         }
@@ -71,29 +105,10 @@ public class SettingsPanelUIController implements Initializable, UIPanelControll
      * Applies changes to properties file.
      */
     @FXML
-    public void applyChanges() {
-        settingsMap.put("db.conn.url",dbJDBC.getText());
-        settingsMap.put("db.username", dbUsername.getText());
-        settingsMap.put("db.password",dbPassword.getText());
+    public void applyDBSettingChanges() {
         propHandler.writePropertiesFromMap(settingsMap);
+        //reset
+        settingsMap.clear();
         hasUnchangedSettings.set(false);
-    }
-
-    /**
-     * Adds change listener to text area to observe for changes.
-     * Sets hasUnchangedSettings to true if text area was changed.
-     * @param textArea text area to observe
-     */
-    private void observeTextAreaChanges(TextArea textArea) {
-        textArea.textProperty().addListener((obs, oldText, newText) -> hasUnchangedSettings.set(true));
-    }
-
-    /**
-     * Adds change listener to text field to observe for changes.
-     * Sets hasUnchangedSettings to true if text area was changed.
-     * @param textField text field to observe
-     */
-    private void observeTextFieldChanges(TextField textField) {
-        textField.textProperty().addListener((obs, oldText, newText) -> hasUnchangedSettings.set(true));
     }
 }

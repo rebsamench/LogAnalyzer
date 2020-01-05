@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -45,12 +46,12 @@
                                     <Insets bottom="10.0" top="10.0" />
                                  </GridPane.margin></TextArea>
                               <TextField fx:id="dbPassword" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
-                              <TextField fx:id="dbUsername" onAction="#applyChanges" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                              <TextField fx:id="dbUsername" onAction="#applyDBSettingChanges" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
                               <Label text="User" GridPane.rowIndex="1" />
                               <ButtonBar GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2">
                                 <buttons>
                                   <Button fx:id="dbTestConnectionButton" mnemonicParsing="false" onAction="#testDbConnection" text="Test Connection" />
-                                    <Button fx:id="dbApplyChangesButton" mnemonicParsing="false" onAction="#applyChanges" text="Apply" />
+                                    <Button fx:id="dbApplyChangesButton" mnemonicParsing="false" onAction="#applyDBSettingChanges" text="Apply" />
                                 </buttons>
                               </ButtonBar>
                            </children>
@@ -76,6 +77,8 @@
                            <children>
                               <CheckBox fx:id="clearMessageBoxOnPanelChangeCb" mnemonicParsing="false" GridPane.columnIndex="1" />
                               <Label text="Clear message box on panel change" />
+                              <Label text="Selected panel on app startup" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="availablePanelComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </children></AnchorPane>

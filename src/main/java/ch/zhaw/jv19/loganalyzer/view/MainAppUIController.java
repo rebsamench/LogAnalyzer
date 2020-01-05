@@ -1,4 +1,5 @@
 package ch.zhaw.jv19.loganalyzer.view;
+
 import ch.zhaw.jv19.loganalyzer.MainApp;
 import ch.zhaw.jv19.loganalyzer.model.AppDataController;
 import ch.zhaw.jv19.loganalyzer.util.properties.PropertyHandler;
@@ -10,7 +11,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -59,6 +59,10 @@ public class MainAppUIController implements Initializable {
         addPanelToPanelList("ReportPanel");
         addPanelToPanelList("SettingsPanel");
         addPanelToPanelList("BaseDataPanel");
+        //make panel list available on appdata for further usage
+        appDataController.fillPanelList(uiPanels);
+        // select default panel defined in properties
+        selectPanel(PropertyHandler.getInstance().getValue("selectedPanelOnStartup"));
     }
 
     /**
@@ -121,7 +125,8 @@ public class MainAppUIController implements Initializable {
                 uiPanels.add(pane);
             }
             else {
-                System.out.println("Panel not added: Top level pane in Panel " + fxmlName + " has no fx:id.");
+                appDataController.setMessage("Panel not added: Top level pane in Panel " + fxmlName + " has no id attribute" +
+                        " or id attribute does not match name of fxml file.");
             }
         } catch (IOException e) {
             e.printStackTrace();

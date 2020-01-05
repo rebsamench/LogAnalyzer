@@ -3,9 +3,9 @@ package ch.zhaw.jv19.loganalyzer.model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.AnchorPane;
+
 import java.util.ArrayList;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Provides base data for loganalyzer app. Instance created (singleton) and data loaded from storage on app startup.
@@ -18,6 +18,7 @@ public class AppData {
     private ObservableList<Busline> busLineList;
     private ObservableList<EventType> eventTypeList;
     private ObservableList<Source> sourceList;
+    private ObservableList<String> panelList;
     private final SimpleStringProperty message;
     private static AppData instance;
 
@@ -79,6 +80,10 @@ public class AppData {
         return sourceList;
     }
 
+    public ObservableList<String> getPanelList() {
+        return panelList;
+    }
+
     public void addUser(User user) {
         userList.add(user);
     }
@@ -89,5 +94,12 @@ public class AppData {
 
     public void addBusline(Busline busline) {
         busLineList.add(busline);
+    }
+
+    public void fillPanelList(ArrayList<AnchorPane> availablePanelList) {
+        panelList = FXCollections.observableArrayList();
+        for(AnchorPane panel : availablePanelList) {
+            panelList.add(panel.getId());
+        }
     }
 }
