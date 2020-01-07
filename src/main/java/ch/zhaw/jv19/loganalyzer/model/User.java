@@ -2,6 +2,11 @@ package ch.zhaw.jv19.loganalyzer.model;
 
 import java.time.ZonedDateTime;
 
+/**
+ * Holds all the data for a single user and provides getter and setter methods to alter data.
+ *
+ * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ */
 public class User {
     private int id;
     private ZonedDateTime created;

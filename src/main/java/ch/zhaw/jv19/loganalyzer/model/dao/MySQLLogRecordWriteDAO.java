@@ -13,8 +13,21 @@ import java.util.List;
 
 public class MySQLLogRecordWriteDAO implements LogRecordWriteDAO {
 
+    /**
+     * Receives a logRecordList and does the insert to the data base.
+     *
+     * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+     */
     public MySQLLogRecordWriteDAO() {}
 
+    /**
+     * Gets a logRecordList and generates the insert statements for each logRecord. Statements are
+     * processed as a batch.
+     *
+     * @param logRecordList : list of logRecords
+     * @return : returns an int[], representing the altered rows in the data base.
+     * @throws Exception
+     */
     @Override
     public int[] insertLogRecords(List<LogRecord> logRecordList) throws Exception {
         Connection connection = DBUtil.getConnection();

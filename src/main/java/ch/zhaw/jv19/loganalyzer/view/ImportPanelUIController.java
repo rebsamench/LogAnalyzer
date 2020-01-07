@@ -18,6 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Handles user interactions on the import panel.
+ * Collects the chosen data and hands it over to the FileImportController as a list of files.
+ *
+ * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ */
 public class ImportPanelUIController implements Initializable, UIPanelController {
     private AppDataController appDataController;
     private List<File> fileList;
@@ -52,6 +58,10 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         chooseBusline.getItems().addAll(appDataController.getBuslineList());
     }
 
+
+    /**
+     * Makes a file chooser available and collects the chosen files in a list.
+     */
     @FXML
     public void handleSelectedLogFiles() {
         // Set extension filter
@@ -63,6 +73,12 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         showSelectedFiles(fileList);
     }
 
+    /**
+     * Wraps the files in the file list in a FileWrapper and hand it over to the table view.
+     * The wrapper is necessary for the table view.
+     *
+     * @param fileList: list of chosen files for import.
+     */
     @FXML
     public void showSelectedFiles(List<File> fileList) {
         ArrayList listToArrayList = new ArrayList();
@@ -74,25 +90,38 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         buildSelectedFilesTable(selectedFiles);
     }
 
+    /**
+     * Bundles all the selected data such as user, site, busline and the selected files and hands it over to
+     * the the FileImportController.
+     */
     @FXML
     public void handleImportData() {
         User user = chooseCreatedUser.getSelectionModel().getSelectedItem();
         Site site = chooseSite.getSelectionModel().getSelectedItem();
         Busline busline = chooseBusline.getSelectionModel().getSelectedItem();
-        if(user == null) {appDataController.setMessage("Select Created User!");}
-        else if(site == null) {appDataController.setMessage("Select site!");}
-        else if(busline == null){appDataController.setMessage("Select Busline!");}
-        else if(fileList == null){appDataController.setMessage("No files selected!");}
-        else {new FileImportController(user, site, busline, fileList);}
+        if (user == null) {
+            appDataController.setMessage("Select Created User!");
+        } else if (site == null) {
+            appDataController.setMessage("Select site!");
+        } else if (busline == null) {
+            appDataController.setMessage("Select Busline!");
+        } else if (fileList == null) {
+            appDataController.setMessage("No files selected!");
+        } else {
+            new FileImportController(user, site, busline, fileList);
+        }
         appDataController.setMessage("Data Import completed");
     }
 
-    public void buildSelectedFilesTable (ObservableList selectedFiles) {
-        TableColumn <FileWrapper, String> fileColumn  = new TableColumn<>("selected files");
+    /**
+     * Creates a table view of the selected files.
+     *
+     * @param selectedFiles : observable list of the selected files.
+     */
+    public void buildSelectedFilesTable(ObservableList selectedFiles) {
+        TableColumn<FileWrapper, String> fileColumn = new TableColumn<>("selected files");
         fileColumn.setCellValueFactory(new PropertyValueFactory("name"));
         showSelectedFiles.getColumns().add(fileColumn);
         showSelectedFiles.setItems(selectedFiles);
     }
-
-
 }

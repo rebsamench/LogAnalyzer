@@ -13,8 +13,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Provides functionality for extraction, update and save of data from and to data base.
+ *
+ * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ */
 public class MySQLBuslineDAO implements BusLineDAO {
 
+    /**
+     * Reads a single busline from data base.
+     *
+     * @param name : busline name
+     * @return : Busline instance
+     * @throws Exception
+     */
     @Override
     public Busline getBuslineByName(String name) throws Exception {
         Busline busline = null;
@@ -27,6 +39,12 @@ public class MySQLBuslineDAO implements BusLineDAO {
         return busline;
     }
 
+    /**
+     * Returns a list of all buslines in the data base.
+     *
+     * @return : list of buslines
+     * @throws Exception
+     */
     @Override
     public ObservableList<Busline> getAllBuslinesList() throws Exception {
         ObservableList<Busline> buslineList = FXCollections.observableArrayList();
@@ -41,6 +59,13 @@ public class MySQLBuslineDAO implements BusLineDAO {
         return buslineList;
     }
 
+    /**
+     * Saves a single busline instance to the data base.
+     *
+     * @param busline : busline instance
+     * @return : int represents the row count.
+     * @throws Exception
+     */
     @Override
     public int saveBusline(Busline busline) throws Exception {
         String[] values = {
@@ -62,6 +87,13 @@ public class MySQLBuslineDAO implements BusLineDAO {
         return DBUtil.executeUpdate(statementTemplate);
     }
 
+    /**
+     * Extracts a single busline from a result set.
+     *
+     * @param rs : result set
+     * @return
+     * @throws SQLException
+     */
     public Busline extractBuslineFromResultSet(ResultSet rs) throws SQLException {
         Busline busline = new Busline();
         busline.setId(rs.getInt("id"));
@@ -72,6 +104,13 @@ public class MySQLBuslineDAO implements BusLineDAO {
         return busline;
     }
 
+    /**
+     * Updates busline date in the data base provided in a list.
+     *
+     * @param buslineList : list for buslines
+     * @return : int[] representing the updated rows
+     * @throws SQLException
+     */
     public int[] updateBuslineData(ObservableList<Busline> buslineList) throws SQLException {
         Connection connection = DBUtil.getConnection();
         try {

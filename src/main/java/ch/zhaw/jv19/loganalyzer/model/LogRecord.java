@@ -21,6 +21,11 @@ public class LogRecord {
     private Source source;
     private String message;
 
+    /**
+     * Holds all the data for a single logRecord and provides getter and setter methods.
+     *
+     * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+     */
     public LogRecord(){}
 
     public LogRecord(String timestamp, int milliseconds, String eventType, String source, String message, User user, Site site, Busline busline) {
@@ -82,6 +87,11 @@ public class LogRecord {
         return uniqueIdentifier;
     }
 
+    /**
+     * Creates a unique identifier for each logRecord.
+     *
+     * @param address : bus address. Is unique in a busline.
+     */
     public void setUniqueIdentifier(int address) {
         this.uniqueIdentifier = (site.getId() +
                 busline.getId() +

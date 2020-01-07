@@ -2,6 +2,13 @@ package ch.zhaw.jv19.loganalyzer.model;
 
 import javafx.beans.property.SimpleStringProperty;
 
+
+ /**
+ * Wraps a site object in order to provide property fields.
+ * This is necessary for editable table views.
+ *
+ * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ */
 public class SiteWrapper {
 
     private Site site;

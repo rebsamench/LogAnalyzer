@@ -13,6 +13,12 @@ public class Site {
     private String city;
     private String timezone = "UTC + 1";
 
+    /**
+     * A site object holds all the data that describes one site.
+     * A site can consist of multiple buslines.
+     *
+     * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+     */
     public Site() {}
 
     public Site(String createdUser, String name, String street, String zipCode, String city) {

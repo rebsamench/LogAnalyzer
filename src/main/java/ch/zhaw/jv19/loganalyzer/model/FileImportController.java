@@ -6,6 +6,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Receives the collected import data from ImportPanelUIController and processes it to an appropriate form,
+ * ready for the data base import.
+ *
+ * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ */
 public class FileImportController {
 
     private User user;
@@ -30,6 +36,15 @@ public class FileImportController {
         }
     }
 
+    /**
+     * Creates a list of log files.
+     * The received files are processed and LogRecords are generated from each line in the input files.
+     * The header rows of each file are skipped, because these are of minor interest.
+     * The bus address is extracted and added to each logRecord and a unique identifier is created and added to
+     * each LogRecord as well.
+     *
+     * @param fileList : list of the selected files for import.
+     */
     private void createLogFiles(List<File> fileList) {
         try {
             logFileList = new ArrayList<>();
@@ -68,6 +83,12 @@ public class FileImportController {
         }
     }
 
+    /**
+     * Extracts the logRecords from the logFileList and collects them in a LogRecordList
+     * This is the appropriate for for data base insert.
+     *
+     * @param logFileList : list of logFiles
+     */
     private void createLogRecordList(List<LogFile> logFileList) {
         logRecordList = new ArrayList<>();
         for (LogFile logFile : logFileList) {
@@ -77,11 +98,23 @@ public class FileImportController {
         }
     }
 
+    /**
+     * Hands the LogRecordList over to the logRecordDAOWriter.
+     *
+     * @param logRecordList : List of LogRecords
+     * @throws Exception
+     */
     private void saveToDB(List<LogRecord> logRecordList) throws Exception {
         MySQLLogRecordWriteDAO logRecordDAOWriter = new MySQLLogRecordWriteDAO();
         logRecordDAOWriter.insertLogRecords(logRecordList);
     }
 
+    /**
+     * Converts the millisecond string to an int
+     *
+     * @param milliseconds : milliseconds as a string
+     * @return: milliseconds as an int
+     */
     private int convertMilliSeconds(String milliseconds) {
         String[] millis = milliseconds.split(" ");
         return Integer.parseInt(millis[0]);
