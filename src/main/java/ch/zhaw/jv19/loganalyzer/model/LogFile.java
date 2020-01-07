@@ -12,7 +12,7 @@ public class LogFile {
     public LogFile() {
         recordlist = new ArrayList<>();
     }
-
+    
     public void addLogRecord(LogRecord logRecord) {
         recordlist.add(logRecord);
     }
@@ -34,8 +34,5 @@ public class LogFile {
         this.addressSet = true;
     }
 
-    public void setRecordlist(List<LogRecord> recordlist) {
-        this.recordlist = recordlist;
-    }
 }
 
