@@ -2,6 +2,7 @@ package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.model.*;
 import ch.zhaw.jv19.loganalyzer.model.FileWrapper;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -56,6 +57,13 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         chooseCreatedUser.getItems().addAll(appDataController.getUserList());
         chooseSite.getItems().addAll(appDataController.getSiteList());
         chooseBusline.getItems().addAll(appDataController.getBuslineList());
+        selectLogFiles.disableProperty().bind((chooseSite.valueProperty().isNull())
+                .or(chooseBusline.valueProperty().isNull())
+                .or(chooseCreatedUser.valueProperty().isNull()));
+        importData.disableProperty().bind((chooseSite.valueProperty().isNull())
+                .or(chooseBusline.valueProperty().isNull())
+                .or(chooseCreatedUser.valueProperty().isNull())
+                .or(Bindings.size(selectedFiles).isEqualTo(0)));
     }
 
 
@@ -99,18 +107,12 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         User user = chooseCreatedUser.getSelectionModel().getSelectedItem();
         Site site = chooseSite.getSelectionModel().getSelectedItem();
         Busline busline = chooseBusline.getSelectionModel().getSelectedItem();
-        if (user == null) {
-            appDataController.setMessage("Select Created User!");
-        } else if (site == null) {
-            appDataController.setMessage("Select site!");
-        } else if (busline == null) {
-            appDataController.setMessage("Select Busline!");
-        } else if (fileList == null) {
-            appDataController.setMessage("No files selected!");
-        } else {
-            new FileImportController(user, site, busline, fileList);
-        }
+        new FileImportController(user, site, busline, fileList);
         appDataController.setMessage("Data Import completed");
+        showSelectedFiles.getItems().clear();
+        chooseCreatedUser.getItems().clear();
+        chooseBusline.getItems().clear();
+        chooseSite.getItems().clear();
     }
 
     /**
