@@ -11,13 +11,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Receives a logRecordList and does the insert to the data base.
+ *
+ * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ */
 public class MySQLLogRecordWriteDAO implements LogRecordWriteDAO {
 
-    /**
-     * Receives a logRecordList and does the insert to the data base.
-     *
-     * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
-     */
     public MySQLLogRecordWriteDAO() {}
 
     /**

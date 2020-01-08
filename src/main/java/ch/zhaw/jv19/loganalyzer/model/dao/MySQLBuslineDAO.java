@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Provides functionality for extraction, update and save of data from and to data base.
+ * Provides functionality for extraction, update and save of busline data from and to data base.
  *
  * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
  */

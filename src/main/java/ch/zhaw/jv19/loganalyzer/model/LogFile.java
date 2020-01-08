@@ -32,6 +32,11 @@ public class LogFile {
         return address;
     }
 
+    /**
+     * Indicates if an address for a LogFile has been set, or not.
+     *
+     * @return : Returns true if an address for a logfile is set.
+     */
     public boolean isAddressSet() {
         return addressSet;
     }
