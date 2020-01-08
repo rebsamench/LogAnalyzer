@@ -19,7 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class BaseDataUserPanelUIController implements Initializable {
+/**
+ * Handles user interactions on the base data panel.
+ * Allows the opening of new users, sites and buslines and changes to existing users, sites and buslines.
+ * Users, sites and buslines need to be available prior to the import of new log files.
+ *
+ * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ */
+public class BaseDataPanelUIController implements Initializable {
 
     private ObservableList<UserWrapper> userTableData = FXCollections.observableArrayList();
     private AppDataController appDataController;
@@ -75,7 +82,6 @@ public class BaseDataUserPanelUIController implements Initializable {
     @FXML
     private TableColumn<SiteWrapper, Integer> columnCity;
     // Busline Tab Elements
-
     @FXML
     private Button buttonSubmitNewBusline;
     // Site Tab Elements
@@ -103,6 +109,11 @@ public class BaseDataUserPanelUIController implements Initializable {
         initializeBuslineTab();
     }
 
+
+    /**
+     * Builds a lists of wrapped users, sites and buslines in order to populate the editable table views
+     * on the panel
+     */
     private void populate() {
         for (User user : appDataController.getUserList()) {
             userTableData.add(new UserWrapper(user));
@@ -115,6 +126,10 @@ public class BaseDataUserPanelUIController implements Initializable {
         }
     }
 
+
+    /**
+     * Initializes the user tab
+     */
     private void initializeUserUserTab() {
         baseDataUserTable.setItems(userTableData);
         comboBoxCreatedUserUser.getItems().addAll(appDataController.getUserList());
@@ -132,6 +147,10 @@ public class BaseDataUserPanelUIController implements Initializable {
                 .or(comboBoxIsadmin.valueProperty().isNull()));
     }
 
+
+    /**
+     * Initializes the site tab
+     */
     private void initializeSiteTab() {
         baseDataSiteTable.setItems(siteTableData);
         comboBoxCreatedUserSite.getItems().addAll(appDataController.getUserList());
@@ -148,6 +167,10 @@ public class BaseDataUserPanelUIController implements Initializable {
                         .or(fieldCity.textProperty().isEmpty()));
     }
 
+
+    /**
+     * Initializes the busline tab
+     */
     private void initializeBuslineTab() {
         baseDataBuslineTable.setItems(buslineTableData);
         comboBoxCreatedUserBusline.getItems().addAll(appDataController.getUserList());
@@ -306,6 +329,10 @@ public class BaseDataUserPanelUIController implements Initializable {
         );
     }
 
+    /**
+     * Collects user data from the user tab and hands it over to the corresponding DAO in order to
+     * create a new user.
+     */
     @FXML
     private void submitNewUser() {
         User createdUser = (User) comboBoxCreatedUserUser.getSelectionModel().getSelectedItem();
@@ -333,6 +360,11 @@ public class BaseDataUserPanelUIController implements Initializable {
             }
         }
     }
+
+    /**
+     * Collects site data from the site tab and hands it over to the corresponding DAO in order to
+     * create a new site.
+     */
     @FXML
     private void submitNewSite() {
         User createdUser = (User) comboBoxCreatedUserSite.getSelectionModel().getSelectedItem();
@@ -363,6 +395,11 @@ public class BaseDataUserPanelUIController implements Initializable {
             }
         }
     }
+
+    /**
+     * Collects busline data from the busline tab and hands it over to the corresponding DAO in order to
+     * create a new busline.
+     */
     @FXML
     private void submitNewBusline() {
         User createdUser = (User) comboBoxCreatedUserBusline.getSelectionModel().getSelectedItem();
@@ -390,6 +427,10 @@ public class BaseDataUserPanelUIController implements Initializable {
         }
     }
 
+    /**
+     * Collects updated user data and hands it over to the corresponding DAO in order to update data in
+     * the data base.
+     */
     @FXML
     private void updateUserName() {
         mySQLUserDAO = new MySQLUserDAO();
@@ -401,6 +442,11 @@ public class BaseDataUserPanelUIController implements Initializable {
             appDataController.setMessage("SQL Error");
         }
     }
+
+    /**
+     * Collects updated site data and hands it over to the corresponding DAO in order to update data in
+     * the data base.
+     */
     @FXML
     private void updateSite() {
         mySQLSiteDAO = new MySQLSiteDAO();
@@ -412,6 +458,11 @@ public class BaseDataUserPanelUIController implements Initializable {
             appDataController.setMessage("SQL Error");
         }
     }
+
+    /**
+     * Collects updated busline data and hands it over to the corresponding DAO in order to update data in
+     * the data base.
+     */
     @FXML
     private void updateBusline() {
         mySQLBuslineDAO = new MySQLBuslineDAO();
@@ -424,6 +475,11 @@ public class BaseDataUserPanelUIController implements Initializable {
         }
     }
 
+    /**
+     * Checks if a user already exists.
+     *
+     * @param newWrappedUser : Wrapped user
+     */
     private void checkUserDuplicates(UserWrapper newWrappedUser) {
         List listOfNames = new ArrayList();
         for (UserWrapper user : userTableData) {
@@ -435,6 +491,12 @@ public class BaseDataUserPanelUIController implements Initializable {
             doesNameExist = false;
         }
     }
+
+    /**
+     * Checks if a site already exists.
+     *
+     * @param newWrappedSite : Wrapped site
+     */
     private void checkSiteDuplicates(SiteWrapper newWrappedSite) {
         List listOfNames = new ArrayList();
         for (SiteWrapper site : siteTableData) {
@@ -446,6 +508,12 @@ public class BaseDataUserPanelUIController implements Initializable {
             doesNameExist = false;
         }
     }
+
+    /**
+     * Checks if a busline already exists.
+     *
+     * @param newWrappedBusline : Wrapped busline
+     */
     private void checkBuslineDuplicates(BuslineWrapper newWrappedBusline) {
         List listOfNames = new ArrayList();
         for (BuslineWrapper busline : buslineTableData) {

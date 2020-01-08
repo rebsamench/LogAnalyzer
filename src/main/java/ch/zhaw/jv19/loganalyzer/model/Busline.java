@@ -15,7 +15,8 @@ public class Busline {
     private String name;
     private String bustype;
 
-    public Busline() {}
+    public Busline() {
+    }
 
     public Busline(String createdUser, String name, String bustype) {
         this.createdUser = createdUser;

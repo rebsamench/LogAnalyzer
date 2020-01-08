@@ -13,8 +13,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Provides functionality for extraction, update and save of site data from and to data base.
+ *
+ * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ */
 public class MySQLSiteDAO implements SiteDAO {
 
+    /**
+     * Reads a single Site from data base.
+     *
+     * @param name : Site name
+     * @return : Site instance
+     * @throws Exception
+     */
     @Override
     public Site getSiteByName(String name) throws Exception {
         Site site = null;
@@ -27,6 +39,12 @@ public class MySQLSiteDAO implements SiteDAO {
         return site;
     }
 
+    /**
+     * Returns a list of all sites in the data base.
+     *
+     * @return : list of sites
+     * @throws Exception
+     */
     @Override
     public ObservableList<Site> getAllSitesList() throws Exception {
         ObservableList<Site> siteList = FXCollections.observableArrayList();
@@ -41,6 +59,13 @@ public class MySQLSiteDAO implements SiteDAO {
         return siteList;
     }
 
+    /**
+     * Saves a single site instance to the data base.
+     *
+     * @param site : Site instance
+     * @return : int represents the row count.
+     * @throws Exception
+     */
     @Override
     public int saveSite(Site site) throws Exception {
         String[] values = {
@@ -70,6 +95,13 @@ public class MySQLSiteDAO implements SiteDAO {
         return DBUtil.executeUpdate(statementTemplate);
     }
 
+    /**
+     * Extracts a single site from a result set.
+     *
+     * @param rs : result set
+     * @return
+     * @throws SQLException
+     */
     public Site extractSiteFromResultSet(ResultSet rs) throws SQLException {
         Site site = new Site();
         site.setId(rs.getInt("id"));
@@ -83,6 +115,13 @@ public class MySQLSiteDAO implements SiteDAO {
         return site;
     }
 
+    /**
+     * Updates site date in the data base provided in a list.
+     *
+     * @param siteList : list for sites
+     * @return : int[] representing the updated rows
+     * @throws SQLException
+     */
     public int[] updateSiteData(ObservableList<Site> siteList) throws SQLException {
         Connection connection = DBUtil.getConnection();
         try {
