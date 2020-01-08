@@ -17,10 +17,10 @@
 
 <AnchorPane id="ReportPanel" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.jv19.loganalyzer.view.ReportPanelUIController">
    <children>
-         <VBox id="vbox" prefHeight="543.2" prefWidth="624.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <VBox prefHeight="543.2" prefWidth="624.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-               <TitledPane id="tp1" text="Report definieren" VBox.vgrow="ALWAYS">
-                     <AnchorPane id="anchor_inside">
+               <TitledPane  text="Report definieren" VBox.vgrow="ALWAYS">
+                     <AnchorPane>
                         <children>
                      <VBox prefHeight="269.6" prefWidth="622.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <children>

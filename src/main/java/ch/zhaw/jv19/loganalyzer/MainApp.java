@@ -12,8 +12,6 @@ import java.io.IOException;
 
 public class MainApp extends Application {
     private Stage primaryStage;
-    private double x, y;
-
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -26,17 +24,6 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class
                     .getResource("view/MainApp.fxml"));
             Pane rootLayout = (AnchorPane) loader.load();
-            //TODO not working properly
-            rootLayout.setOnMousePressed(mouseEvent -> {
-                x = mouseEvent.getSceneX();
-                y = mouseEvent.getSceneX();
-            });
-
-            rootLayout.setOnMouseDragged(mouseEvent -> {
-                primaryStage.setX(mouseEvent.getScreenX() - x);
-                primaryStage.setY(mouseEvent.getScreenY() - y);
-            });
-
             Scene scene = new Scene(rootLayout, 1200, 750);
             MainAppUIController controller = loader.getController();
             controller.setMainApp(this);

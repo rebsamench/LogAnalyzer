@@ -70,7 +70,10 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         fileChooser.getExtensionFilters().add(extFilter);
         // Show open file dialog to select multiple files.
         fileList = fileChooser.showOpenMultipleDialog(null);
-        showSelectedFiles(fileList);
+        // check for null in case user cancels
+        if(fileList != null) {
+            showSelectedFiles(fileList);
+        }
     }
 
     /**

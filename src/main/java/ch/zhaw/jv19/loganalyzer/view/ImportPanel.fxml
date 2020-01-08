@@ -32,7 +32,7 @@
             <ComboBox fx:id="chooseCreatedUser" prefWidth="200.0" GridPane.columnIndex="1" />
             <ComboBox fx:id="chooseSite" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ComboBox fx:id="chooseBusline" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button fx:id="selectLogFiles" mnemonicParsing="false" onAction="#handleSelectedLogFiles" prefWidth="100.0" text="Select Log FIles" GridPane.rowIndex="4" />
+            <Button fx:id="selectLogFiles" mnemonicParsing="false" onAction="#handleSelectedLogFiles" prefWidth="100.0" text="Select Log Files" GridPane.rowIndex="4" />
             <Button fx:id="importData" mnemonicParsing="false" onAction="#handleImportData" prefWidth="100.0" text="Import Data" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <TableView fx:id="showSelectedFiles" minHeight="-Infinity" prefHeight="30.0" prefWidth="474.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
