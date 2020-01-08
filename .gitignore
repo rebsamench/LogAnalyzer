@@ -1,9 +1,9 @@
 # Created by .ignore support plugin (hsz.mobi)
 # edited by Simon Rizzi, rizzisim@studentsh.zhaw.ch
 # directories
-../target
-../shade
-../.idea
+target
+shade
+.idea
 # Compiled class file
 *.class
 
