@@ -1,14 +1,12 @@
 package ch.zhaw.jv19.loganalyzer.model.dao;
 
+import ch.zhaw.jv19.loganalyzer.model.AppDataController;
 import ch.zhaw.jv19.loganalyzer.model.LogRecord;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 /**
@@ -17,6 +15,8 @@ import java.util.List;
  * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class MySQLLogRecordWriteDAO implements LogRecordWriteDAO {
+
+    AppDataController appDataController;
 
     public MySQLLogRecordWriteDAO() {}
 
@@ -50,7 +50,7 @@ public class MySQLLogRecordWriteDAO implements LogRecordWriteDAO {
             }
             return ps.executeBatch();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            appDataController.setMessage("SQL Error");
         }
         return null;
     }
