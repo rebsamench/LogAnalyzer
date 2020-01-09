@@ -8,14 +8,14 @@
 */
 
 * {
-    -color : #ff6600;
+    -color : dimgray;
     -white : #efefef;
     -gray : #dfdfdf;
     -darkGray : derive(-gray,-20%);
     -black : #444444dd;
     -abort : #e74c3c;
     -menucolor: -color;
-    -menucolor_text: -black;
+    -menucolor_text: -white;
     -menucolor_hover: derive(-color, 40%);
     -menucolor_selected: derive(-color, 50%);
 }
@@ -143,7 +143,7 @@
 /* added */
 .main_menu_button {
     -fx-background-color: -menucolor;
-    -fx-text-fill: -black;
+    -fx-text-fill: -menucolor_text;
     -fx-pref-height: 50;
     -fx-pref-width: 200;
     -fx-background-radius: 0;

@@ -58,7 +58,6 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         chooseBusline.getItems().addAll(appDataController.getBuslineList());
     }
 
-
     /**
      * Makes a file chooser available and collects the chosen files in a list.
      */
