@@ -57,7 +57,7 @@ public class FileImportController {
                 String strLine;
                 READ_RECORDS: while ((strLine = br.readLine()) != null) {
                     String[] tokens = strLine.split("\t");
-                    LogRecord record = new LogRecord(tokens[0], convertMilliSeconds(tokens[1]), tokens[2], tokens[3], tokens[4], user, site, busline);
+                    LogRecord record = new LogRecord(delteNull(tokens[0]), convertMilliSeconds(tokens[1]), tokens[2], tokens[3], tokens[4], user, site, busline);
                     if (record.getMessage().contains("address") == false && logFile.isAddressSet() == false) {
                         continue READ_RECORDS;
                     }
@@ -118,5 +118,17 @@ public class FileImportController {
     private int convertMilliSeconds(String milliseconds) {
         String[] millis = milliseconds.split(" ");
         return Integer.parseInt(millis[0]);
+    }
+
+    /**
+     * The timestamp from the first logRecord in a logfile can contain an additional null. This will cause
+     * an Exception when the String gets converted to ZonedDateTime because of the non conform pattern.
+     *
+     * @param timestamp : timestamp as a String
+     * @return : timestamp as a String
+     */
+    private String delteNull(String timestamp) {
+        String timestampNoNull = timestamp.substring(0, 19);
+        return timestampNoNull;
     }
 }
