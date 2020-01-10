@@ -65,4 +65,24 @@ public class Busline {
     public void setBustype(String bustype) {
         this.bustype = bustype;
     }
+
+    public int hashCode() {
+        int ergebnis = 17;
+        ergebnis = 37 * ergebnis + name.hashCode();
+        ergebnis = 37 * ergebnis + bustype.hashCode();
+        return ergebnis;
+    }
+
+    public boolean equals(Object object) {
+        if(this == object) {
+            return true;
+        }
+
+        if(!(object instanceof Busline)) {
+            return false;
+        }
+
+        Busline anderer = (Busline) object;
+        return name.equals(anderer.name) && bustype == anderer.bustype;
+    }
 }

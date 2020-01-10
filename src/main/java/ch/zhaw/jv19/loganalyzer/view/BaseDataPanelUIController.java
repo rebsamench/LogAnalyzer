@@ -31,6 +31,7 @@ public class BaseDataPanelUIController implements Initializable {
     private ObservableList<UserWrapper> userTableData = FXCollections.observableArrayList();
     private AppDataController appDataController;
     private MySQLUserDAO mySQLUserDAO;
+    private BaseDataController baseDataController;
     @FXML
     Button buttonSubmitNewUser;
     @FXML
@@ -342,17 +343,15 @@ public class BaseDataPanelUIController implements Initializable {
         int isAdmin = (int) comboBoxIsadmin.getSelectionModel().getSelectedItem();
         User newUser = new User(cu, name, password, isAdmin);
         UserWrapper newWrappedUser = new UserWrapper(newUser);
-        checkUserDuplicates(newWrappedUser);
         fieldUserName.clear();
         fieldPassword.clear();
-        if (doesNameExist) {
+        if (appDataController.getUserList().contains(newUser)) {
             appDataController.setMessage("User already exists!");
         } else {
-            appDataController.addUserToUserList(newUser);
             userTableData.add(newWrappedUser);
             try {
-                mySQLUserDAO = new MySQLUserDAO();
-                mySQLUserDAO.saveUser(newUser);
+                baseDataController = new BaseDataController();
+                baseDataController.saveNewUser(newUser);
                 appDataController.setMessage("New User successfully submitted");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -375,7 +374,7 @@ public class BaseDataPanelUIController implements Initializable {
         String city = fieldCity.getText();
         Site newSite = new Site(cu, name, street, zipCode, city);
         SiteWrapper newWrappedSite = new SiteWrapper(newSite);
-        checkSiteDuplicates(newWrappedSite);
+        checkSiteDuplicates(newSite);
         fieldSiteName.clear();
         fieldStreetName.clear();
         fieldZipCode.clear();
@@ -408,7 +407,7 @@ public class BaseDataPanelUIController implements Initializable {
         String bustyp = fieldBusType.getText();
         Busline newBusline = new Busline(cu, name, bustyp);
         BuslineWrapper newWrappedBusline = new BuslineWrapper(newBusline);
-        checkBuslineDuplicates(newWrappedBusline);
+        checkBuslineDuplicates(newBusline);
         fieldBuslineName.clear();
         fieldBusType.clear();
         if (doesNameExist) {
@@ -478,14 +477,10 @@ public class BaseDataPanelUIController implements Initializable {
     /**
      * Checks if a user already exists.
      *
-     * @param newWrappedUser : Wrapped user
+     * @param newUser : Wrapped user
      */
-    private void checkUserDuplicates(UserWrapper newWrappedUser) {
-        List listOfNames = new ArrayList();
-        for (UserWrapper user : userTableData) {
-            listOfNames.add(user.getName());
-        }
-        if (listOfNames.contains(newWrappedUser.getName())) {
+    private void checkUserDuplicates(User newUser) {
+        if (appDataController.getUserList().contains(newUser)) {
             doesNameExist = true;
         } else {
             doesNameExist = false;
@@ -495,14 +490,10 @@ public class BaseDataPanelUIController implements Initializable {
     /**
      * Checks if a site already exists.
      *
-     * @param newWrappedSite : Wrapped site
+     * @param newSite : Wrapped site
      */
-    private void checkSiteDuplicates(SiteWrapper newWrappedSite) {
-        List listOfNames = new ArrayList();
-        for (SiteWrapper site : siteTableData) {
-            listOfNames.add(site.getName());
-        }
-        if (listOfNames.contains(newWrappedSite.getName())) {
+    private void checkSiteDuplicates(Site newSite) {
+        if (appDataController.getSiteList().contains(newSite)) {
             doesNameExist = true;
         } else {
             doesNameExist = false;
@@ -512,14 +503,10 @@ public class BaseDataPanelUIController implements Initializable {
     /**
      * Checks if a busline already exists.
      *
-     * @param newWrappedBusline : Wrapped busline
+     * @param newBusline : Wrapped busline
      */
-    private void checkBuslineDuplicates(BuslineWrapper newWrappedBusline) {
-        List listOfNames = new ArrayList();
-        for (BuslineWrapper busline : buslineTableData) {
-            listOfNames.add(busline.getName());
-        }
-        if (listOfNames.contains(newWrappedBusline.getName())) {
+    private void checkBuslineDuplicates(Busline newBusline) {
+        if (appDataController.getBuslineList().contains(newBusline)) {
             doesNameExist = true;
         } else {
             doesNameExist = false;

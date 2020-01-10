@@ -76,4 +76,25 @@ public class User {
     public String toString() {
         return (getName());
     }
+
+    public int hashCode() {
+        int ergebnis = 17;
+        ergebnis = 37 * ergebnis + name.hashCode();
+        ergebnis = 37 * ergebnis + password.hashCode();
+        return ergebnis;
+    }
+
+    public boolean equals(Object object) {
+        if(this == object) {
+            return true;
+        }
+
+        if(!(object instanceof User)) {
+            return false;
+        }
+
+        User anderer = (User) object;
+        return name.equals(anderer.name) && password == anderer.password;
+    }
+
 }

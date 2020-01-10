@@ -97,4 +97,24 @@ public class Site {
     public String toString() {
         return (getName() + ", " + getStreet() + ", " + getZipCode() + ", " + getCity());
     }
+
+    public int hashCode() {
+        int ergebnis = 17;
+        ergebnis = 37 * ergebnis + name.hashCode();
+        ergebnis = 37 * ergebnis + street.hashCode();
+        return ergebnis;
+    }
+
+    public boolean equals(Object object) {
+        if(this == object) {
+            return true;
+        }
+
+        if(!(object instanceof Site)) {
+            return false;
+        }
+
+        Site anderer = (Site) object;
+        return name.equals(anderer.name) && street == anderer.street;
+    }
 }
