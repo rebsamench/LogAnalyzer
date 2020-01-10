@@ -17,7 +17,7 @@ public class Site {
      * A site object holds all the data that describes one site.
      * A site can consist of multiple buslines.
      *
-     * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+     * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
      */
     public Site() {}
 

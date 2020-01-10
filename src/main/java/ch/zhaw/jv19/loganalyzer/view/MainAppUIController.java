@@ -1,6 +1,5 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
-import ch.zhaw.jv19.loganalyzer.MainApp;
 import ch.zhaw.jv19.loganalyzer.model.AppDataController;
 import ch.zhaw.jv19.loganalyzer.util.properties.PropertyHandler;
 import javafx.fxml.FXML;
@@ -43,8 +42,7 @@ public class MainAppUIController implements Initializable {
     private ToggleButton btnBaseData;
     @FXML
     private TextArea messageBox;
-    private ArrayList<AnchorPane> uiPanels;
-    private MainApp mainApp;
+    private ArrayList<AnchorPane> uiPanelList;
     private AppDataController appDataController;
 
     @Override
@@ -58,28 +56,25 @@ public class MainAppUIController implements Initializable {
         logoBox.getChildren().add(imageView);
         // create global appdata controller
         appDataController = AppDataController.getInstance();
-        uiPanels = new ArrayList<>();
+        uiPanelList = new ArrayList<>();
         ToggleGroup mainMenu = new ToggleGroup();
-        btnHome.setToggleGroup(mainMenu);
         btnImport.setToggleGroup(mainMenu);
         btnReports.setToggleGroup(mainMenu);
         btnSettings.setToggleGroup(mainMenu);
         btnBaseData.setToggleGroup(mainMenu);
         // disable unusable panels by disabling buttons if database is not accessible
-        btnHome.disableProperty().bind(appDataController.isDatabaseAccessible().not());
         btnImport.disableProperty().bind(appDataController.isDatabaseAccessible().not());
         btnReports.disableProperty().bind(appDataController.isDatabaseAccessible().not());
         btnBaseData.disableProperty().bind(appDataController.isDatabaseAccessible().not());
         // bind message box to message in app data
         messageBox.textProperty().bind(appDataController.getMessage());
         // all panels must be created here by providing the name of the fxml file
-        addPanelToPanelList("HomePanel");
         addPanelToPanelList("ImportPanel");
         addPanelToPanelList("ReportPanel");
         addPanelToPanelList("SettingsPanel");
         addPanelToPanelList("BaseDataPanel");
         //make panel list available on appdata for further usage
-        appDataController.fillPanelList(uiPanels);
+        appDataController.fillPanelList(uiPanelList);
         // select default panel. overridden if db is not available
         if(appDataController.isDatabaseAccessible().get() == false) {
             appDataController.setMessage("Could not connect to database. Adjust database connection settings in properties file or on panel 'Settings' and restart app");
@@ -125,7 +120,7 @@ public class MainAppUIController implements Initializable {
      * @param ignoreClearMessageBoxOnPanelChange true, if clearMessageBoxOnPanelChange property should be ignored
      */
     private void selectPanel(String panelId, boolean ignoreClearMessageBoxOnPanelChange) {
-        Iterator<AnchorPane> it = uiPanels.iterator();
+        Iterator<AnchorPane> it = uiPanelList.iterator();
         boolean panelFound = false;
         while(!panelFound && it.hasNext()) {
             AnchorPane pane = it.next();
@@ -154,7 +149,7 @@ public class MainAppUIController implements Initializable {
             pane = fxmlLoader.load();
             // top level pane in panel needs an id attribute in order to load it by id
             if(pane.getId() != null) {
-                uiPanels.add(pane);
+                uiPanelList.add(pane);
             }
             else {
                 appDataController.setMessage("Panel not added: Top level pane in Panel " + fxmlName + " has no id attribute" +
@@ -164,9 +159,4 @@ public class MainAppUIController implements Initializable {
             e.printStackTrace();
         }
     }
-
-    public void setMainApp(MainApp main) {
-        this.mainApp = main;
-    }
-
 }

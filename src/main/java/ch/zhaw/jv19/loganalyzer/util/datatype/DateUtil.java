@@ -2,7 +2,6 @@ package ch.zhaw.jv19.loganalyzer.util.datatype;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 /**
  * Provides date conversion methods.

@@ -1,6 +1,5 @@
 package ch.zhaw.jv19.loganalyzer.util.properties;
 
-import javafx.fxml.FXML;
 import org.apache.commons.collections4.properties.SortedProperties;
 
 import java.io.*;
@@ -112,9 +111,7 @@ public class PropertyHandler {
      * @param propertiesMap HashMap of property key (String) and property values (String)
      */
     public void writePropertiesFromMap(HashMap<String, String> propertiesMap) {
-        Iterator<HashMap.Entry<String, String>> entries = propertiesMap.entrySet().iterator();
-        while (entries.hasNext()) {
-            HashMap.Entry<String, String> entry = entries.next();
+        for (HashMap.Entry<String, String> entry : propertiesMap.entrySet()) {
             saveProperty(entry.getKey(), entry.getValue());
         }
         refreshInstance();

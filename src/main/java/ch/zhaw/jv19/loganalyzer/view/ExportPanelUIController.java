@@ -8,7 +8,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 
 public class ExportPanelUIController {
-    private AppDataController appDataController;
+    private final AppDataController appDataController;
 
     ExportPanelUIController() {
         appDataController = AppDataController.getInstance();

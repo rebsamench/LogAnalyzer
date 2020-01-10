@@ -1,7 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.model.*;
-import ch.zhaw.jv19.loganalyzer.model.FileWrapper;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +22,7 @@ import java.util.ResourceBundle;
  * Handles user interactions on the import panel.
  * Collects the chosen data and hands it over to the FileImportController as a list of files.
  *
- * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class ImportPanelUIController implements Initializable, UIPanelController {
     private AppDataController appDataController;
@@ -46,7 +45,7 @@ public class ImportPanelUIController implements Initializable, UIPanelController
 
     @FXML
     private TableView<FileWrapper> showSelectedFiles;
-    private ObservableList<Files> selectedFiles = FXCollections.observableArrayList();
+    private final ObservableList<Files> selectedFiles = FXCollections.observableArrayList();
 
     public ImportPanelUIController() {
     }

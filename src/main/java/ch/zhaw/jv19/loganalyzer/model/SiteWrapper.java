@@ -7,16 +7,16 @@ import javafx.beans.property.SimpleStringProperty;
  * Wraps a site object in order to provide property fields.
  * This is necessary for editable table views.
  *
- * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class SiteWrapper {
 
     private Site site;
-    private SimpleStringProperty createdUser;
-    private SimpleStringProperty name;
-    private SimpleStringProperty street;
-    private SimpleStringProperty zipCode;
-    private SimpleStringProperty city;
+    private final SimpleStringProperty createdUser;
+    private final SimpleStringProperty name;
+    private final SimpleStringProperty street;
+    private final SimpleStringProperty zipCode;
+    private  final SimpleStringProperty city;
 
     public SiteWrapper (Site site) {
         this.createdUser = new SimpleStringProperty(site.getCreatedUser());

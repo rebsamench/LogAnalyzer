@@ -8,19 +8,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="MainApp" stylesheets="/css/main2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.jv19.loganalyzer.view.MainAppUIController">
+<AnchorPane id="MainApp" stylesheets="/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.jv19.loganalyzer.view.MainAppUIController">
     <children>
         <VBox id="main_menu_pane" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <HBox id="logo" fx:id="logoBox" prefHeight="100.0" prefWidth="200.0" alignment="CENTER"/>
-                <ToggleButton fx:id="btnHome" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#handleMenuButtonClicks" styleClass="main_menu_button" text="Start">
-                    <VBox.margin>
-                        <Insets />
-                    </VBox.margin>
-                    <padding>
-                        <Insets left="20.0" />
-                    </padding>
-                </ToggleButton>
                 <ToggleButton fx:id="btnImport" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#handleMenuButtonClicks" styleClass="main_menu_button" text="Import">
                     <padding>
                         <Insets left="20.0" />

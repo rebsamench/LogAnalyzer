@@ -1,11 +1,8 @@
 package ch.zhaw.jv19.loganalyzer.util.db;
 
 import ch.zhaw.jv19.loganalyzer.util.properties.PropertyHandler;
-import ch.zhaw.jv19.loganalyzer.util.datatype.StringUtil;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Provides methods to interact with database.
@@ -49,7 +46,7 @@ public class DBUtil {
         }
     }
 
-    public static int executeUpdate(String query) throws SQLException, Exception {
+    public static int executeUpdate(String query) throws Exception {
         int affectedRows;
         dbConnect();
         PreparedStatement pstmt = con.prepareStatement(query);

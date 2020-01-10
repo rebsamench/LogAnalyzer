@@ -241,12 +241,9 @@ public class ReportPanelUIController implements Initializable, UIPanelController
      * @param node numeric node (e. g. TextField)
      */
     private void addNumericEventfilter(Node node) {
-        node.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (!"0123456789".contains(keyEvent.getCharacter())) {
-                    keyEvent.consume();
-                }
+        node.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
+            if (!"0123456789".contains(keyEvent.getCharacter())) {
+                keyEvent.consume();
             }
         });
     }
@@ -263,7 +260,7 @@ public class ReportPanelUIController implements Initializable, UIPanelController
         Integer secondsAfterInt = secondsBefore.getText().isEmpty() ? 0 : Integer.parseInt(secondsAfter.getText());
         Parent root = null;
         try {
-            root = (Parent) fxmlLoader.load();
+            root = fxmlLoader.load();
             Scene inspectionScene = new Scene(root);
             ReportInspectionDialogUIController uiPanelController = fxmlLoader.getController();
             for (LogRecord logRecord : reportResultPanelUIController.getSelectedItems()) {

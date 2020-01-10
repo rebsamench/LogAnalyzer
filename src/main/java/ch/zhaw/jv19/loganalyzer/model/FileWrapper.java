@@ -8,7 +8,7 @@ import java.io.File;
  * Wraps a file object in order to provide property fields.
  * This is necessary for table views.
  *
- * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class FileWrapper {
     private File file;

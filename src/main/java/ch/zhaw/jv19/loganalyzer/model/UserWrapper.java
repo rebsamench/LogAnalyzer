@@ -7,15 +7,15 @@ import javafx.beans.property.SimpleStringProperty;
  * Wraps a user object in order to provide property fields.
  * This is necessary for editable table views.
  *
- * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class UserWrapper {
 
     private User user;
-    private SimpleStringProperty createdUser;
-    private SimpleStringProperty name;
-    private SimpleStringProperty password;
-    private SimpleIntegerProperty isadmin;
+    private final SimpleStringProperty createdUser;
+    private final SimpleStringProperty name;
+    private final SimpleStringProperty password;
+    private final SimpleIntegerProperty isadmin;
 
     public UserWrapper(User user) {
         this.createdUser = new SimpleStringProperty(user.getCreatedUser());

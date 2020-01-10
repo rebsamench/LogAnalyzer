@@ -16,15 +16,15 @@ import java.sql.SQLException;
 /**
  * Provides functionality for extraction, update and save of busline data from and to data base.
  *
- * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @authr: Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class MySQLBuslineDAO implements BusLineDAO {
 
     /**
      * Reads a single busline from data base.
      *
-     * @param name : busline name
-     * @return : Busline instance
+     * @param name busline name
+     * @return Busline instance
      * @throws Exception
      */
     @Override
@@ -42,7 +42,7 @@ public class MySQLBuslineDAO implements BusLineDAO {
     /**
      * Returns a list of all buslines in the data base.
      *
-     * @return : list of buslines
+     * @return list of buslines
      * @throws Exception
      */
     @Override
@@ -62,8 +62,8 @@ public class MySQLBuslineDAO implements BusLineDAO {
     /**
      * Saves a single busline instance to the data base.
      *
-     * @param busline : busline instance
-     * @return : int represents the row count.
+     * @param busline busline instance
+     * @return int represents the row count.
      * @throws Exception
      */
     @Override
@@ -90,8 +90,8 @@ public class MySQLBuslineDAO implements BusLineDAO {
     /**
      * Extracts a single busline from a result set.
      *
-     * @param rs : result set
-     * @return
+     * @param rs result set
+     * @return bus line
      * @throws SQLException
      */
     public Busline extractBuslineFromResultSet(ResultSet rs) throws SQLException {

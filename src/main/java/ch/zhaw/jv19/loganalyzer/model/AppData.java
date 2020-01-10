@@ -19,8 +19,8 @@ public class AppData {
     private ObservableList<User> userList;
     private ObservableList<Site> siteList;
     private ObservableList<Busline> busLineList;
-    private ObservableList<EventType> eventTypeList;
-    private ObservableList<Source> sourceList;
+    private final ObservableList<EventType> eventTypeList;
+    private final  ObservableList<Source> sourceList;
     private ObservableList<String> panelList;
     private final SimpleStringProperty message;
     private final SimpleBooleanProperty isDatabaseAccessible;

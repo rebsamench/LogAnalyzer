@@ -5,7 +5,6 @@ import ch.zhaw.jv19.loganalyzer.model.dao.MySQLBuslineDAO;
 import ch.zhaw.jv19.loganalyzer.model.dao.MySQLSiteDAO;
 import ch.zhaw.jv19.loganalyzer.model.dao.MySQLUserDAO;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,7 +24,7 @@ import java.util.ResourceBundle;
  * Allows the opening of new users, sites and buslines and changes to existing users, sites and buslines.
  * Users, sites and buslines need to be available prior to the import of new log files.
  *
- * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class BaseDataPanelUIController implements Initializable {
 
