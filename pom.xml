@@ -202,7 +202,7 @@
                 <version>3.0.0</version>
                 <executions>
                     <execution>
-                        <id>copy-resources</id>
+                        <id>copy-config</id>
                         <phase>package</phase>
                         <goals>
                             <goal>copy-resources</goal>
@@ -221,6 +221,12 @@
             </plugin>
         </plugins>
         <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
             <resource>
                 <directory>src/main/java</directory>
                 <includes>

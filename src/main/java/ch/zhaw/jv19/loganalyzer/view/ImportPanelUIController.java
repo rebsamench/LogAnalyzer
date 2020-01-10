@@ -66,7 +66,6 @@ public class ImportPanelUIController implements Initializable, UIPanelController
                 .or(Bindings.size(selectedFiles).isEqualTo(0)));
     }
 
-
     /**
      * Makes a file chooser available and collects the chosen files in a list.
      */
