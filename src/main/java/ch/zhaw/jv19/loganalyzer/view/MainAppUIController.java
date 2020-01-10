@@ -49,6 +49,7 @@ public class MainAppUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        String cachedMessage;
         //set logo
         Class<?> clazz = this.getClass();
         InputStream input = clazz.getResourceAsStream("/images/logo_177x69.png");
@@ -64,6 +65,11 @@ public class MainAppUIController implements Initializable {
         btnReports.setToggleGroup(mainMenu);
         btnSettings.setToggleGroup(mainMenu);
         btnBaseData.setToggleGroup(mainMenu);
+        // disable unusable panels by disabling buttons if database is not accessible
+        btnHome.disableProperty().bind(appDataController.isDatabaseAccessible().not());
+        btnImport.disableProperty().bind(appDataController.isDatabaseAccessible().not());
+        btnReports.disableProperty().bind(appDataController.isDatabaseAccessible().not());
+        btnBaseData.disableProperty().bind(appDataController.isDatabaseAccessible().not());
         // bind message box to message in app data
         messageBox.textProperty().bind(appDataController.getMessage());
         // all panels must be created here by providing the name of the fxml file
@@ -74,8 +80,20 @@ public class MainAppUIController implements Initializable {
         addPanelToPanelList("BaseDataPanel");
         //make panel list available on appdata for further usage
         appDataController.fillPanelList(uiPanels);
-        // select default panel defined in properties
-        selectPanel(PropertyHandler.getInstance().getValue("selectedPanelOnStartup"));
+        // select default panel. overridden if db is not available
+        if(appDataController.isDatabaseAccessible().get() == false) {
+            appDataController.setMessage("Could not connect to database. Adjust database connection settings in properties file or on panel 'Settings' and restart app");
+            selectPanel("SettingsPanel", true);
+        } else {
+            // select default panel defined in properties
+            selectPanel(PropertyHandler.getInstance().getValue("selectedPanelOnStartup"), true);
+        }
+    }
+
+    private void setDisablePropertyOfDataMenuButtons(boolean isDisabled) {
+        btnImport.disableProperty().set(isDisabled);
+        btnReports.disableProperty().set(isDisabled);
+        btnBaseData.disableProperty().set(isDisabled);
     }
 
     /**
@@ -85,15 +103,15 @@ public class MainAppUIController implements Initializable {
     @FXML
     public void handleMenuButtonClicks(MouseEvent event) {
         if (event.getSource() == btnHome) {
-            selectPanel("HomePanel");
+            selectPanel("HomePanel", false);
         } else if (event.getSource() == btnImport) {
-            selectPanel("ImportPanel");
+            selectPanel("ImportPanel", false);
         } else if (event.getSource() == btnReports) {
-            selectPanel("ReportPanel");
+            selectPanel("ReportPanel", false);
         } else if (event.getSource() == btnSettings) {
-            selectPanel("SettingsPanel");
+            selectPanel("SettingsPanel", false);
         } else if (event.getSource() == btnBaseData) {
-            selectPanel("BaseDataPanel");
+            selectPanel("BaseDataPanel", false);
         }
         else {
             appDataController.setMessage("Button " + " not bound with a panel id. Check MainAppUIController.");
@@ -104,8 +122,9 @@ public class MainAppUIController implements Initializable {
      * Selects panel in uiPanels list by panel id and displays it.
      * @param panelId ID of panel to show. ID must correspond with
      *                an id attribute of a Pane (root element) in uiPanels list.
+     * @param ignoreClearMessageBoxOnPanelChange true, if clearMessageBoxOnPanelChange property should be ignored
      */
-    private void selectPanel(String panelId) {
+    private void selectPanel(String panelId, boolean ignoreClearMessageBoxOnPanelChange) {
         Iterator<AnchorPane> it = uiPanels.iterator();
         boolean panelFound = false;
         while(!panelFound && it.hasNext()) {
@@ -118,7 +137,7 @@ public class MainAppUIController implements Initializable {
                 pane.minHeightProperty().bind(contentPane.heightProperty());
                 contentPane.getChildren().add(pane);
             }
-            if (PropertyHandler.getInstance().getValue("clearMessageBoxOnPanelChange").equals("true")) {
+            if (PropertyHandler.getInstance().getValue("clearMessageBoxOnPanelChange").equals("true") && !ignoreClearMessageBoxOnPanelChange) {
                 appDataController.setMessage("");
             }
         }

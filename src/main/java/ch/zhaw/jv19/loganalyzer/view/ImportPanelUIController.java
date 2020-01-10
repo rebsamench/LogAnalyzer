@@ -54,16 +54,18 @@ public class ImportPanelUIController implements Initializable, UIPanelController
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appDataController = AppDataController.getInstance();
-        chooseCreatedUser.getItems().addAll(appDataController.getUserList());
-        chooseSite.getItems().addAll(appDataController.getSiteList());
-        chooseBusline.getItems().addAll(appDataController.getBuslineList());
-        selectLogFiles.disableProperty().bind((chooseSite.valueProperty().isNull())
-                .or(chooseBusline.valueProperty().isNull())
-                .or(chooseCreatedUser.valueProperty().isNull()));
-        importData.disableProperty().bind((chooseSite.valueProperty().isNull())
-                .or(chooseBusline.valueProperty().isNull())
-                .or(chooseCreatedUser.valueProperty().isNull())
-                .or(Bindings.size(selectedFiles).isEqualTo(0)));
+        if (appDataController.isDatabaseAccessible().get() == true) {
+            chooseCreatedUser.getItems().addAll(appDataController.getUserList());
+            chooseSite.getItems().addAll(appDataController.getSiteList());
+            chooseBusline.getItems().addAll(appDataController.getBuslineList());
+            selectLogFiles.disableProperty().bind((chooseSite.valueProperty().isNull())
+                    .or(chooseBusline.valueProperty().isNull())
+                    .or(chooseCreatedUser.valueProperty().isNull()));
+            importData.disableProperty().bind((chooseSite.valueProperty().isNull())
+                    .or(chooseBusline.valueProperty().isNull())
+                    .or(chooseCreatedUser.valueProperty().isNull())
+                    .or(Bindings.size(selectedFiles).isEqualTo(0)));
+        }
     }
 
     /**

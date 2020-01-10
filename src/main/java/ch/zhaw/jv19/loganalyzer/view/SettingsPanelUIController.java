@@ -55,7 +55,7 @@ public class SettingsPanelUIController implements Initializable, UIPanelControll
             settingsMap.put("db.username", dbUsername.getText());
         });
         dbPassword.setText(propHandler.getValue("db.password"));
-        dbUsername.textProperty().addListener((obs, oldText, newText) -> {
+        dbPassword.textProperty().addListener((obs, oldText, newText) -> {
             hasUnchangedSettings.set(true);
             settingsMap.put("db.password", dbPassword.getText());
         });
@@ -92,12 +92,10 @@ public class SettingsPanelUIController implements Initializable, UIPanelControll
      */
     @FXML
     public void testDbConnection() {
-        try {
-            DBUtil.getConnection();
+        if (appDataController.isDatabaseAccessible().get() == true) {
             appDataController.setMessage("Database successfully connected.");
-        } catch (Exception e) {
-            appDataController.setMessage("Connection failed. Check connection settings." + "\n" +
-                    e.getMessage());
+        } else {
+            appDataController.setMessage("Connection failed. Check connection settings.");
         }
     }
 

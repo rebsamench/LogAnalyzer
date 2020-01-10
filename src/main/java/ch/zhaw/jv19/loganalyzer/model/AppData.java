@@ -1,5 +1,8 @@
 package ch.zhaw.jv19.loganalyzer.model;
 
+import ch.zhaw.jv19.loganalyzer.model.dao.*;
+import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +23,7 @@ public class AppData {
     private ObservableList<Source> sourceList;
     private ObservableList<String> panelList;
     private final SimpleStringProperty message;
+    private final SimpleBooleanProperty isDatabaseAccessible;
     private static AppData instance;
 
     //Singleton: AppData can only be instantiated once
@@ -27,6 +31,14 @@ public class AppData {
         eventTypeList = EventType.getEventTypeList();
         sourceList = Source.getSourceList();
         message = new SimpleStringProperty();
+        isDatabaseAccessible = new SimpleBooleanProperty();
+        initializeAppData();
+        // if app is started with invalid db settings and db settings are corrected, base data needs to be reloaded
+        isDatabaseAccessible.addListener((obs, oldValue, newValue) -> {
+            if(oldValue == false && newValue == true) {
+                initializeAppData();
+            }
+        });
     }
 
     /**
@@ -40,8 +52,40 @@ public class AppData {
         return AppData.instance;
     }
 
+    /**
+     * Gets data from responsible DAOs
+     */
+    private void initializeAppData() {
+        UserDAO userDao = new MySQLUserDAO();
+        SiteDAO siteDAO = new MySQLSiteDAO();
+        BusLineDAO busLineDAO = new MySQLBuslineDAO();
+        try {
+            this.userList = userDao.getAllUsersList();
+            this.siteList = siteDAO.getAllSitesList();
+            this.busLineList = busLineDAO.getAllBuslinesList();
+        } catch (Exception e) {
+            setMessage(e.getMessage());
+        }
+    }
+
     public SimpleStringProperty getMessage() {
         return message;
+    }
+
+    public SimpleBooleanProperty isDatabaseAccessible() {
+        refreshIsDatabaseAccessible();
+        return isDatabaseAccessible;
+    }
+
+    private void refreshIsDatabaseAccessible() {
+        boolean isDBAccessible;
+        try {
+            DBUtil.getConnection();
+            isDBAccessible = true;
+        } catch (Exception e) {
+            isDBAccessible = false;
+        }
+        this.isDatabaseAccessible.set(isDBAccessible);
     }
 
     public void setMessage(String message) {
