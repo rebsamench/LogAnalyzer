@@ -1,7 +1,9 @@
 package ch.zhaw.jv19.loganalyzer.model;
 
 import ch.zhaw.jv19.loganalyzer.model.dao.*;
+import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
 import ch.zhaw.jv19.loganalyzer.util.export.ExcelExporter;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
@@ -23,7 +25,6 @@ public class AppDataController {
     //Singleton: AppDataController can only be instantiated once
     private AppDataController() {
         appData = AppData.getInstance();
-        initializeAppData();
     }
 
     /**
@@ -52,22 +53,6 @@ public class AppDataController {
      */
     public SimpleStringProperty getMessage() {
         return appData.getMessage();
-    }
-
-    /**
-     * Gets data from responsible DAOs and hands it to AppData
-     */
-    public void initializeAppData() {
-        UserDAO userDao = new MySQLUserDAO();
-        SiteDAO siteDAO = new MySQLSiteDAO();
-        BusLineDAO busLineDAO = new MySQLBuslineDAO();
-        try {
-            appData.setUserList(userDao.getAllUsersList());
-            appData.setSiteList(siteDAO.getAllSitesList());
-            appData.setBusLineList(busLineDAO.getAllBuslinesList());
-        } catch (Exception e) {
-            setMessage(e.getMessage());
-        }
     }
 
     /**
@@ -211,5 +196,12 @@ public class AppDataController {
         return appData.getPanelList();
     }
 
+    /**
+     * Checks if database can be connected.
+     * @return SimpleBooleanProperty with refresehed connection state
+     */
+    public SimpleBooleanProperty isDatabaseAccessible() {
+        return appData.isDatabaseAccessible();
+    }
 
 }

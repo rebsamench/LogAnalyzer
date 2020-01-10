@@ -5,6 +5,7 @@ import ch.zhaw.jv19.loganalyzer.model.dao.MySQLBuslineDAO;
 import ch.zhaw.jv19.loganalyzer.model.dao.MySQLSiteDAO;
 import ch.zhaw.jv19.loganalyzer.model.dao.MySQLUserDAO;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -104,10 +105,14 @@ public class BaseDataPanelUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appDataController = AppDataController.getInstance();
-        populate();
-        initializeUserUserTab();
-        initializeSiteTab();
-        initializeBuslineTab();
+        if (appDataController.isDatabaseAccessible().get() == true) {
+            populate();
+            initializeUserUserTab();
+            initializeSiteTab();
+            initializeBuslineTab();
+        } else {
+            appDataController.setMessage("Could not load base data. Check database connection settings in properties file or on panel 'Settings'.");
+        }
     }
 
 
