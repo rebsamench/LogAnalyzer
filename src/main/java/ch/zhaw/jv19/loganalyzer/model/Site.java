@@ -114,7 +114,7 @@ public class Site {
             return false;
         }
 
-        Site anderer = (Site) object;
-        return name.equals(anderer.name) && street == anderer.street;
+        Site other = (Site) object;
+        return name.equals(other.name) && street.equals(other.street);
     }
 }

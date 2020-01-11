@@ -92,9 +92,7 @@ public class User {
         if(!(object instanceof User)) {
             return false;
         }
-
-        User anderer = (User) object;
-        return name.equals(anderer.name) && password == anderer.password;
+        User other = (User) object;
+        return name.equals(other.name) && password.equals(other.password);
     }
-
 }

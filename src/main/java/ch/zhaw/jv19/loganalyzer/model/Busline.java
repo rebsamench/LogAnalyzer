@@ -82,7 +82,7 @@ public class Busline {
             return false;
         }
 
-        Busline anderer = (Busline) object;
-        return name.equals(anderer.name) && bustype == anderer.bustype;
+        Busline other = (Busline) object;
+        return name.equals(other.name) && bustype.equals(other.bustype);
     }
 }

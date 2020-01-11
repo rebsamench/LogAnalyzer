@@ -428,7 +428,7 @@ public class BaseDataPanelUIController implements Initializable {
      * Collects updated user data from UI and calls BaseDataController in order to update the data base.
      */
     @FXML
-    private void updateUserName() {
+    private void updateUser() {
         baseDataController = new BaseDataController();
         try {
             baseDataController.updateUserdata();
