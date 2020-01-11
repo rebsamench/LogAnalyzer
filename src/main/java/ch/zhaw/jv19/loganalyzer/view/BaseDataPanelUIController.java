@@ -31,17 +31,15 @@ public class BaseDataPanelUIController implements Initializable {
 
     private ObservableList<UserWrapper> userTableData = FXCollections.observableArrayList();
     private AppDataController appDataController;
-    private MySQLUserDAO mySQLUserDAO;
     private BaseDataController baseDataController;
+    private ObservableList<SiteWrapper> siteTableData = FXCollections.observableArrayList();
+    private ObservableList<BuslineWrapper> buslineTableData = FXCollections.observableArrayList();
+
+
     @FXML
     Button buttonSubmitNewUser;
     @FXML
     ComboBox comboBoxCreatedUserBusline;
-    private boolean doesNameExist;
-    private ObservableList<SiteWrapper> siteTableData = FXCollections.observableArrayList();
-    private ObservableList<BuslineWrapper> buslineTableData = FXCollections.observableArrayList();
-    private MySQLSiteDAO mySQLSiteDAO;
-    private MySQLBuslineDAO mySQLBuslineDAO;
     @FXML
     private ComboBox comboBoxCreatedUserUser;
     @FXML
@@ -336,7 +334,7 @@ public class BaseDataPanelUIController implements Initializable {
     }
 
     /**
-     * Collects user data from the user tab and hands it over to the corresponding DAO in order to
+     * Collects user data from the user tab and hands it over to the BaseDataController in order to
      * create a new user.
      */
     @FXML
@@ -366,7 +364,7 @@ public class BaseDataPanelUIController implements Initializable {
     }
 
     /**
-     * Collects site data from the site tab and hands it over to the corresponding DAO in order to
+     * Collects site data from the site tab and hands it over to the BaseDataController in order to
      * create a new site.
      */
     @FXML
@@ -379,19 +377,17 @@ public class BaseDataPanelUIController implements Initializable {
         String city = fieldCity.getText();
         Site newSite = new Site(cu, name, street, zipCode, city);
         SiteWrapper newWrappedSite = new SiteWrapper(newSite);
-        checkSiteDuplicates(newSite);
         fieldSiteName.clear();
         fieldStreetName.clear();
         fieldZipCode.clear();
         fieldCity.clear();
-        if (doesNameExist) {
+        if (appDataController.getSiteList().contains(newSite)) {
             appDataController.setMessage("Site already exists!");
         } else {
-            appDataController.addSiteToSiteList(newSite);
             siteTableData.add(newWrappedSite);
             try {
-                mySQLSiteDAO = new MySQLSiteDAO();
-                mySQLSiteDAO.saveSite(newSite);
+                baseDataController = new BaseDataController();
+                baseDataController.saveNewSite(newSite);
                 appDataController.setMessage("New Site successfully submitted");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -401,7 +397,7 @@ public class BaseDataPanelUIController implements Initializable {
     }
 
     /**
-     * Collects busline data from the busline tab and hands it over to the corresponding DAO in order to
+     * Collects busline data from the busline tab and hands it over to the BaseDataController in order to
      * create a new busline.
      */
     @FXML
@@ -412,17 +408,15 @@ public class BaseDataPanelUIController implements Initializable {
         String bustyp = fieldBusType.getText();
         Busline newBusline = new Busline(cu, name, bustyp);
         BuslineWrapper newWrappedBusline = new BuslineWrapper(newBusline);
-        checkBuslineDuplicates(newBusline);
         fieldBuslineName.clear();
         fieldBusType.clear();
-        if (doesNameExist) {
+        if (appDataController.getBuslineList().contains(newBusline)) {
             appDataController.setMessage("Site already exists!");
         } else {
-            appDataController.addBuslineToBuslineList(newBusline);
             buslineTableData.add(newWrappedBusline);
             try {
-                mySQLBuslineDAO = new MySQLBuslineDAO();
-                mySQLBuslineDAO.saveBusline(newBusline);
+                baseDataController = new BaseDataController();
+                baseDataController.saveNewBusline(newBusline);
                 appDataController.setMessage("New Busline successfully submitted");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -432,14 +426,13 @@ public class BaseDataPanelUIController implements Initializable {
     }
 
     /**
-     * Collects updated user data and hands it over to the corresponding DAO in order to update data in
-     * the data base.
+     * Collects updated user data from UI and calls BaseDataController in order to update the data base.
      */
     @FXML
     private void updateUserName() {
-        mySQLUserDAO = new MySQLUserDAO();
+        baseDataController = new BaseDataController();
         try {
-            mySQLUserDAO.updateUserData(appDataController.getUserList());
+            baseDataController.updateUserdata();
             appDataController.setMessage("User Data successfully updated");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -448,14 +441,13 @@ public class BaseDataPanelUIController implements Initializable {
     }
 
     /**
-     * Collects updated site data and hands it over to the corresponding DAO in order to update data in
-     * the data base.
+     * Collects updated Site data from UI and calls BaseDataController in order to update the data base.
      */
     @FXML
     private void updateSite() {
-        mySQLSiteDAO = new MySQLSiteDAO();
+        baseDataController = new BaseDataController();
         try {
-            mySQLSiteDAO.updateSiteData(appDataController.getSiteList());
+            baseDataController.updateSitedata();
             appDataController.setMessage("Site Data successfully updated");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -464,57 +456,17 @@ public class BaseDataPanelUIController implements Initializable {
     }
 
     /**
-     * Collects updated busline data and hands it over to the corresponding DAO in order to update data in
-     * the data base.
+     * Collects updated buslin data from UI and calls BaseDataController in order to update the data base.
      */
     @FXML
     private void updateBusline() {
-        mySQLBuslineDAO = new MySQLBuslineDAO();
+        baseDataController = new BaseDataController();
         try {
-            mySQLBuslineDAO.updateBuslineData(appDataController.getBuslineList());
+            baseDataController.updateBuslinedata();
             appDataController.setMessage("Busline Data successfully updated");
         } catch (SQLException e) {
             e.printStackTrace();
             appDataController.setMessage("SQL Error");
-        }
-    }
-
-    /**
-     * Checks if a user already exists.
-     *
-     * @param newUser : Wrapped user
-     */
-    private void checkUserDuplicates(User newUser) {
-        if (appDataController.getUserList().contains(newUser)) {
-            doesNameExist = true;
-        } else {
-            doesNameExist = false;
-        }
-    }
-
-    /**
-     * Checks if a site already exists.
-     *
-     * @param newSite : Wrapped site
-     */
-    private void checkSiteDuplicates(Site newSite) {
-        if (appDataController.getSiteList().contains(newSite)) {
-            doesNameExist = true;
-        } else {
-            doesNameExist = false;
-        }
-    }
-
-    /**
-     * Checks if a busline already exists.
-     *
-     * @param newBusline : Wrapped busline
-     */
-    private void checkBuslineDuplicates(Busline newBusline) {
-        if (appDataController.getBuslineList().contains(newBusline)) {
-            doesNameExist = true;
-        } else {
-            doesNameExist = false;
         }
     }
 }

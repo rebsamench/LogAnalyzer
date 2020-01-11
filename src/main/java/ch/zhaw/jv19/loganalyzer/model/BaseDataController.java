@@ -7,9 +7,17 @@ import javafx.fxml.FXML;
 
 import java.sql.SQLException;
 
+/**
+ * This class acts as a interface between the BaseDataUIController and the corresponding DAOs.
+ *
+ * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ */
 public class BaseDataController {
 
-    private boolean doesNameExist;
+    public BaseDataController() {
+        appDataController = AppDataController.getInstance();
+    }
+
     private AppDataController appDataController;
     private MySQLUserDAO mySQLUserDAO;
     private MySQLSiteDAO mySQLSiteDAO;
@@ -52,50 +60,32 @@ public class BaseDataController {
     }
 
     /**
-     * Collects updated user data and hands it over to the corresponding DAO in order to update data in
-     * the data base.
+     * Is called by the BaseDataPanelUIController and will hand over the updated userList to the corresponding
+     * DAO in Order to update the data base.
      */
     @FXML
-    public void updateUserdata() {
+    public void updateUserdata() throws SQLException {
         mySQLUserDAO = new MySQLUserDAO();
-        try {
-            mySQLUserDAO.updateUserData(appDataController.getUserList());
-            appDataController.setMessage("User Data successfully updated");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            appDataController.setMessage("SQL Error");
-        }
+        mySQLUserDAO.updateUserData(appDataController.getUserList());
     }
 
     /**
-     * Collects updated site data and hands it over to the corresponding DAO in order to update data in
-     * the data base.
+     * Is called by the BaseDataPanelUIController and will hand over the updated siteList to the corresponding
+     * DAO in Order to update the data base.
      */
     @FXML
-    public void updateSitedata() {
+    public void updateSitedata() throws SQLException {
         mySQLSiteDAO = new MySQLSiteDAO();
-        try {
-            mySQLSiteDAO.updateSiteData(appDataController.getSiteList());
-            appDataController.setMessage("Site Data successfully updated");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            appDataController.setMessage("SQL Error");
-        }
+        mySQLSiteDAO.updateSiteData(appDataController.getSiteList());
     }
 
     /**
-     * Collects updated busline data and hands it over to the corresponding DAO in order to update data in
-     * the data base.
+     * Is called by the BaseDataPanelUIController and will hand over the updated buslineList to the corresponding
+     * DAO in Order to update the data base.
      */
     @FXML
-    public void updateBuslinedata() {
+    public void updateBuslinedata() throws SQLException {
         mySQLBuslineDAO = new MySQLBuslineDAO();
-        try {
-            mySQLBuslineDAO.updateBuslineData(appDataController.getBuslineList());
-            appDataController.setMessage("Busline Data successfully updated");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            appDataController.setMessage("SQL Error");
-        }
+        mySQLBuslineDAO.updateBuslineData(appDataController.getBuslineList());
     }
 }
