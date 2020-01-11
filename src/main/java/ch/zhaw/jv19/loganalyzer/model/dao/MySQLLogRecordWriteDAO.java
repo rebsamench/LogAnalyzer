@@ -12,11 +12,11 @@ import java.util.List;
 /**
  * Receives a logRecordList and does the insert to the data base.
  *
- * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class MySQLLogRecordWriteDAO implements LogRecordWriteDAO {
 
-    AppDataController appDataController;
+    private final AppDataController appDataController;
 
     public MySQLLogRecordWriteDAO() {
         appDataController = AppDataController.getInstance();
@@ -28,7 +28,7 @@ public class MySQLLogRecordWriteDAO implements LogRecordWriteDAO {
      *
      * @param logRecordList list of logRecords
      * @return returns an int[], representing the altered rows in the data base.
-     * @throws Exception
+     * @throws Exception database error, if insert fails
      */
     @Override
     public int[] insertLogRecords(List<LogRecord> logRecordList) throws Exception {

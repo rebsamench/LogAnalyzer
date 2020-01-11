@@ -5,14 +5,14 @@ import javafx.beans.property.SimpleStringProperty;
 /**
  * Wraps a busline object in order to provide property fields.
  * This is necessary for editable table views.
- * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class BuslineWrapper {
 
     private Busline busline;
-    private SimpleStringProperty createdUser;
-    private SimpleStringProperty name;
-    private SimpleStringProperty bustype;
+    private final SimpleStringProperty createdUser;
+    private final SimpleStringProperty name;
+    private final SimpleStringProperty bustype;
 
     public BuslineWrapper (Busline busline) {
         this.createdUser = new SimpleStringProperty(busline.getCreatedUser());

@@ -102,7 +102,7 @@ public class BaseDataPanelUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appDataController = AppDataController.getInstance();
-        if (appDataController.isDatabaseAccessible().get() == true) {
+        if (appDataController.isDatabaseAccessible().get()) {
             populate();
             initializeUserUserTab();
             initializeSiteTab();

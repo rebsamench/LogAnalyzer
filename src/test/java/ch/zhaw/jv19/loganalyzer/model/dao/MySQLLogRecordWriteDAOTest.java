@@ -6,9 +6,6 @@ import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -58,7 +55,6 @@ public class MySQLLogRecordWriteDAOTest {
     @After
     public void deleteLogRecord() {
         try {
-            Connection connection = DBUtil.getConnection();
             String deleteStatement = "delete from logrecord where unique_identifier IN (" +
                     logRecord1.getUniqueIdentifier() +
                     MySQLConst.SEPARATOR +

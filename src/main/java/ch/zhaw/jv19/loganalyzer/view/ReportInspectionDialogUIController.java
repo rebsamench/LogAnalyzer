@@ -31,7 +31,6 @@ public class ReportInspectionDialogUIController extends ExportPanelUIController 
         searchConditions.put("busLine", FXCollections.observableArrayList(logRecord.getBusline()));
         searchConditions.put("address", logRecord.getAddress());
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReportResultPanel.fxml"));
-        Parent root = null;
         try {
             AnchorPane resultTablePanel = fxmlLoader.load();
             ReportResultPanelUIController uiPanelController = fxmlLoader.getController();

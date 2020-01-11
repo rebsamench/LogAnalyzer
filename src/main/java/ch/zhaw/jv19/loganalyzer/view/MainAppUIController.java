@@ -31,8 +31,6 @@ public class MainAppUIController implements Initializable {
     @FXML
     HBox logoBox;
     @FXML
-    private ToggleButton btnHome;
-    @FXML
     private ToggleButton btnImport;
     @FXML
     private ToggleButton btnReports;
@@ -47,7 +45,6 @@ public class MainAppUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String cachedMessage;
         //set logo
         Class<?> clazz = this.getClass();
         InputStream input = clazz.getResourceAsStream("/images/logo_177x69.png");
@@ -76,7 +73,7 @@ public class MainAppUIController implements Initializable {
         //make panel list available on appdata for further usage
         appDataController.fillPanelList(uiPanelList);
         // select default panel. overridden if db is not available
-        if(appDataController.isDatabaseAccessible().get() == false) {
+        if(!appDataController.isDatabaseAccessible().get()) {
             appDataController.setMessage("Could not connect to database. Adjust database connection settings in properties file or on panel 'Settings' and restart app");
             selectPanel("SettingsPanel", true);
         } else {
@@ -85,21 +82,13 @@ public class MainAppUIController implements Initializable {
         }
     }
 
-    private void setDisablePropertyOfDataMenuButtons(boolean isDisabled) {
-        btnImport.disableProperty().set(isDisabled);
-        btnReports.disableProperty().set(isDisabled);
-        btnBaseData.disableProperty().set(isDisabled);
-    }
-
     /**
      * Handles clicks on menu buttons. Each menu button must be bound with the according panel in this method.
      * @param event Mouse event of the clicked button.
      */
     @FXML
     public void handleMenuButtonClicks(MouseEvent event) {
-        if (event.getSource() == btnHome) {
-            selectPanel("HomePanel", false);
-        } else if (event.getSource() == btnImport) {
+        if (event.getSource() == btnImport) {
             selectPanel("ImportPanel", false);
         } else if (event.getSource() == btnReports) {
             selectPanel("ReportPanel", false);

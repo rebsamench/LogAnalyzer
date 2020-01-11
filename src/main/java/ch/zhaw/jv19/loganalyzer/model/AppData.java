@@ -35,7 +35,7 @@ public class AppData {
         initializeAppData();
         // if app is started with invalid db settings and db settings are corrected, base data needs to be reloaded
         isDatabaseAccessible.addListener((obs, oldValue, newValue) -> {
-            if(oldValue == false && newValue == true) {
+            if(!oldValue && newValue) {
                 initializeAppData();
             }
         });

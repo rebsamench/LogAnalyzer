@@ -10,7 +10,7 @@ import java.io.File;
 public class ExportPanelUIController {
     private final AppDataController appDataController;
 
-    ExportPanelUIController() {
+    public ExportPanelUIController() {
         appDataController = AppDataController.getInstance();
     }
 
