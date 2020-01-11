@@ -24,7 +24,7 @@ public class LogRecord {
     /**
      * Holds all the data for a single logRecord and provides getter and setter methods.
      *
-     * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+     * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
      */
     public LogRecord(){}
 
@@ -52,6 +52,9 @@ public class LogRecord {
     }
 
     public String getSource() {
+            if(source == null) {
+                System.out.println("Hallo");
+            }
         return source.toString();
     }
 

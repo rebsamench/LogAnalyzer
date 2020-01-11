@@ -1,7 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.model;
 
 import ch.zhaw.jv19.loganalyzer.model.dao.*;
-import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
 import ch.zhaw.jv19.loganalyzer.util.export.ExcelExporter;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -182,15 +181,15 @@ public class AppDataController {
 
     /**
      * Fills panel list with available UI panels
-     * @param panelList
+     * @param panelList list of UI panels (AnchorPane)
      */
     public void fillPanelList(ArrayList<AnchorPane> panelList) {
         appData.fillPanelList(panelList);
     }
 
     /**
-     * Gets list ov available UI panels.
-     * @return
+     * Gets list of available UI panels.
+     * @return ObservableList of UI panels (String)
      */
     public ObservableList<String> getPanelList() {
         return appData.getPanelList();

@@ -1,7 +1,5 @@
 package ch.zhaw.jv19.loganalyzer.util.datatype;
 
-import java.util.function.Function;
-
 import static org.junit.Assert.*;
 /**
  * Provides unit tests for string conversion and formatting methods.

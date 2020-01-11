@@ -16,15 +16,15 @@ import java.sql.SQLException;
 /**
  * Provides functionality for extraction, update and save of site data from and to data base.
  *
- * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class MySQLSiteDAO implements SiteDAO {
 
     /**
      * Reads a single Site from data base.
      *
-     * @param name : Site name
-     * @return : Site instance
+     * @param name Site name
+     * @return Site instance
      * @throws Exception
      */
     @Override
@@ -42,7 +42,7 @@ public class MySQLSiteDAO implements SiteDAO {
     /**
      * Returns a list of all sites in the data base.
      *
-     * @return : list of sites
+     * @return list of sites
      * @throws Exception
      */
     @Override
@@ -62,8 +62,8 @@ public class MySQLSiteDAO implements SiteDAO {
     /**
      * Saves a single site instance to the data base.
      *
-     * @param site : Site instance
-     * @return : int represents the row count.
+     * @param site Site instance
+     * @return int represents the row count.
      * @throws Exception
      */
     @Override
@@ -98,8 +98,8 @@ public class MySQLSiteDAO implements SiteDAO {
     /**
      * Extracts a single site from a result set.
      *
-     * @param rs : result set
-     * @return
+     * @param rs result set
+     * @return extracted site
      * @throws SQLException
      */
     public Site extractSiteFromResultSet(ResultSet rs) throws SQLException {
@@ -118,8 +118,8 @@ public class MySQLSiteDAO implements SiteDAO {
     /**
      * Updates site date in the data base provided in a list.
      *
-     * @param siteList : list for sites
-     * @return : int[] representing the updated rows
+     * @param siteList list for sites
+     * @return int[] representing the updated rows
      * @throws SQLException
      */
     public int[] updateSiteData(ObservableList<Site> siteList) throws SQLException {

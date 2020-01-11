@@ -8,11 +8,11 @@ import java.util.List;
  * A field device has an address that is unique within a busline. Therefore it is absolutely necessary
  * to have such a data structure in order to set the address for each logRecord.
  *
- * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class LogFile {
 
-    private List<LogRecord> recordlist;
+    private final List<LogRecord> recordlist;
     private int address;
     private boolean addressSet = false;
 

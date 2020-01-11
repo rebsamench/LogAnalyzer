@@ -6,7 +6,7 @@ import java.time.ZonedDateTime;
  * Holds all Data for a single busline and provides getter and setter methods.
  * A busline can consist of multiple field devices, each represented by a LogFile.
  *
- * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class Busline {
     private int id;

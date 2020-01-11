@@ -11,26 +11,22 @@ import static org.junit.Assert.*;
 
 public class LogFileTest {
 
-    LogFile logFile;
-    List<LogRecord> recordlist;
-    LogRecord logRecord;
+    private LogFile logFile;
+    private List<LogRecord> recordList;
+    private LogRecord logRecord;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         logFile = new LogFile();
-        recordlist = new ArrayList<>();
+        recordList = new ArrayList<>();
         logRecord = new LogRecord();
         logFile.setAddress("initializing modbus with address: 128, baud: 38400, parity: n, stop bits: 2");
     }
 
-    @After
-    public void tearDown() throws Exception {
-    }
-
     @Test
     public void addLogRecord() {
-        recordlist.add(logRecord);
-        assertEquals(1, recordlist.size());
+        recordList.add(logRecord);
+        assertEquals(1, recordList.size());
     }
 
     @Test

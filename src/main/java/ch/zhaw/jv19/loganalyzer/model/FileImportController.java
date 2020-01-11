@@ -1,6 +1,7 @@
 package ch.zhaw.jv19.loganalyzer.model;
 
 import ch.zhaw.jv19.loganalyzer.model.dao.MySQLLogRecordWriteDAO;
+import ch.zhaw.jv19.loganalyzer.util.properties.ImportFileConst;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
  * Receives the collected import data from ImportPanelUIController and processes it to an appropriate form,
  * ready for the data base import.
  *
- * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class FileImportController {
 
@@ -21,7 +22,8 @@ public class FileImportController {
     private List<LogRecord> logRecordList;
 
 
-    public FileImportController() {}
+    public FileImportController() {
+    }
 
     public FileImportController(User user, Site site, Busline busline, List<File> fileList) {
         this.user = user;
@@ -50,35 +52,29 @@ public class FileImportController {
             logFileList = new ArrayList<>();
             for (File file : fileList) {
                 LogFile logFile = new LogFile();
-                FileInputStream fstream = null;
-                fstream = new FileInputStream(file);
+                FileInputStream fstream = new FileInputStream(file);
                 DataInputStream in = new DataInputStream(fstream);
                 BufferedReader br = new BufferedReader(new InputStreamReader(in));
                 String strLine;
-                READ_RECORDS: while ((strLine = br.readLine()) != null) {
+                while ((strLine = br.readLine()) != null) {
                     String[] tokens = strLine.split("\t");
-                    LogRecord record = new LogRecord(delteNull(tokens[0]), convertMilliSeconds(tokens[1]), tokens[2], tokens[3], tokens[4], user, site, busline);
-                    if (record.getMessage().contains("address") == false && logFile.isAddressSet() == false) {
-                        continue READ_RECORDS;
-                    }
-                    else {
-                        if (record.getMessage().contains("address")) {
+                    if (tokens[4].contains("address") || logFile.isAddressSet()) {
+                        LogRecord record = new LogRecord(trimTimestamp(tokens[0]), convertMilliSeconds(tokens[1]), tokens[2], tokens[3], tokens[4], user, site, busline);
+                        // ignore all lines before address is set. address is first record that must be saved
+                        if (logFile.isAddressSet()) {
+                            record.setAddress(logFile.getAddress());
+                            record.setUniqueIdentifier(record.getAddress());
+                        } else if (record.getMessage().contains("address")) {
                             logFile.setAddress(record.getMessage());
                             record.setAddress(logFile.getAddress());
                             record.setUniqueIdentifier(logFile.getAddress());
-                            logFile.addLogRecord(record);
                         }
-                        else {
-                            record.setAddress(logFile.getAddress());
-                            record.setUniqueIdentifier(record.getAddress());
-                            logFile.addLogRecord(record);
-                        }
+                        logFile.addLogRecord(record);
                     }
                 }
-            logFileList.add(logFile);
+                logFileList.add(logFile);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -113,7 +109,7 @@ public class FileImportController {
      * Converts the millisecond string to an int
      *
      * @param milliseconds : milliseconds as a string
-     * @return: milliseconds as an int
+     * @return milliseconds as an int
      */
     private int convertMilliSeconds(String milliseconds) {
         String[] millis = milliseconds.split(" ");
@@ -124,11 +120,10 @@ public class FileImportController {
      * The timestamp from the first logRecord in a logfile can contain an additional null. This will cause
      * an Exception when the String gets converted to ZonedDateTime because of the non conform pattern.
      *
-     * @param timestamp : timestamp as a String
-     * @return : timestamp as a String
+     * @param timestamp timestamp as a String
+     * @return timestamp as a String
      */
-    private String delteNull(String timestamp) {
-        String timestampNoNull = timestamp.substring(0, 19);
-        return timestampNoNull;
+    private String trimTimestamp(String timestamp) {
+        return timestamp.substring(0, ImportFileConst.DATETIMEPATTERNIMPORT.length());
     }
 }

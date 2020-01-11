@@ -1,6 +1,5 @@
 package ch.zhaw.jv19.loganalyzer.util.export;
 
-import ch.zhaw.jv19.loganalyzer.model.LogRecord;
 import javafx.scene.control.TableView;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -8,7 +7,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.lang.reflect.Type;
 
 /**
  * Exports TableView to a Microsoft Excel file (XLSX).

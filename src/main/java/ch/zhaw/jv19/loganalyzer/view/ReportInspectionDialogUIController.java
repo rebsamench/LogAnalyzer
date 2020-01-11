@@ -1,6 +1,5 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
-import ch.zhaw.jv19.loganalyzer.model.AppData;
 import ch.zhaw.jv19.loganalyzer.model.AppDataController;
 import ch.zhaw.jv19.loganalyzer.model.LogRecord;
 import javafx.collections.FXCollections;
@@ -12,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 

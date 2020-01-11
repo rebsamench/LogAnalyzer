@@ -12,29 +12,31 @@ import java.util.List;
 /**
  * Receives a logRecordList and does the insert to the data base.
  *
- * @autor: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class MySQLLogRecordWriteDAO implements LogRecordWriteDAO {
 
     AppDataController appDataController;
 
-    public MySQLLogRecordWriteDAO() {}
+    public MySQLLogRecordWriteDAO() {
+        appDataController = AppDataController.getInstance();
+    }
 
     /**
      * Gets a logRecordList and generates the insert statements for each logRecord. Statements are
      * processed as a batch.
      *
-     * @param logRecordList : list of logRecords
-     * @return : returns an int[], representing the altered rows in the data base.
+     * @param logRecordList list of logRecords
+     * @return returns an int[], representing the altered rows in the data base.
      * @throws Exception
      */
     @Override
     public int[] insertLogRecords(List<LogRecord> logRecordList) throws Exception {
         Connection connection = DBUtil.getConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO logrecord (createduser,unique_identifier,timestamp,site,busline,address,milliseconds,type,source,message) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            for (LogRecord logRecord: logRecordList){
-                // INSERT INTO logrecord (createduser,unique_identifier,timestamp,site,busline,address,milliseconds,type,source, message) values ('admin', 'heiri', '2019-11-13 16:31:08', 1, 1, 1, 798420, 'Warning', 'Controller', 'Errors: +Mechanical')
+            PreparedStatement ps = connection.prepareStatement("INSERT IGNORE INTO logrecord (createduser,unique_identifier,timestamp,site,busline,address,milliseconds,type,source,message) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                for (LogRecord logRecord: logRecordList){
+                // INSERT INTO logrecord (createduser,unique_identifier,timestamp,site,busline,address,milliseconds,type,source, message) values ('admin', 'hueresiech', '2019-11-13 16:31:08', 1, 1, 1, 798420, 'Warning', 'Controller', 'Errors: +Mechanical')
                 ps.setString(1, logRecord.getUser().getName());
                 ps.setString(2, logRecord.getUniqueIdentifier());
                 ps.setString(3, DateUtil.convertDateTimeToString(logRecord.getTimestamp(), MySQLConst.DATETIMEPATTERN));
@@ -50,7 +52,7 @@ public class MySQLLogRecordWriteDAO implements LogRecordWriteDAO {
             }
             return ps.executeBatch();
         } catch (SQLException ex) {
-            appDataController.setMessage("SQL Error");
+            appDataController.setMessage("SQL Error: " + ex.getMessage());
         }
         return null;
     }

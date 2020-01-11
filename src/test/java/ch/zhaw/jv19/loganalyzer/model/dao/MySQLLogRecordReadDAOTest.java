@@ -19,7 +19,7 @@ public class MySQLLogRecordReadDAOTest {
     Source testSource;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         testUser = new User("admin", "test", "password123", 0);
         testSite = new Site("admin", "Site 1", "test street 13", "8152", "Opfikon");
         testSite.setId(1);

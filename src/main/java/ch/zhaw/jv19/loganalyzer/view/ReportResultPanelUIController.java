@@ -5,22 +5,13 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import org.apache.poi.ss.formula.functions.Even;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 /**
@@ -32,14 +23,12 @@ import java.util.ResourceBundle;
 public class ReportResultPanelUIController extends ExportPanelUIController implements Initializable, UIPanelController {
     @FXML
     private TableView<LogRecord> resultTable;
-    private ObservableList<LogRecord> tableData = FXCollections.observableArrayList();
+    private final ObservableList<LogRecord> tableData = FXCollections.observableArrayList();
     @FXML
     private Button exportButton;
-    private AppDataController appDataController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        appDataController = AppDataController.getInstance();
         // disable button when table is empty
         exportButton.disableProperty().bind(Bindings.isEmpty(tableData));
         resultTable.getSelectionModel().setSelectionMode(
@@ -126,7 +115,7 @@ public class ReportResultPanelUIController extends ExportPanelUIController imple
      * @return Observable list of selected log records
      */
     public ObservableList<LogRecord> getSelectedItems() {
-        ObservableList<LogRecord> selectedItemsList = FXCollections.observableArrayList();
+        ObservableList<LogRecord> selectedItemsList;
         selectedItemsList = resultTable.getSelectionModel().getSelectedItems();
         return selectedItemsList;
     }

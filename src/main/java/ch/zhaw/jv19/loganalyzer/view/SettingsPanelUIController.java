@@ -1,7 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.model.AppDataController;
-import ch.zhaw.jv19.loganalyzer.util.db.DBUtil;
 import ch.zhaw.jv19.loganalyzer.util.properties.PropertyHandler;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
@@ -34,8 +33,8 @@ public class SettingsPanelUIController implements Initializable, UIPanelControll
     private CheckBox clearMessageBoxOnPanelChangeCb;
     @FXML
     private ComboBox<String> availablePanelComboBox;
-    private HashMap<String, String> settingsMap = new HashMap<>();
-    private SimpleBooleanProperty hasUnchangedSettings = new SimpleBooleanProperty();
+    private final HashMap<String, String> settingsMap = new HashMap<>();
+    private final SimpleBooleanProperty hasUnchangedSettings = new SimpleBooleanProperty();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -66,9 +65,7 @@ public class SettingsPanelUIController implements Initializable, UIPanelControll
             settingsMap.clear();
         });
         // when initialize method is called by fxml loader, panelList in AppData is still empty
-        availablePanelComboBox.addEventHandler(ComboBox.ON_SHOWING, event -> {
-            fillPanelComboBox();
-        });
+        availablePanelComboBox.addEventHandler(ComboBox.ON_SHOWING, event -> fillPanelComboBox());
         availablePanelComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
             settingsMap.put("selectedPanelOnStartup", availablePanelComboBox.getSelectionModel().getSelectedItem());
             propHandler.writePropertiesFromMap(settingsMap);

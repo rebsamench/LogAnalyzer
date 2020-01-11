@@ -17,17 +17,17 @@ import static org.junit.Assert.*;
 
 public class MySQLLogRecordWriteDAOTest {
 
-    MySQLLogRecordWriteDAO mySQLLogRecordWriteDAO = new MySQLLogRecordWriteDAO();
+    private final MySQLLogRecordWriteDAO mySQLLogRecordWriteDAO = new MySQLLogRecordWriteDAO();
 
-    List<LogRecord> logRecordList;
-    LogRecord logRecord1;
-    LogRecord logRecord2;
-    User testUser;
-    Site testSite;
-    Busline testBusline;
+    private List<LogRecord> logRecordList;
+    private LogRecord logRecord1;
+    private LogRecord logRecord2;
+    private User testUser;
+    private Site testSite;
+    private Busline testBusline;
 
     @Before
-    public void setUp() throws Exception{
+    public void setUp() {
         // String createdUser, String name, String password, int isadmin
         testUser = new User("admin", "admin", "password", 1);
         // String createdUser, String name, String street, String zipCode, String city
@@ -64,8 +64,6 @@ public class MySQLLogRecordWriteDAOTest {
                     MySQLConst.SEPARATOR +
                     logRecord2.getUniqueIdentifier() + ");";
             DBUtil.executeUpdate(deleteStatement);
-        } catch (SQLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }

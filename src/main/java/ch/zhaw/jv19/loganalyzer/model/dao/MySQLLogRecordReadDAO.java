@@ -219,7 +219,7 @@ public class MySQLLogRecordReadDAO implements LogRecordReadDAO {
                             .map(source -> String.valueOf(source.toString()))
                             .collect(Collectors.toCollection(ArrayList::new));
                 } else if (inConditionList.get(0) instanceof String) {
-                    inConditionListString = new ArrayList<String>((ObservableList<String>) inConditionList);
+                    inConditionListString = new ArrayList<>((ObservableList<String>) inConditionList);
                 }
                 // build IN-conditions
                 condition = getInConditions(inConditionListString);
@@ -271,7 +271,7 @@ public class MySQLLogRecordReadDAO implements LogRecordReadDAO {
      * @return log record extracted from result set
      * @throws SQLException database exception
      */
-    private LogRecord extractLogRecordFromResultSet(ResultSet rs) throws SQLException {
+    private LogRecord extractLogRecordFromResultSet(ResultSet rs) {
         LogRecord logRecord = null;
         try {
             logRecord = new LogRecord();
