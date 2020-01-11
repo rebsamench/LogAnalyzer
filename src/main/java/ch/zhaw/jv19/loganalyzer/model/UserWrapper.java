@@ -63,7 +63,7 @@ public class UserWrapper {
     }
 
     public void setIsadmin(int isadmin) {
-        this.isadmin.set(isadmin);
-        user.setIsadmin(isadmin);
-    }
+            this.isadmin.set(isadmin);
+            user.setIsadmin(isadmin);
+        }
 }

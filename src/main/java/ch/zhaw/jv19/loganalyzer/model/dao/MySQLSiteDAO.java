@@ -124,7 +124,6 @@ public class MySQLSiteDAO implements SiteDAO {
      */
     public int[] updateSiteData(ObservableList<Site> siteList) throws SQLException {
         Connection connection = DBUtil.getConnection();
-        try {
             PreparedStatement ps = connection.prepareStatement("UPDATE SITE SET createduser = ?, name = ?, street = ?, zipcode = ?, city = ?, timezone = ? WHERE id = ?");
             for (Site site : siteList) {
                 ps.setString(1, site.getCreatedUser());
@@ -137,9 +136,5 @@ public class MySQLSiteDAO implements SiteDAO {
                 ps.addBatch();
             }
             return ps.executeBatch();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return null;
     }
 }

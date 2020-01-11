@@ -33,7 +33,6 @@ public class MySQLLogRecordWriteDAO implements LogRecordWriteDAO {
     @Override
     public int[] insertLogRecords(List<LogRecord> logRecordList) throws Exception {
         Connection connection = DBUtil.getConnection();
-        try {
             PreparedStatement ps = connection.prepareStatement("INSERT IGNORE INTO logrecord (createduser,unique_identifier,timestamp,site,busline,address,milliseconds,type,source,message) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
                 for (LogRecord logRecord: logRecordList){
                 // INSERT INTO logrecord (createduser,unique_identifier,timestamp,site,busline,address,milliseconds,type,source, message) values ('admin', 'hueresiech', '2019-11-13 16:31:08', 1, 1, 1, 798420, 'Warning', 'Controller', 'Errors: +Mechanical')
@@ -47,13 +46,8 @@ public class MySQLLogRecordWriteDAO implements LogRecordWriteDAO {
                 ps.setString(8, logRecord.getEventType());
                 ps.setString(9, logRecord.getSource());
                 ps.setString(10, logRecord.getMessage());
-
                 ps.addBatch();
             }
             return ps.executeBatch();
-        } catch (SQLException ex) {
-            appDataController.setMessage("SQL Error: " + ex.getMessage());
-        }
-        return null;
     }
 }

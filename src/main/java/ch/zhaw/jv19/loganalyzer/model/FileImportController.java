@@ -25,17 +25,13 @@ public class FileImportController {
     public FileImportController() {
     }
 
-    public FileImportController(User user, Site site, Busline busline, List<File> fileList) {
+    public FileImportController(User user, Site site, Busline busline, List<File> fileList) throws Exception {
         this.user = user;
         this.site = site;
         this.busline = busline;
         createLogFiles(fileList);
         createLogRecordList(logFileList);
-        try {
-            saveToDB(logRecordList);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        saveToDB(logRecordList);
     }
 
     /**

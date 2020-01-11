@@ -109,7 +109,6 @@ public class MySQLUserDAO implements UserDAO {
 
     public int[] updateUserData(ObservableList<User> userList) throws SQLException {
         Connection connection = DBUtil.getConnection();
-        try {
             // update user set createduser = 'a', password = 'a', isadmin = 1 where id = 17
             PreparedStatement ps = connection.prepareStatement("UPDATE USER SET createduser = ?, password = ?, isadmin = ? WHERE id = ?");
             for (User user : userList) {
@@ -120,9 +119,5 @@ public class MySQLUserDAO implements UserDAO {
                 ps.addBatch();
             }
             return ps.executeBatch();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return null;
     }
 }

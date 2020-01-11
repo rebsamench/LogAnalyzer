@@ -110,7 +110,12 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         User user = chooseCreatedUser.getSelectionModel().getSelectedItem();
         Site site = chooseSite.getSelectionModel().getSelectedItem();
         Busline busline = chooseBusline.getSelectionModel().getSelectedItem();
-        new FileImportController(user, site, busline, fileList);
+        try {
+            new FileImportController(user, site, busline, fileList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            appDataController.setMessage("SQL Error");
+        }
         appDataController.setMessage("Data Import completed");
         showSelectedFiles.getItems().clear();
         chooseCreatedUser.getItems().clear();

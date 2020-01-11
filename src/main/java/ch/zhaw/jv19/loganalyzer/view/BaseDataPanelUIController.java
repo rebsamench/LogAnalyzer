@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
@@ -28,11 +29,12 @@ import java.util.ResourceBundle;
  */
 public class BaseDataPanelUIController implements Initializable {
 
-    private ObservableList<UserWrapper> userTableData = FXCollections.observableArrayList();
     private AppDataController appDataController;
     private BaseDataController baseDataController;
+    private ObservableList<UserWrapper> userTableData = FXCollections.observableArrayList();
     private ObservableList<SiteWrapper> siteTableData = FXCollections.observableArrayList();
     private ObservableList<BuslineWrapper> buslineTableData = FXCollections.observableArrayList();
+    private ObservableList<String> userNames = FXCollections.observableArrayList();
 
 
     @FXML
@@ -127,6 +129,9 @@ public class BaseDataPanelUIController implements Initializable {
         for (Busline busline : appDataController.getBuslineList()) {
             buslineTableData.add(new BuslineWrapper(busline));
         }
+        for (UserWrapper user : userTableData) {
+            userNames.add(user.getName());
+        }
     }
 
 
@@ -186,18 +191,16 @@ public class BaseDataPanelUIController implements Initializable {
                         .or(fieldBusType.textProperty().isEmpty()));
     }
 
-    // Setup Columns
     private void setupCreatedUserColumnUser() {
-        TableColumn<UserWrapper, String> createdUserColumn = new TableColumn<>("Created User");
-        createdUserColumn.setCellValueFactory(new PropertyValueFactory<>("createdUser"));
-        createdUserColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        baseDataUserTable.getColumns().add(createdUserColumn);
-        createdUserColumn.setOnEditCommit(
+        TableColumn<UserWrapper, String> columnCreatedUserUser = new TableColumn<>("Created User");
+        columnCreatedUserUser.setCellValueFactory(new PropertyValueFactory<>("createdUser"));
+        columnCreatedUserUser.setCellFactory(ComboBoxTableCell.forTableColumn(userNames));
+        baseDataUserTable.getColumns().add(columnCreatedUserUser);
+        columnCreatedUserUser.setOnEditCommit(
                 (TableColumn.CellEditEvent<UserWrapper, String> t) ->
                         (t.getTableView().getItems().get(
                                 t.getTablePosition().getRow())
-                        ).setCreatedUser(t.getNewValue())
-        );
+                        ).setCreatedUser(t.getNewValue()));
     }
 
     private void setupCreatedUserColumnSite() {
@@ -234,24 +237,13 @@ public class BaseDataPanelUIController implements Initializable {
     private void setupIsadminColumn() {
         TableColumn<UserWrapper, Integer> isadminColumn = new TableColumn<>("Admin");
         isadminColumn.setCellValueFactory(new PropertyValueFactory<>("isadmin"));
-        isadminColumn.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
-            @Override
-            public String toString(Integer integer) {
-                return Integer.toString(integer);
-            }
-
-            @Override
-            public Integer fromString(String s) {
-                return Integer.parseInt(s);
-            }
-        }));
+        isadminColumn.setCellFactory(ComboBoxTableCell.forTableColumn(0, 1));
         baseDataUserTable.getColumns().add(isadminColumn);
         isadminColumn.setOnEditCommit(
                 (TableColumn.CellEditEvent<UserWrapper, Integer> t) ->
                         (t.getTableView().getItems().get(
                                 t.getTablePosition().getRow())
-                        ).setIsadmin(t.getNewValue())
-        );
+                        ).setIsadmin(t.getNewValue()));
     }
 
     private void setupSiteNameColumn() {

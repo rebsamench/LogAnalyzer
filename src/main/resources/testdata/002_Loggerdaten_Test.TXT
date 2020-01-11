@@ -1,4 +1,4 @@
-13.11.2019 17:17:51	2000 ms	Event	BKN230-24-MOD-BAC	v 21.2.0.9
+13.11.2019 17:17:510    2000 ms	Event	BKN230-24-MOD-BAC	v 21.2.0.9
 13.11.2019 17:17:51	2007 ms	Info	Input	Input CLOSED changed to 1
 13.11.2019 17:17:51	2014 ms	Info	Input	Input ADDR0 changed to 1
 13.11.2019 17:17:51	2021 ms	Info	Input	Input BAUD1 changed to 1

@@ -113,7 +113,6 @@ public class MySQLBuslineDAO implements BusLineDAO {
      */
     public int[] updateBuslineData(ObservableList<Busline> buslineList) throws SQLException {
         Connection connection = DBUtil.getConnection();
-        try {
             PreparedStatement ps = connection.prepareStatement("UPDATE BUSLINE SET createduser = ?, name = ?, bustype = ? WHERE id = ?");
             for (Busline busline : buslineList) {
                 ps.setString(1, busline.getCreatedUser());
@@ -123,9 +122,5 @@ public class MySQLBuslineDAO implements BusLineDAO {
                 ps.addBatch();
             }
             return ps.executeBatch();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return null;
     }
 }
