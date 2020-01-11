@@ -89,7 +89,7 @@ public class SettingsPanelUIController implements Initializable, UIPanelControll
      */
     @FXML
     public void testDbConnection() {
-        if (appDataController.isDatabaseAccessible().get() == true) {
+        if (appDataController.isDatabaseAccessible().get()) {
             appDataController.setMessage("Database successfully connected.");
         } else {
             appDataController.setMessage("Connection failed. Check connection settings.");

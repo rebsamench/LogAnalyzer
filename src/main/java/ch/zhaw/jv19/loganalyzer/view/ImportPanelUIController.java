@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * Handles user interactions on the import panel.
  * Collects the chosen data and hands it over to the FileImportController as a list of files.
  *
- * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class ImportPanelUIController implements Initializable, UIPanelController {
     private AppDataController appDataController;
@@ -53,7 +53,7 @@ public class ImportPanelUIController implements Initializable, UIPanelController
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appDataController = AppDataController.getInstance();
-        if (appDataController.isDatabaseAccessible().get() == true) {
+        if (appDataController.isDatabaseAccessible().get()) {
             chooseCreatedUser.getItems().addAll(appDataController.getUserList());
             chooseSite.getItems().addAll(appDataController.getSiteList());
             chooseBusline.getItems().addAll(appDataController.getBuslineList());

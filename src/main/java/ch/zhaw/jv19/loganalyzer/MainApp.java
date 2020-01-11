@@ -25,7 +25,6 @@ public class MainApp extends Application {
                     .getResource("view/MainApp.fxml"));
             Pane rootLayout = (AnchorPane) loader.load();
             Scene scene = new Scene(rootLayout, 1200, 750);
-            MainAppUIController controller = loader.getController();
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {

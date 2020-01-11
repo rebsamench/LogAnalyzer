@@ -22,7 +22,6 @@ public class ExcelExporter {
      * @param file  file to which table is exported.
      */
     public void saveTable(TableView<?> table, File file) {
-        String filepath = file.getAbsolutePath();
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Export");

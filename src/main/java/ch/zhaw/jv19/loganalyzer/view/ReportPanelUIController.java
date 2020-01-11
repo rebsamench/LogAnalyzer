@@ -3,7 +3,6 @@ package ch.zhaw.jv19.loganalyzer.view;
 import ch.zhaw.jv19.loganalyzer.model.*;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
 import javafx.beans.binding.Bindings;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -256,11 +255,10 @@ public class ReportPanelUIController implements Initializable, UIPanelController
         final Stage inspectionDialog = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReportInspectionDialog.fxml"));
         // secondsBefore and secondsAfter allow numeric values only, therefore parse exception impossible
-        Integer secondsBeforeInt = secondsBefore.getText().isEmpty() ? 0 : Integer.parseInt(secondsBefore.getText());
-        Integer secondsAfterInt = secondsBefore.getText().isEmpty() ? 0 : Integer.parseInt(secondsAfter.getText());
-        Parent root = null;
+        int secondsBeforeInt = secondsBefore.getText().isEmpty() ? 0 : Integer.parseInt(secondsBefore.getText());
+        int secondsAfterInt = secondsBefore.getText().isEmpty() ? 0 : Integer.parseInt(secondsAfter.getText());
         try {
-            root = fxmlLoader.load();
+            Parent root = fxmlLoader.load();
             Scene inspectionScene = new Scene(root);
             ReportInspectionDialogUIController uiPanelController = fxmlLoader.getController();
             for (LogRecord logRecord : reportResultPanelUIController.getSelectedItems()) {

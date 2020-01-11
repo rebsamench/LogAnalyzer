@@ -81,14 +81,6 @@ public class PropertyHandler {
         return this.prop.getProperty(propKey);
     }
 
-    public Set<String> getAllPropertyNames() {
-        return this.prop.stringPropertyNames();
-    }
-
-    public boolean containsKey(String key) {
-        return this.prop.containsKey(key);
-    }
-
     /**
      * Saves given key and value as property in property file path
      *
