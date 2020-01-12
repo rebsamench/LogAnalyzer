@@ -52,7 +52,6 @@ public class BaseDataPanelUIController implements Initializable {
     private TableColumn<UserWrapper, String> columnPassword;
     @FXML
     private TableColumn<UserWrapper, Integer> columnIsAdmin;
-    // User Tab Elements
     @FXML
     private TextField fieldPassword;
     @FXML
@@ -77,10 +76,8 @@ public class BaseDataPanelUIController implements Initializable {
     private TableColumn<SiteWrapper, String> columnZipCode;
     @FXML
     private TableColumn<SiteWrapper, Integer> columnCity;
-    // BusLine Tab Elements
     @FXML
     private Button buttonSubmitNewBusLine;
-    // Site Tab Elements
     @FXML
     private ComboBox<User> comboBoxCreatedUserSite;
     @FXML
@@ -397,7 +394,7 @@ public class BaseDataPanelUIController implements Initializable {
         fieldBusLineName.clear();
         fieldBusType.clear();
         if (appDataController.getBusLineList().contains(newBusLine)) {
-            appDataController.setMessage("Site already exists!");
+            appDataController.setMessage("Busline already exists!");
         } else {
             busLineTableData.add(newWrappedBusLine);
             try {

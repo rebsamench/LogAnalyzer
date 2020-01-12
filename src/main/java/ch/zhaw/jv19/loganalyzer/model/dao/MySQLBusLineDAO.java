@@ -44,11 +44,10 @@ public class MySQLBusLineDAO implements BusLineDAO {
      * Saves a single busLine instance to the data base.
      *
      * @param busLine busLine instance
-     * @return int represents the row count.
      * @throws Exception if saving fails
      */
     @Override
-    public int saveBusLine(BusLine busLine) throws Exception {
+    public void saveBusLine(BusLine busLine) throws Exception {
         String[] values = {
                 StringUtil.wrapQuotes.apply(busLine.getCreatedUser()),
                 StringUtil.wrapQuotes.apply(busLine.getName()),
@@ -65,7 +64,7 @@ public class MySQLBusLineDAO implements BusLineDAO {
                         ", name " + MySQLConst.EQUALS + values[1] +
                         ", bustype " + MySQLConst.EQUALS + values[2] +
                         MySQLConst.ENDQUERY;
-        return DBUtil.executeUpdate(statementTemplate);
+        DBUtil.executeUpdate(statementTemplate);
     }
 
     /**
@@ -89,10 +88,9 @@ public class MySQLBusLineDAO implements BusLineDAO {
      * Updates busLine date in the data base provided in a list.
      *
      * @param busLineList : list for busLines
-     * @return : int[] representing the updated rows
      * @throws SQLException if updating fails
      */
-    public int[] updateBusLineData(ObservableList<BusLine> busLineList) throws SQLException {
+    public void updateBusLineData(ObservableList<BusLine> busLineList) throws SQLException {
         Connection connection = DBUtil.getConnection();
             PreparedStatement ps = connection.prepareStatement("UPDATE BUSLINE SET createduser = ?, name = ?, bustype = ? WHERE id = ?");
             for (BusLine busLine : busLineList) {
@@ -102,6 +100,5 @@ public class MySQLBusLineDAO implements BusLineDAO {
                 ps.setInt(4, busLine.getId());
                 ps.addBatch();
             }
-            return ps.executeBatch();
     }
 }

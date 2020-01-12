@@ -47,11 +47,11 @@
                                           <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
 
-                                          <Label text="Register New User:" styleClass="label"/>
-                                          <Label text="Created by" GridPane.rowIndex="1" styleClass="label"/>
-                                          <Label text="Name" GridPane.rowIndex="2" styleClass="label"/>
-                                          <Label text="Admin 1/0" GridPane.rowIndex="4" styleClass="label"/>
-                                          <Label text="Password" GridPane.rowIndex="3" styleClass="label"/>
+                                          <Label styleClass="label" text="Register New User:" />
+                                          <Label styleClass="label" text="Created by" GridPane.rowIndex="1" />
+                                          <Label styleClass="label" text="Name" GridPane.rowIndex="2" />
+                                          <Label styleClass="label" text="Admin 1/0" GridPane.rowIndex="4" />
+                                          <Label styleClass="label" text="Password" GridPane.rowIndex="3" />
                                           <TextField fx:id="fieldUserName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <TextField fx:id="fieldPassword" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <Button fx:id="buttonSubmitNewUser" mnemonicParsing="false" onAction="#submitNewUser" text="Submit" GridPane.columnIndex="3" GridPane.rowIndex="4" />
@@ -97,16 +97,16 @@
                                           <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
 
-                                          <Label text="Register New Site:" styleClass="label"/>
-                                          <Label text="Created by" GridPane.rowIndex="1" styleClass="label"/>
-                                          <Label text="Name" GridPane.rowIndex="2" styleClass="label"/>
-                                          <Label text="City" GridPane.rowIndex="5" styleClass="label"/>
-                                          <Label text="Street" GridPane.rowIndex="3" styleClass="label"/>
+                                          <Label styleClass="label" text="Register New Site:" />
+                                          <Label styleClass="label" text="Created by" GridPane.rowIndex="1" />
+                                          <Label styleClass="label" text="Name" GridPane.rowIndex="2" />
+                                          <Label styleClass="label" text="City" GridPane.rowIndex="5" />
+                                          <Label styleClass="label" text="Street" GridPane.rowIndex="3" />
                                           <TextField fx:id="fieldSiteName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <TextField fx:id="fieldStreetName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <TextField fx:id="fieldCity" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                           <Button fx:id="buttonSubmitNewSite" mnemonicParsing="false" onAction="#submitNewSite" text="Submit" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                                          <Label text="Zip Code" GridPane.rowIndex="4" styleClass="label"/>
+                                          <Label styleClass="label" text="Zip Code" GridPane.rowIndex="4" />
                                           <TextField fx:id="fieldZipCode" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                           <ComboBox fx:id="comboBoxCreatedUserSite" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
@@ -128,7 +128,7 @@
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
 
                                     <TableView fx:id="baseDataBusLineTable" maxWidth="400.0" minWidth="400.0" prefHeight="206.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                    <Button layoutX="412.0" layoutY="14.0" mnemonicParsing="false" onAction="#updateBusLine" text="Update Data in DB" AnchorPane.leftAnchor="415.0" AnchorPane.topAnchor="15.0"  styleClass="button"/>
+                                    <Button layoutX="412.0" layoutY="14.0" mnemonicParsing="false" onAction="#updateBusLine" styleClass="button" text="Update Data in DB" AnchorPane.leftAnchor="415.0" AnchorPane.topAnchor="15.0" />
 
                               </AnchorPane>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="131.0" prefWidth="598.0">
@@ -154,7 +154,7 @@
                                           <TextField fx:id="fieldBusLineName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <TextField fx:id="fieldBusType" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <Button fx:id="buttonSubmitNewBusLine" mnemonicParsing="false" onAction="#submitNewBusLine" text="Submit" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                          <ComboBox fx:id="comboBoxCreatedUserBusLine" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="combo-box" />
+                                          <ComboBox fx:id="comboBoxCreatedUserBusLine" prefWidth="200.0" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
                                     </GridPane>
 

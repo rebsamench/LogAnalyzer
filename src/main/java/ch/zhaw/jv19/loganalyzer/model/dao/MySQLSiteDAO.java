@@ -44,11 +44,10 @@ public class MySQLSiteDAO implements SiteDAO {
      * Saves a single site instance to the data base.
      *
      * @param site Site instance
-     * @return int represents the row count.
      * @throws Exception if saving fails
      */
     @Override
-    public int saveSite(Site site) throws Exception {
+    public void saveSite(Site site) throws Exception {
         String[] values = {
                 StringUtil.wrapQuotes.apply(site.getCreatedUser()),
                 StringUtil.wrapQuotes.apply(site.getName()),
@@ -73,7 +72,7 @@ public class MySQLSiteDAO implements SiteDAO {
                         ", city " + MySQLConst.EQUALS + values[4] +
                         ", timezone " + MySQLConst.EQUALS + values[5] +
                         MySQLConst.ENDQUERY;
-        return DBUtil.executeUpdate(statementTemplate);
+        DBUtil.executeUpdate(statementTemplate);
     }
 
     /**
@@ -100,10 +99,9 @@ public class MySQLSiteDAO implements SiteDAO {
      * Updates site date in the data base provided in a list.
      *
      * @param siteList list for sites
-     * @return int[] representing the updated rows
      * @throws SQLException if updating fails
      */
-    public int[] updateSiteData(ObservableList<Site> siteList) throws SQLException {
+    public void updateSiteData(ObservableList<Site> siteList) throws SQLException {
         Connection connection = DBUtil.getConnection();
             PreparedStatement ps = connection.prepareStatement("UPDATE SITE SET createduser = ?, name = ?, street = ?, zipcode = ?, city = ?, timezone = ? WHERE id = ?");
             for (Site site : siteList) {
@@ -116,6 +114,5 @@ public class MySQLSiteDAO implements SiteDAO {
                 ps.setInt(7, site.getId());
                 ps.addBatch();
             }
-            return ps.executeBatch();
     }
 }

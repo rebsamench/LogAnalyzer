@@ -79,10 +79,6 @@ public class LogRecord {
         return created;
     }
 
-    public ZonedDateTime getLastChanged() {
-        return lastChanged;
-    }
-
     public String getUniqueIdentifier() {
         return uniqueIdentifier;
     }

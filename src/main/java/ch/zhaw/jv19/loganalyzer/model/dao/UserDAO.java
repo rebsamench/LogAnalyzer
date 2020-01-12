@@ -7,6 +7,6 @@ import java.sql.SQLException;
 public interface UserDAO {
     User getUserByName(String name) throws Exception;
     ObservableList<User> getAllUsersList() throws Exception;
-    int saveUser(User user) throws Exception;
-    int[] updateUserData(ObservableList<User> userList) throws SQLException;
+    void saveUser(User user) throws Exception;
+    void updateUserData(ObservableList<User> userList) throws SQLException;
 }
