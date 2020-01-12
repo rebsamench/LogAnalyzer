@@ -20,12 +20,10 @@ public class FileImportController {
     private Busline busline;
     private List<LogFile> logFileList;
     private List<LogRecord> logRecordList;
-
-
-    public FileImportController() {
-    }
+    private AppDataController appDataController;
 
     public FileImportController(User user, Site site, Busline busline, List<File> fileList) throws Exception {
+        appDataController = AppDataController.getInstance();
         this.user = user;
         this.site = site;
         this.busline = busline;
@@ -54,30 +52,33 @@ public class FileImportController {
                 String strLine;
                 while ((strLine = br.readLine()) != null) {
                     String[] tokens = strLine.split("\t");
-                    if (tokens[4].contains("address") || logFile.isAddressSet()) {
+                    // ignore all records with different line lengths from 5
+                    if (tokens.length == 5) {
                         LogRecord record = new LogRecord(trimTimestamp(tokens[0]), convertMilliSeconds(tokens[1]), tokens[2], tokens[3], tokens[4], user, site, busline);
-                        // ignore all lines before address is set. address is first record that must be saved
-                        if (logFile.isAddressSet()) {
-                            record.setAddress(logFile.getAddress());
-                            record.setUniqueIdentifier(record.getAddress());
-                        } else if (record.getMessage().contains("address")) {
-                            logFile.setAddress(record.getMessage());
-                            record.setAddress(logFile.getAddress());
-                            record.setUniqueIdentifier(logFile.getAddress());
+                        if (logFile.isAddressSet() || record.getMessage().contains("address")) {
+                            if (logFile.isAddressSet()) {
+                                record.setAddress(logFile.getAddress());
+                                record.setUniqueIdentifier(record.getAddress());
+                            } else if (record.getMessage().contains("address")) {
+                                logFile.setAddress(record.getMessage());
+                                record.setAddress(logFile.getAddress());
+                                record.setUniqueIdentifier(logFile.getAddress());
+                            }
+                            logFile.addLogRecord(record);
                         }
-                        logFile.addLogRecord(record);
                     }
                 }
                 logFileList.add(logFile);
             }
         } catch (IOException e) {
+            appDataController.setMessage(e.getMessage());
             e.printStackTrace();
         }
     }
 
     /**
      * Extracts the logRecords from the logFileList and collects them in a LogRecordList
-     * This is the appropriate for for data base insert.
+     * This is the appropriate for data base insert.
      *
      * @param logFileList : list of logFiles
      */

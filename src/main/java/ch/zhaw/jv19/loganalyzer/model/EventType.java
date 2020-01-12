@@ -14,7 +14,8 @@ import java.util.stream.Stream;
 public enum EventType {
     INFO("Info"),
     EVENT("Event"),
-    WARNING("Warning");
+    WARNING("Warning"),
+    IRRELEVANT("Irrelevant");
 
     private String eventType;
     private static final Map<String, EventType> lookup = new HashMap<>();
@@ -24,6 +25,7 @@ public enum EventType {
     }
 
     String getEventType() {
+
         return eventType;
     }
 
@@ -36,7 +38,11 @@ public enum EventType {
     }
 
     public static EventType get(String eventType) {
-        return lookup.get(eventType.toUpperCase());
+        EventType identifiedEventType = lookup.get(eventType.toUpperCase());
+        if(identifiedEventType == null) {
+            identifiedEventType = lookup.get("IRRELEVANT");
+        }
+        return identifiedEventType;
     }
 
     /**

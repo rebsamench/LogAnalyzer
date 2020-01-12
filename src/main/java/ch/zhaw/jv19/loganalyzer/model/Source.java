@@ -16,7 +16,8 @@ public enum Source {
     INPUT("Input"),
     CONTROLLER("Controller"),
     MODBUS_APP("Modbus App"),
-    DEVICE_CONFIGURATION("DeviceConfiguration");
+    DEVICE_CONFIGURATION("DeviceConfiguration"),
+    IRRELEVANT("Irrelevant");
 
     private String source;
     private static final Map<String, Source> lookup = new HashMap<>();
@@ -38,7 +39,11 @@ public enum Source {
     }
 
     public static Source get(String source) {
-        return lookup.get(source.toUpperCase());
+        Source identifiedSource = lookup.get(source.toUpperCase());
+        if(identifiedSource == null) {
+            identifiedSource = lookup.get("IRRELEVANT");
+        }
+        return identifiedSource;
     }
 
     /**

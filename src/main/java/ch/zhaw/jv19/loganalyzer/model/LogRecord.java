@@ -52,9 +52,6 @@ public class LogRecord {
     }
 
     public String getSource() {
-            if(source == null) {
-                System.out.println("Hallo");
-            }
         return source.toString();
     }
 
@@ -137,8 +134,6 @@ public class LogRecord {
         } else {
             throw new Exception("Event type '" + source + "' unknown in EventType enum. Extend EventType enum.");
         }
-
-        this.eventType = EventType.get(eventType);
     }
 
     public void setSource(String source) throws Exception {

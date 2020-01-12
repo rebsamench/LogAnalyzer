@@ -114,13 +114,14 @@ public class ImportPanelUIController implements Initializable, UIPanelController
             new FileImportController(user, site, busline, fileList);
         } catch (Exception e) {
             e.printStackTrace();
-            appDataController.setMessage("SQL Error");
+            appDataController.setMessage("SQL Error: " + e.getMessage());
         }
         appDataController.setMessage("Data Import completed");
         showSelectedFiles.getItems().clear();
-        chooseCreatedUser.getItems().clear();
-        chooseBusline.getItems().clear();
-        chooseSite.getItems().clear();
+        showSelectedFiles.getColumns().clear();
+        chooseCreatedUser.getSelectionModel().clearSelection();
+        chooseBusline.getSelectionModel().clearSelection();
+        chooseSite.getSelectionModel().clearSelection();
     }
 
     /**

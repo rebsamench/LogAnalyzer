@@ -87,7 +87,7 @@ public class BaseDataPanelUIController implements Initializable {
     private Button buttonSubmitNewBusline;
     // Site Tab Elements
     @FXML
-    private ComboBox comboBoxCreatedUserSite;
+    private ComboBox<User> comboBoxCreatedUserSite;
     @FXML
     private TextField fieldBuslineName;
     @FXML
