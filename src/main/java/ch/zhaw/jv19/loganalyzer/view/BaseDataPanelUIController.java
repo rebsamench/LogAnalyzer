@@ -41,7 +41,7 @@ public class BaseDataPanelUIController implements Initializable {
     @FXML
     private TextField fieldUserName;
     @FXML
-    private ComboBox<Integer> comboBoxIsadmin;
+    private ComboBox<Integer> comboBoxIsAdmin;
     @FXML
     private TableView<UserWrapper> baseDataUserTable;
     @FXML
@@ -72,7 +72,7 @@ public class BaseDataPanelUIController implements Initializable {
     @FXML
     private TableColumn<SiteWrapper, String> columnSiteName;
     @FXML
-    private TableColumn<SiteWrapper, String> ColumnStreetname;
+    private TableColumn<SiteWrapper, String> columnStreetName;
     @FXML
     private TableColumn<SiteWrapper, String> columnZipCode;
     @FXML
@@ -139,7 +139,7 @@ public class BaseDataPanelUIController implements Initializable {
         List<Integer> admin = new ArrayList<>();
         admin.add(0);
         admin.add(1);
-        comboBoxIsadmin.getItems().addAll(admin);
+        comboBoxIsAdmin.getItems().addAll(admin);
         setupCreatedUserColumnUser();
         setupUserNameColumn();
         setupPasswordColumn();
@@ -147,7 +147,7 @@ public class BaseDataPanelUIController implements Initializable {
         baseDataUserTable.setEditable(true);
         buttonSubmitNewUser.disableProperty().bind((fieldUserName.textProperty().isEmpty())
                 .or(fieldPassword.textProperty().isEmpty())
-                .or(comboBoxIsadmin.valueProperty().isNull()));
+                .or(comboBoxIsAdmin.valueProperty().isNull()));
     }
 
 
@@ -329,7 +329,7 @@ public class BaseDataPanelUIController implements Initializable {
         String cu = createdUser.getName();
         String name = fieldUserName.getText();
         String password = fieldPassword.getText();
-        int isAdmin = comboBoxIsadmin.getSelectionModel().getSelectedItem();
+        int isAdmin = comboBoxIsAdmin.getSelectionModel().getSelectedItem();
         User newUser = new User(cu, name, password, isAdmin);
         UserWrapper newWrappedUser = new UserWrapper(newUser);
         fieldUserName.clear();

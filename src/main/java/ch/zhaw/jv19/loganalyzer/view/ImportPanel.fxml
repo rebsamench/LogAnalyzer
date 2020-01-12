@@ -1,42 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="ImportPanel" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" fx:controller="ch.zhaw.jv19.loganalyzer.view.ImportPanelUIController">
-
-      <GridPane layoutX="24.0" layoutY="24.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="485.6" minWidth="10.0" prefWidth="474.3999877929688" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="8.0" minHeight="8.0" prefHeight="8.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="350.0" minHeight="10.0" prefHeight="160.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-
-            <Label text="User" styleClass="label"/>
-            <Label text="Site" GridPane.rowIndex="1" styleClass="label"/>
-            <Label text="BusLine" GridPane.rowIndex="2" styleClass="label"/>
-            <ComboBox fx:id="chooseCreatedUser" prefWidth="200.0" GridPane.columnIndex="1" styleClass="combo-box"/>
-            <ComboBox fx:id="chooseSite" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="combo-box"/>
-            <ComboBox fx:id="chooseBusLine" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="combo-box"/>
-            <Button fx:id="selectLogFiles" mnemonicParsing="false" onAction="#handleSelectedLogFiles" prefWidth="100.0" text="Select Log Files" GridPane.rowIndex="4" styleClass="button" />
-            <Button fx:id="importData" mnemonicParsing="false" onAction="#handleImportData" prefWidth="100.0" text="Import Data" GridPane.columnIndex="1" GridPane.rowIndex="6" styleClass="button"/>
-            <TableView fx:id="selectedFilesTable" minHeight="-Infinity" prefHeight="30.0" prefWidth="474.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-
-      </GridPane>
-      <Label layoutX="14.0" layoutY="14.0" text="Define Meta Data:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" styleClass="label"/>
-
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="ImportPanel" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx" fx:controller="ch.zhaw.jv19.loganalyzer.view.ImportPanelUIController">
+    <GridPane layoutX="24.0" layoutY="24.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="10.0"
+              AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="485.6" minWidth="10.0" prefWidth="474.3999877929688"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="8.0" minHeight="8.0" prefHeight="8.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="350.0" minHeight="10.0" prefHeight="160.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        </rowConstraints>
+        <Label text="User" styleClass="label"/>
+        <Label text="Site" GridPane.rowIndex="1" styleClass="label"/>
+        <Label text="Bus Line" GridPane.rowIndex="2" styleClass="label"/>
+        <ComboBox fx:id="chooseCreatedUser" prefWidth="200.0" GridPane.columnIndex="1" styleClass="combo-box"/>
+        <ComboBox fx:id="chooseSite" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                  styleClass="combo-box"/>
+        <ComboBox fx:id="chooseBusLine" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                  styleClass="combo-box"/>
+        <Button fx:id="selectLogFiles" mnemonicParsing="false" onAction="#handleSelectedLogFiles" prefWidth="100.0"
+                text="Select Log Files" GridPane.rowIndex="4" styleClass="button"/>
+        <Button fx:id="importData" mnemonicParsing="false" onAction="#handleImportData" prefWidth="100.0"
+                text="Import Data" GridPane.columnIndex="1" GridPane.rowIndex="6" styleClass="button"/>
+        <TableView fx:id="selectedFilesTable" minHeight="-Infinity" prefHeight="30.0" prefWidth="474.0"
+                   GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+    </GridPane>
+    <Label layoutX="14.0" layoutY="14.0" text="Define Meta Data" AnchorPane.leftAnchor="10.0"
+           AnchorPane.topAnchor="10.0" styleClass="title"/>
 </AnchorPane>
