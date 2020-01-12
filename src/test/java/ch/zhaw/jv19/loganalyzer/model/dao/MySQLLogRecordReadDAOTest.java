@@ -9,6 +9,10 @@ import java.time.ZonedDateTime;
 import java.util.TreeMap;
 
 import static org.junit.Assert.*;
+/**
+ * Provides unit tests for LogRecordReadDAO.
+ * @author Simon Rizzi, rizzisim@students.zhaw.ch
+ */
 
 public class MySQLLogRecordReadDAOTest {
     MySQLLogRecordReadDAO mySQLLogRecordReadDAO;

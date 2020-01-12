@@ -16,8 +16,7 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 /**
- * Controls ui interactions of report panel. Provides form to select criteria for log record
- * search and displaying search results.
+ * Controls ui interactions of result panel. Provides methods to display search results in exportable table.
  *
  * @author Simon Rizzi, rizzisim@students.zhaw.ch
  */

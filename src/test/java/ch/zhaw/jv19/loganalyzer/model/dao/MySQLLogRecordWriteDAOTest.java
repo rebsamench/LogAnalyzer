@@ -12,7 +12,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-
+/**
+ * Provides unit tests for LogRecordWriteDAO.
+ * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
+ */
 public class MySQLLogRecordWriteDAOTest {
 
     private final MySQLLogRecordWriteDAO mySQLLogRecordWriteDAO = new MySQLLogRecordWriteDAO();

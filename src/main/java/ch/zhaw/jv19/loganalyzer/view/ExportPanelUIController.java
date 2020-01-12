@@ -7,6 +7,10 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 
+/**
+ * Controls excel export. Used as super class for all panels with exportable tables.
+ * @author Simon Rizzi, rizzisim@students.zhaw.ch
+ */
 public class ExportPanelUIController {
     private final AppDataController appDataController = AppDataController.getInstance();
 

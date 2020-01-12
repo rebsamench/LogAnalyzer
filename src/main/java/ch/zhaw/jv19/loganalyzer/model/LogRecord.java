@@ -5,7 +5,10 @@ import ch.zhaw.jv19.loganalyzer.util.properties.ImportFileConst;
 import ch.zhaw.jv19.loganalyzer.util.db.MySQLConst;
 
 import java.time.ZonedDateTime;
-
+/**
+ * Holds all the data for a single logRecord and provides getter and setter methods.
+ * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
+ */
 public class LogRecord {
     private int id;
     private ZonedDateTime created;
@@ -21,11 +24,7 @@ public class LogRecord {
     private Source source;
     private String message;
 
-    /**
-     * Holds all the data for a single logRecord and provides getter and setter methods.
-     *
-     * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
-     */
+
     public LogRecord(){}
 
     public LogRecord(String timestamp, int milliseconds, String eventType, String source, String message, User user, Site site, BusLine busLine) {
