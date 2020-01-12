@@ -56,7 +56,7 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     @FXML
     private CheckComboBox<Site> site;
     @FXML
-    private CheckComboBox<Busline> busLine;
+    private CheckComboBox<BusLine> busLine;
     @FXML
     private TextField address;
     @FXML
@@ -131,11 +131,11 @@ public class ReportPanelUIController implements Initializable, UIPanelController
     }
 
     /**
-     * Fill busline combobox if it is empty
+     * Fill busLine combobox if it is empty
      */
     private void fillBusLineComboBox() {
         if (busLine.getItems().size() == 0) {
-            busLine.getItems().addAll(appDataController.getBuslineList());
+            busLine.getItems().addAll(appDataController.getBusLineList());
         }
     }
 

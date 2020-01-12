@@ -11,14 +11,14 @@ import javafx.scene.layout.AnchorPane;
 import java.util.ArrayList;
 
 /**
- * Provides base data for loganalyzer app. Instance created (singleton) and data loaded from storage on app startup.
+ * Provides base data for LogAnalyzer app. Instance created (singleton) and data loaded from storage on app startup.
  * Access data only from {@link AppDataController}.
  * @author Simon Rizzi, rizzisim@students.zhaw.ch
  */
 public class AppData {
     private ObservableList<User> userList;
     private ObservableList<Site> siteList;
-    private ObservableList<Busline> busLineList;
+    private ObservableList<BusLine> busLineList;
     private final ObservableList<EventType> eventTypeList;
     private final  ObservableList<Source> sourceList;
     private ObservableList<String> panelList;
@@ -58,11 +58,11 @@ public class AppData {
     private void initializeAppData() {
         UserDAO userDao = new MySQLUserDAO();
         SiteDAO siteDAO = new MySQLSiteDAO();
-        BusLineDAO busLineDAO = new MySQLBuslineDAO();
+        BusLineDAO busLineDAO = new MySQLBusLineDAO();
         try {
             this.userList = userDao.getAllUsersList();
             this.siteList = siteDAO.getAllSitesList();
-            this.busLineList = busLineDAO.getAllBuslinesList();
+            this.busLineList = busLineDAO.getAllBusLinesList();
         } catch (Exception e) {
             setMessage(e.getMessage());
         }
@@ -92,23 +92,11 @@ public class AppData {
         this.message.setValue(message);
     }
 
-    public void setUserList(ObservableList<User> userList) {
-        this.userList = userList;
-    }
-
-    public void setSiteList(ObservableList<Site> siteList) {
-        this.siteList = siteList;
-    }
-
-    public void setBusLineList(ObservableList<Busline> busLineList) {
-        this.busLineList = busLineList;
-    }
-
     public ObservableList<User> getUserList() {
         return userList;
     }
 
-    public ObservableList<Busline> getBusLineList() {
+    public ObservableList<BusLine> getBusLineList() {
         return busLineList;
     }
 
@@ -136,8 +124,8 @@ public class AppData {
         siteList.add(site);
     }
 
-    public void addBusline(Busline busline) {
-        busLineList.add(busline);
+    public void addBusLine(BusLine busLine) {
+        busLineList.add(busLine);
     }
 
     public void fillPanelList(ArrayList<AnchorPane> availablePanelList) {

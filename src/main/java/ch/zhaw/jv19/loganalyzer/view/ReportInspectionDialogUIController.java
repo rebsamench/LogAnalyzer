@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import java.io.IOException;
@@ -28,7 +27,7 @@ public class ReportInspectionDialogUIController extends ExportPanelUIController 
         searchConditions.put("loggedTimestampFrom", logRecord.getTimestamp().minusSeconds(secondsBefore));
         searchConditions.put("loggedTimestampUpTo", logRecord.getTimestamp().plusSeconds(secondsAfter));
         searchConditions.put("site", FXCollections.observableArrayList(logRecord.getSite()));
-        searchConditions.put("busLine", FXCollections.observableArrayList(logRecord.getBusline()));
+        searchConditions.put("busLine", FXCollections.observableArrayList(logRecord.getBusLine()));
         searchConditions.put("address", logRecord.getAddress());
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReportResultPanel.fxml"));
         try {

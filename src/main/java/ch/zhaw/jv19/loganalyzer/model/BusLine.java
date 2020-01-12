@@ -3,25 +3,25 @@ package ch.zhaw.jv19.loganalyzer.model;
 import java.time.ZonedDateTime;
 
 /**
- * Holds all Data for a single busline and provides getter and setter methods.
- * A busline can consist of multiple field devices, each represented by a LogFile.
+ * Holds all Data for a single busLine and provides getter and setter methods.
+ * A busLine can consist of multiple field devices, each represented by a LogFile.
  *
- * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
-public class Busline {
+public class BusLine {
     private int id;
     private ZonedDateTime created;
     private String createdUser;
     private String name;
-    private String bustype;
+    private String busType;
 
-    public Busline() {
+    public BusLine() {
     }
 
-    public Busline(String createdUser, String name, String bustype) {
+    public BusLine(String createdUser, String name, String busType) {
         this.createdUser = createdUser;
         this.name = name;
-        this.bustype = bustype;
+        this.busType = busType;
     }
 
     public String getName() {
@@ -32,8 +32,8 @@ public class Busline {
         return id;
     }
 
-    public String getBustype() {
-        return bustype;
+    public String getBusType() {
+        return busType;
     }
 
     public String getCreatedUser() {
@@ -43,7 +43,7 @@ public class Busline {
     @Override
     public String toString() {
         return (getName() + ", " +
-                getBustype());
+                getBusType());
     }
 
     public void setId(int id) {
@@ -62,15 +62,15 @@ public class Busline {
         this.name = name;
     }
 
-    public void setBustype(String bustype) {
-        this.bustype = bustype;
+    public void setBusType(String busType) {
+        this.busType = busType;
     }
 
     public int hashCode() {
-        int ergebnis = 17;
-        ergebnis = 37 * ergebnis + name.hashCode();
-        ergebnis = 37 * ergebnis + bustype.hashCode();
-        return ergebnis;
+        int result = 17;
+        result = 37 * result + name.hashCode();
+        result = 37 * result + busType.hashCode();
+        return result;
     }
 
     public boolean equals(Object object) {
@@ -78,11 +78,11 @@ public class Busline {
             return true;
         }
 
-        if(!(object instanceof Busline)) {
+        if(!(object instanceof BusLine)) {
             return false;
         }
 
-        Busline other = (Busline) object;
-        return name.equals(other.name) && bustype.equals(other.bustype);
+        BusLine other = (BusLine) object;
+        return name.equals(other.name) && busType.equals(other.busType);
     }
 }

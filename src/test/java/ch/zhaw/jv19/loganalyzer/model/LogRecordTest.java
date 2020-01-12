@@ -11,7 +11,7 @@ public class LogRecordTest {
 
     private LogRecord logRecord;
     private Site site;
-    private Busline busline;
+    private BusLine busLine;
     private static final String TIMESTAMP = "13.11.2019 17:17:52";
     private static final int ADDRESS = 66;
 
@@ -19,11 +19,11 @@ public class LogRecordTest {
     public void setUp() {
         site = new Site();
         site.setId(42);
-        busline = new Busline();
-        busline.setId(24);
+        busLine = new BusLine();
+        busLine.setId(24);
         logRecord = new LogRecord();
         logRecord.setSite(site);
-        logRecord.setBusline(busline);
+        logRecord.setBusLine(busLine);
         logRecord.setTimestamp(DateUtil.getZonedDateTimeFromDateTimeString(TIMESTAMP, ImportFileConst.DATETIMEPATTERNIMPORT));
         logRecord.setMilliseconds(4000);
     }

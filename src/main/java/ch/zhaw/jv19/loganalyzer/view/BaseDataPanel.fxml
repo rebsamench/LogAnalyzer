@@ -13,25 +13,25 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="BaseDataPanel" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="ch.zhaw.jv19.loganalyzer.view.BaseDataPanelUIController">
-    <children>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="BaseDataPanel" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" fx:controller="ch.zhaw.jv19.loganalyzer.view.BaseDataPanelUIController">
+
         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <tabs>
+
                 <Tab text="Users">
-                    <content>
+
                         <AnchorPane>
-                            <children>
+
                         <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <items>
+
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                                 <children>
+
                                             <TableView fx:id="baseDataUserTable" maxWidth="400.0" minWidth="400.0" prefHeight="206.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 </TableView>
                                     <Button layoutX="412.0" layoutY="14.0" mnemonicParsing="false" onAction="#updateUser" text="Update Data in DB" AnchorPane.leftAnchor="415.0" AnchorPane.topAnchor="15.0" />
-                                 </children>
+
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="131.0" prefWidth="598.0">
-                                 <children>
+
                                     <GridPane layoutX="5.0" layoutY="14.0" AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="14.0">
                                       <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
@@ -46,41 +46,41 @@
                                           <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
-                                       <children>
-                                          <Label text="Register New User:" />
-                                          <Label text="Created User" GridPane.rowIndex="1" />
-                                          <Label text="Name" GridPane.rowIndex="2" />
-                                          <Label text="Admin 1/0" GridPane.rowIndex="4" />
-                                          <Label text="Password" GridPane.rowIndex="3" />
+
+                                          <Label text="Register New User:" styleClass="label"/>
+                                          <Label text="Created by" GridPane.rowIndex="1" styleClass="label"/>
+                                          <Label text="Name" GridPane.rowIndex="2" styleClass="label"/>
+                                          <Label text="Admin 1/0" GridPane.rowIndex="4" styleClass="label"/>
+                                          <Label text="Password" GridPane.rowIndex="3" styleClass="label"/>
                                           <TextField fx:id="fieldUserName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <TextField fx:id="fieldPassword" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <Button fx:id="buttonSubmitNewUser" mnemonicParsing="false" onAction="#submitNewUser" text="Submit" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                           <ComboBox fx:id="comboBoxCreatedUserUser" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <ComboBox fx:id="comboBoxIsadmin" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                       </children>
+
                                     </GridPane>
-                                 </children>
+
                               </AnchorPane>
-                          </items>
+
                         </SplitPane>
-                            </children>
+
                         </AnchorPane>
-                    </content>
+
                 </Tab>
             <Tab text="Sites">
-               <content>
+
                   <AnchorPane>
-                     <children>
+
                         <SplitPane dividerPositions="0.4162132752992383" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <items>
+
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                                 <children>
+
                                     <TableView fx:id="baseDataSiteTable" maxWidth="400.0" minWidth="400.0" prefHeight="206.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     <Button layoutX="412.0" layoutY="14.0" mnemonicParsing="false" onAction="#updateSite" text="Update Data in DB" AnchorPane.leftAnchor="415.0" AnchorPane.topAnchor="15.0" />
-                                 </children>
+
                               </AnchorPane>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="131.0" prefWidth="598.0">
-                                 <children>
+
                                     <GridPane layoutX="5.0" layoutY="14.0" AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="14.0">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
@@ -96,43 +96,43 @@
                                           <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
-                                       <children>
-                                          <Label text="Register New Site:" />
-                                          <Label text="Created User" GridPane.rowIndex="1" />
-                                          <Label text="Name" GridPane.rowIndex="2" />
-                                          <Label text="City" GridPane.rowIndex="5" />
-                                          <Label text="Street" GridPane.rowIndex="3" />
+
+                                          <Label text="Register New Site:" styleClass="label"/>
+                                          <Label text="Created by" GridPane.rowIndex="1" styleClass="label"/>
+                                          <Label text="Name" GridPane.rowIndex="2" styleClass="label"/>
+                                          <Label text="City" GridPane.rowIndex="5" styleClass="label"/>
+                                          <Label text="Street" GridPane.rowIndex="3" styleClass="label"/>
                                           <TextField fx:id="fieldSiteName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <TextField fx:id="fieldStreetName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <TextField fx:id="fieldCity" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                           <Button fx:id="buttonSubmitNewSite" mnemonicParsing="false" onAction="#submitNewSite" text="Submit" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                                          <Label text="Zip Code" GridPane.rowIndex="4" />
+                                          <Label text="Zip Code" GridPane.rowIndex="4" styleClass="label"/>
                                           <TextField fx:id="fieldZipCode" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                           <ComboBox fx:id="comboBoxCreatedUserSite" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                       </children>
+
                                     </GridPane>
-                                 </children>
+
                               </AnchorPane>
-                           </items>
+
                         </SplitPane>
-                     </children>
+
                   </AnchorPane>
-               </content>
+
             </Tab>
-            <Tab text="Buslines">
-               <content>
+            <Tab text="Bus Lines">
+
                   <AnchorPane>
-                     <children>
+
                         <SplitPane dividerPositions="0.5875952121871599" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <items>
+
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                                 <children>
-                                    <TableView fx:id="baseDataBuslineTable" maxWidth="400.0" minWidth="400.0" prefHeight="206.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                    <Button layoutX="412.0" layoutY="14.0" mnemonicParsing="false" onAction="#updateBusline" text="Update Data in DB" AnchorPane.leftAnchor="415.0" AnchorPane.topAnchor="15.0" />
-                                 </children>
+
+                                    <TableView fx:id="baseDataBusLineTable" maxWidth="400.0" minWidth="400.0" prefHeight="206.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Button layoutX="412.0" layoutY="14.0" mnemonicParsing="false" onAction="#updateBusLine" text="Update Data in DB" AnchorPane.leftAnchor="415.0" AnchorPane.topAnchor="15.0"  styleClass="button"/>
+
                               </AnchorPane>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="131.0" prefWidth="598.0">
-                                 <children>
+
                                     <GridPane layoutX="5.0" layoutY="14.0" AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="14.0">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
@@ -146,26 +146,26 @@
                                           <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
-                                       <children>
-                                          <Label text="Register New Busline:" />
-                                          <Label text="Created User" GridPane.rowIndex="1" />
-                                          <Label text="Busline Name" GridPane.rowIndex="2" />
-                                          <Label text="Bustype" GridPane.rowIndex="3" />
-                                          <TextField fx:id="fieldBuslineName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                                          <Label text="Register New Bus Line:" />
+                                          <Label text="Created by" GridPane.rowIndex="1" />
+                                          <Label text="Name" GridPane.rowIndex="2" />
+                                          <Label text="Bus Type" GridPane.rowIndex="3" />
+                                          <TextField fx:id="fieldBusLineName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <TextField fx:id="fieldBusType" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <Button fx:id="buttonSubmitNewBusline" mnemonicParsing="false" onAction="#submitNewBusline" text="Submit" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                          <ComboBox fx:id="comboBoxCreatedUserBusline" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                       </children>
+                                          <Button fx:id="buttonSubmitNewBusLine" mnemonicParsing="false" onAction="#submitNewBusLine" text="Submit" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                          <ComboBox fx:id="comboBoxCreatedUserBusLine" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="combo-box" />
+
                                     </GridPane>
-                                 </children>
+
                               </AnchorPane>
-                           </items>
+
                         </SplitPane>
-                     </children>
+
                   </AnchorPane>
-               </content>
+
             </Tab>
-            </tabs>
+
         </TabPane>
-    </children>
+
 </AnchorPane>

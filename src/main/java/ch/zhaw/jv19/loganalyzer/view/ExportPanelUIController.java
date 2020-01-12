@@ -8,11 +8,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 
 public class ExportPanelUIController {
-    private final AppDataController appDataController;
-
-    public ExportPanelUIController() {
-        appDataController = AppDataController.getInstance();
-    }
+    private final AppDataController appDataController = AppDataController.getInstance();
 
     /**
      * Exports current resultTable to Excel. Default file name is Export_[currentDateTime].xlsx.

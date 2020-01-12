@@ -14,7 +14,7 @@ public class LogRecord {
     private String uniqueIdentifier;
     private ZonedDateTime timestamp;
     private Site site;
-    private Busline busline;
+    private BusLine busLine;
     private int address;
     private int milliseconds;
     private EventType eventType;
@@ -24,11 +24,11 @@ public class LogRecord {
     /**
      * Holds all the data for a single logRecord and provides getter and setter methods.
      *
-     * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
+     * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
      */
     public LogRecord(){}
 
-    public LogRecord(String timestamp, int milliseconds, String eventType, String source, String message, User user, Site site, Busline busline) {
+    public LogRecord(String timestamp, int milliseconds, String eventType, String source, String message, User user, Site site, BusLine busLine) {
         this.timestamp = DateUtil.getZonedDateTimeFromDateTimeString(timestamp, ImportFileConst.DATETIMEPATTERNIMPORT);
         this.milliseconds = milliseconds;
         this.eventType = EventType.get(eventType);
@@ -36,7 +36,7 @@ public class LogRecord {
         this.message = message;
         this.user = user;
         this.site = site;
-        this.busline = busline;
+        this.busLine = busLine;
     }
 
     public ZonedDateTime getTimestamp() {
@@ -67,8 +67,8 @@ public class LogRecord {
         return site;
     }
 
-    public Busline getBusline() {
-        return busline;
+    public BusLine getBusLine() {
+        return busLine;
     }
 
     public int getId() {
@@ -90,11 +90,11 @@ public class LogRecord {
     /**
      * Creates a unique identifier for each logRecord.
      *
-     * @param address : bus address. Is unique in a busline.
+     * @param address : bus address. Is unique in a busLine.
      */
     public void setUniqueIdentifier(int address) {
         this.uniqueIdentifier = (site.getId() +
-                busline.getId() +
+                busLine.getId() +
                 Integer.toString(address) +
                 DateUtil.convertDateTimeToString(timestamp, MySQLConst.DATETIMEPATTERN) +
                 milliseconds).replaceAll("[^A-Za-z0-9]","");
@@ -152,8 +152,8 @@ public class LogRecord {
         this.site = site;
     }
 
-    public void setBusline(Busline busline) {
-        this.busline = busline;
+    public void setBusLine(BusLine busLine) {
+        this.busLine = busLine;
     }
 
     public void setId(int id) {

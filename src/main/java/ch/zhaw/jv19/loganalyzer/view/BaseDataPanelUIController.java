@@ -1,9 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.model.*;
-import ch.zhaw.jv19.loganalyzer.model.dao.MySQLBuslineDAO;
-import ch.zhaw.jv19.loganalyzer.model.dao.MySQLSiteDAO;
-import ch.zhaw.jv19.loganalyzer.model.dao.MySQLUserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -22,41 +18,40 @@ import java.util.ResourceBundle;
 
 /**
  * Handles user interactions on the base data panel.
- * Allows the opening of new users, sites and buslines and changes to existing users, sites and buslines.
- * Users, sites and buslines need to be available prior to the import of new log files.
+ * Allows the opening of new users, sites and busLines and changes to existing users, sites and busLines.
+ * Users, sites and busLines need to be available prior to the import of new log files.
  *
- * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class BaseDataPanelUIController implements Initializable {
 
     private AppDataController appDataController;
     private BaseDataController baseDataController;
-    private ObservableList<UserWrapper> userTableData = FXCollections.observableArrayList();
-    private ObservableList<SiteWrapper> siteTableData = FXCollections.observableArrayList();
-    private ObservableList<BuslineWrapper> buslineTableData = FXCollections.observableArrayList();
-    private ObservableList<String> userNames = FXCollections.observableArrayList();
+    private final ObservableList<UserWrapper> userTableData = FXCollections.observableArrayList();
+    private final ObservableList<SiteWrapper> siteTableData = FXCollections.observableArrayList();
+    private final ObservableList<BusLineWrapper> busLineTableData = FXCollections.observableArrayList();
+    private final ObservableList<String> userNames = FXCollections.observableArrayList();
 
-
     @FXML
-    Button buttonSubmitNewUser;
+    private Button buttonSubmitNewUser;
     @FXML
-    ComboBox comboBoxCreatedUserBusline;
+    private ComboBox<User> comboBoxCreatedUserBusLine;
     @FXML
-    private ComboBox comboBoxCreatedUserUser;
+    private ComboBox<User> comboBoxCreatedUserUser;
     @FXML
     private TextField fieldUserName;
     @FXML
-    private ComboBox comboBoxIsadmin;
+    private ComboBox<Integer> comboBoxIsadmin;
     @FXML
     private TableView<UserWrapper> baseDataUserTable;
     @FXML
-    private TableColumn<UserWrapper, String> columCreatedUserUser;
+    private TableColumn<UserWrapper, String> columnCreatedUserUser;
     @FXML
     private TableColumn<UserWrapper, String> columnNameUser;
     @FXML
     private TableColumn<UserWrapper, String> columnPassword;
     @FXML
-    private TableColumn<UserWrapper, Integer> columnIsadmin;
+    private TableColumn<UserWrapper, Integer> columnIsAdmin;
     // User Tab Elements
     @FXML
     private TextField fieldPassword;
@@ -82,24 +77,24 @@ public class BaseDataPanelUIController implements Initializable {
     private TableColumn<SiteWrapper, String> columnZipCode;
     @FXML
     private TableColumn<SiteWrapper, Integer> columnCity;
-    // Busline Tab Elements
+    // BusLine Tab Elements
     @FXML
-    private Button buttonSubmitNewBusline;
+    private Button buttonSubmitNewBusLine;
     // Site Tab Elements
     @FXML
     private ComboBox<User> comboBoxCreatedUserSite;
     @FXML
-    private TextField fieldBuslineName;
+    private TextField fieldBusLineName;
     @FXML
     private TextField fieldBusType;
     @FXML
-    private TableView<BuslineWrapper> baseDataBuslineTable;
+    private TableView<BusLineWrapper> baseDataBusLineTable;
     @FXML
-    private TableColumn<BuslineWrapper, String> ColumnCreatedUserBusline;
+    private TableColumn<BusLineWrapper, String> columnCreatedUserBusLine;
     @FXML
-    private TableColumn<BuslineWrapper, String> columnBuslineName;
+    private TableColumn<BusLineWrapper, String> columnBusLineName;
     @FXML
-    private TableColumn<BuslineWrapper, String> columnBusType;
+    private TableColumn<BusLineWrapper, String> columnBusType;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -108,7 +103,7 @@ public class BaseDataPanelUIController implements Initializable {
             populate();
             initializeUserUserTab();
             initializeSiteTab();
-            initializeBuslineTab();
+            initializeBusLineTab();
         } else {
             appDataController.setMessage("Could not load base data. Check database connection settings in properties file or on panel 'Settings'.");
         }
@@ -116,7 +111,7 @@ public class BaseDataPanelUIController implements Initializable {
 
 
     /**
-     * Builds a lists of wrapped users, sites and buslines in order to populate the editable table views
+     * Builds a lists of wrapped users, sites and busLines in order to populate the editable table views
      * on the panel
      */
     private void populate() {
@@ -126,8 +121,8 @@ public class BaseDataPanelUIController implements Initializable {
         for (Site site : appDataController.getSiteList()) {
             siteTableData.add(new SiteWrapper(site));
         }
-        for (Busline busline : appDataController.getBuslineList()) {
-            buslineTableData.add(new BuslineWrapper(busline));
+        for (BusLine busLine : appDataController.getBusLineList()) {
+            busLineTableData.add(new BusLineWrapper(busLine));
         }
         for (UserWrapper user : userTableData) {
             userNames.add(user.getName());
@@ -141,7 +136,7 @@ public class BaseDataPanelUIController implements Initializable {
     private void initializeUserUserTab() {
         baseDataUserTable.setItems(userTableData);
         comboBoxCreatedUserUser.getItems().addAll(appDataController.getUserList());
-        List<Integer> admin = new ArrayList();
+        List<Integer> admin = new ArrayList<>();
         admin.add(0);
         admin.add(1);
         comboBoxIsadmin.getItems().addAll(admin);
@@ -177,22 +172,22 @@ public class BaseDataPanelUIController implements Initializable {
 
 
     /**
-     * Initializes the busline tab
+     * Initializes the busLine tab
      */
-    private void initializeBuslineTab() {
-        baseDataBuslineTable.setItems(buslineTableData);
-        comboBoxCreatedUserBusline.getItems().addAll(appDataController.getUserList());
-        setupCreatedUserColumnBusline();
-        setupBuslineNameColumn();
+    private void initializeBusLineTab() {
+        baseDataBusLineTable.setItems(busLineTableData);
+        comboBoxCreatedUserBusLine.getItems().addAll(appDataController.getUserList());
+        setupCreatedUserColumnBusLine();
+        setupBusLineNameColumn();
         setupBustypeColumn();
-        baseDataBuslineTable.setEditable(true);
-        buttonSubmitNewBusline.disableProperty().bind(
-                (fieldBuslineName.textProperty().isEmpty())
+        baseDataBusLineTable.setEditable(true);
+        buttonSubmitNewBusLine.disableProperty().bind(
+                (fieldBusLineName.textProperty().isEmpty())
                         .or(fieldBusType.textProperty().isEmpty()));
     }
 
     private void setupCreatedUserColumnUser() {
-        TableColumn<UserWrapper, String> columnCreatedUserUser = new TableColumn<>("Created User");
+        TableColumn<UserWrapper, String> columnCreatedUserUser = new TableColumn<>("Created by");
         columnCreatedUserUser.setCellValueFactory(new PropertyValueFactory<>("createdUser"));
         columnCreatedUserUser.setCellFactory(ComboBoxTableCell.forTableColumn(userNames));
         baseDataUserTable.getColumns().add(columnCreatedUserUser);
@@ -204,15 +199,15 @@ public class BaseDataPanelUIController implements Initializable {
     }
 
     private void setupCreatedUserColumnSite() {
-        TableColumn<SiteWrapper, String> columnCreatedUserSite = new TableColumn<>("Created User");
+        TableColumn<SiteWrapper, String> columnCreatedUserSite = new TableColumn<>("Created by");
         columnCreatedUserSite.setCellValueFactory(new PropertyValueFactory<>("createdUser"));
         baseDataSiteTable.getColumns().add(columnCreatedUserSite);
     }
 
-    private void setupCreatedUserColumnBusline() {
-        TableColumn<BuslineWrapper, String> ColumnCreatedUserBusline = new TableColumn<>("Created User");
-        ColumnCreatedUserBusline.setCellValueFactory(new PropertyValueFactory<>("createdUser"));
-        baseDataBuslineTable.getColumns().add(ColumnCreatedUserBusline);
+    private void setupCreatedUserColumnBusLine() {
+        TableColumn<BusLineWrapper, String> ColumnCreatedUserBusLine = new TableColumn<>("Created by");
+        ColumnCreatedUserBusLine.setCellValueFactory(new PropertyValueFactory<>("createdUser"));
+        baseDataBusLineTable.getColumns().add(ColumnCreatedUserBusLine);
     }
 
     private void setupUserNameColumn() {
@@ -298,13 +293,13 @@ public class BaseDataPanelUIController implements Initializable {
         );
     }
 
-    private void setupBuslineNameColumn() {
-        TableColumn<BuslineWrapper, String> columnBuslineName = new TableColumn<>("Busline Name");
-        columnBuslineName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        columnBuslineName.setCellFactory(TextFieldTableCell.forTableColumn());
-        baseDataBuslineTable.getColumns().add(columnBuslineName);
-        columnBuslineName.setOnEditCommit(
-                (TableColumn.CellEditEvent<BuslineWrapper, String> t) ->
+    private void setupBusLineNameColumn() {
+        TableColumn<BusLineWrapper, String> columnBusLineName = new TableColumn<>("Bus Line Name");
+        columnBusLineName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnBusLineName.setCellFactory(TextFieldTableCell.forTableColumn());
+        baseDataBusLineTable.getColumns().add(columnBusLineName);
+        columnBusLineName.setOnEditCommit(
+                (TableColumn.CellEditEvent<BusLineWrapper, String> t) ->
                         (t.getTableView().getItems().get(
                                 t.getTablePosition().getRow())
                         ).setName(t.getNewValue())
@@ -312,15 +307,15 @@ public class BaseDataPanelUIController implements Initializable {
     }
 
     private void setupBustypeColumn() {
-        TableColumn<BuslineWrapper, String> columnBusType = new TableColumn<>("Bustyp");
-        columnBusType.setCellValueFactory(new PropertyValueFactory<>("bustype"));
+        TableColumn<BusLineWrapper, String> columnBusType = new TableColumn<>("Bus Type");
+        columnBusType.setCellValueFactory(new PropertyValueFactory<>("busType"));
         columnBusType.setCellFactory(TextFieldTableCell.forTableColumn());
-        baseDataBuslineTable.getColumns().add(columnBusType);
+        baseDataBusLineTable.getColumns().add(columnBusType);
         columnBusType.setOnEditCommit(
-                (TableColumn.CellEditEvent<BuslineWrapper, String> t) ->
+                (TableColumn.CellEditEvent<BusLineWrapper, String> t) ->
                         (t.getTableView().getItems().get(
                                 t.getTablePosition().getRow())
-                        ).setBustype(t.getNewValue())
+                        ).setBusType(t.getNewValue())
         );
     }
 
@@ -330,11 +325,11 @@ public class BaseDataPanelUIController implements Initializable {
      */
     @FXML
     private void submitNewUser() {
-        User createdUser = (User) comboBoxCreatedUserUser.getSelectionModel().getSelectedItem();
+        User createdUser = comboBoxCreatedUserUser.getSelectionModel().getSelectedItem();
         String cu = createdUser.getName();
         String name = fieldUserName.getText();
         String password = fieldPassword.getText();
-        int isAdmin = (int) comboBoxIsadmin.getSelectionModel().getSelectedItem();
+        int isAdmin = comboBoxIsadmin.getSelectionModel().getSelectedItem();
         User newUser = new User(cu, name, password, isAdmin);
         UserWrapper newWrappedUser = new UserWrapper(newUser);
         fieldUserName.clear();
@@ -360,7 +355,7 @@ public class BaseDataPanelUIController implements Initializable {
      */
     @FXML
     private void submitNewSite() {
-        User createdUser = (User) comboBoxCreatedUserSite.getSelectionModel().getSelectedItem();
+        User createdUser = comboBoxCreatedUserSite.getSelectionModel().getSelectedItem();
         String cu = createdUser.getName();
         String name = fieldSiteName.getText();
         String street = fieldStreetName.getText();
@@ -388,27 +383,27 @@ public class BaseDataPanelUIController implements Initializable {
     }
 
     /**
-     * Collects busline data from the busline tab and hands it over to the BaseDataController in order to
-     * create a new busline.
+     * Collects busLine data from the busLine tab and hands it over to the BaseDataController in order to
+     * create a new busLine.
      */
     @FXML
-    private void submitNewBusline() {
-        User createdUser = (User) comboBoxCreatedUserBusline.getSelectionModel().getSelectedItem();
+    private void submitNewBusLine() {
+        User createdUser = comboBoxCreatedUserBusLine.getSelectionModel().getSelectedItem();
         String cu = createdUser.getName();
-        String name = fieldBuslineName.getText();
-        String bustyp = fieldBusType.getText();
-        Busline newBusline = new Busline(cu, name, bustyp);
-        BuslineWrapper newWrappedBusline = new BuslineWrapper(newBusline);
-        fieldBuslineName.clear();
+        String name = fieldBusLineName.getText();
+        String busType = fieldBusType.getText();
+        BusLine newBusLine = new BusLine(cu, name, busType);
+        BusLineWrapper newWrappedBusLine = new BusLineWrapper(newBusLine);
+        fieldBusLineName.clear();
         fieldBusType.clear();
-        if (appDataController.getBuslineList().contains(newBusline)) {
+        if (appDataController.getBusLineList().contains(newBusLine)) {
             appDataController.setMessage("Site already exists!");
         } else {
-            buslineTableData.add(newWrappedBusline);
+            busLineTableData.add(newWrappedBusLine);
             try {
                 baseDataController = new BaseDataController();
-                baseDataController.saveNewBusline(newBusline);
-                appDataController.setMessage("New Busline successfully submitted");
+                baseDataController.saveNewBusLine(newBusLine);
+                appDataController.setMessage("New bus line successfully submitted");
             } catch (Exception e) {
                 e.printStackTrace();
                 appDataController.setMessage("SQL Error");
@@ -423,7 +418,7 @@ public class BaseDataPanelUIController implements Initializable {
     private void updateUser() {
         baseDataController = new BaseDataController();
         try {
-            baseDataController.updateUserdata();
+            baseDataController.updateUserData();
             appDataController.setMessage("User Data successfully updated");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -438,7 +433,7 @@ public class BaseDataPanelUIController implements Initializable {
     private void updateSite() {
         baseDataController = new BaseDataController();
         try {
-            baseDataController.updateSitedata();
+            baseDataController.updateSiteData();
             appDataController.setMessage("Site Data successfully updated");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -450,11 +445,11 @@ public class BaseDataPanelUIController implements Initializable {
      * Collects updated buslin data from UI and calls BaseDataController in order to update the data base.
      */
     @FXML
-    private void updateBusline() {
+    private void updateBusLine() {
         baseDataController = new BaseDataController();
         try {
-            baseDataController.updateBuslinedata();
-            appDataController.setMessage("Busline Data successfully updated");
+            baseDataController.updateBusLineData();
+            appDataController.setMessage("BusLine Data successfully updated");
         } catch (SQLException e) {
             e.printStackTrace();
             appDataController.setMessage("SQL Error");

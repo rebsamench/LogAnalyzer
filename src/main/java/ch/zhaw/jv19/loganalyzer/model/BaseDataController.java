@@ -1,8 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.model;
 
-import ch.zhaw.jv19.loganalyzer.model.dao.MySQLBuslineDAO;
-import ch.zhaw.jv19.loganalyzer.model.dao.MySQLSiteDAO;
-import ch.zhaw.jv19.loganalyzer.model.dao.MySQLUserDAO;
+import ch.zhaw.jv19.loganalyzer.model.dao.*;
 import javafx.fxml.FXML;
 
 import java.sql.SQLException;
@@ -10,7 +8,7 @@ import java.sql.SQLException;
 /**
  * This class acts as a interface between the BaseDataUIController and the corresponding DAOs.
  *
- * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class BaseDataController {
 
@@ -18,10 +16,10 @@ public class BaseDataController {
         appDataController = AppDataController.getInstance();
     }
 
-    private AppDataController appDataController;
-    private MySQLUserDAO mySQLUserDAO;
-    private MySQLSiteDAO mySQLSiteDAO;
-    private MySQLBuslineDAO mySQLBuslineDAO;
+    private final AppDataController appDataController;
+    private UserDAO mySQLUserDAO;
+    private SiteDAO mySQLSiteDAO;
+    private BusLineDAO mySQLBusLineDAO;
 
     /**
      * Receives a new user from BaseDataPanelUIController and hands it over to the corresponding DAO in order to
@@ -48,15 +46,15 @@ public class BaseDataController {
     }
 
     /**
-     * Receives a new busline from BaseDataPanelUIController and hands it over to the corresponding DAO in order to
-     * create a new busline.
+     * Receives a new busLine from BaseDataPanelUIController and hands it over to the corresponding DAO in order to
+     * create a new busLine.
      */
     @FXML
-    public void saveNewBusline(Busline busline) throws Exception {
-        appDataController.addBuslineToBuslineList(busline);
-        mySQLBuslineDAO = new MySQLBuslineDAO();
-        mySQLBuslineDAO.saveBusline(busline);
-        appDataController.setMessage("New Busline successfully submitted");
+    public void saveNewBusLine(BusLine busLine) throws Exception {
+        appDataController.addBusLineToBusLineList(busLine);
+        mySQLBusLineDAO = new MySQLBusLineDAO();
+        mySQLBusLineDAO.saveBusLine(busLine);
+        appDataController.setMessage("New bus line successfully submitted.");
     }
 
     /**
@@ -64,7 +62,7 @@ public class BaseDataController {
      * DAO in Order to update the data base.
      */
     @FXML
-    public void updateUserdata() throws SQLException {
+    public void updateUserData() throws SQLException {
         mySQLUserDAO = new MySQLUserDAO();
         mySQLUserDAO.updateUserData(appDataController.getUserList());
     }
@@ -74,18 +72,18 @@ public class BaseDataController {
      * DAO in Order to update the data base.
      */
     @FXML
-    public void updateSitedata() throws SQLException {
+    public void updateSiteData() throws SQLException {
         mySQLSiteDAO = new MySQLSiteDAO();
         mySQLSiteDAO.updateSiteData(appDataController.getSiteList());
     }
 
     /**
-     * Is called by the BaseDataPanelUIController and will hand over the updated buslineList to the corresponding
+     * Is called by the BaseDataPanelUIController and will hand over the updated busLineList to the corresponding
      * DAO in Order to update the data base.
      */
     @FXML
-    public void updateBuslinedata() throws SQLException {
-        mySQLBuslineDAO = new MySQLBuslineDAO();
-        mySQLBuslineDAO.updateBuslineData(appDataController.getBuslineList());
+    public void updateBusLineData() throws SQLException {
+        mySQLBusLineDAO = new MySQLBusLineDAO();
+        mySQLBusLineDAO.updateBusLineData(appDataController.getBusLineList());
     }
 }

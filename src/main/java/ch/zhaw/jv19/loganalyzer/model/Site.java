@@ -15,9 +15,9 @@ public class Site {
 
     /**
      * A site object holds all the data that describes one site.
-     * A site can consist of multiple buslines.
+     * A site can consist of multiple busLines.
      *
-     * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
+     * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
      */
     public Site() {}
 
@@ -47,10 +47,6 @@ public class Site {
 
     public String getCity() {
         return city;
-    }
-
-    public ZonedDateTime getCreated() {
-        return created;
     }
 
     public String getTimezone() {

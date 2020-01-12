@@ -14,7 +14,7 @@ public class MySQLLogRecordReadDAOTest {
     MySQLLogRecordReadDAO mySQLLogRecordReadDAO;
     User testUser;
     Site testSite;
-    Busline testBusLine;
+    BusLine testBusLine;
     EventType testEventType;
     Source testSource;
 
@@ -23,16 +23,11 @@ public class MySQLLogRecordReadDAOTest {
         testUser = new User("admin", "test", "password123", 0);
         testSite = new Site("admin", "Site 1", "test street 13", "8152", "Opfikon");
         testSite.setId(1);
-        testBusLine = new Busline("admin", "Line 123", "KNX");
+        testBusLine = new BusLine("admin", "Line 123", "KNX");
         testBusLine.setId(1);
         testEventType = EventType.get("Info");
         testSource = Source.get("Input");
         mySQLLogRecordReadDAO = new MySQLLogRecordReadDAO();
-    }
-
-    @Test
-    public void getCurrentQuery() {
-        mySQLLogRecordReadDAO.getCurrentQuery();
     }
 
     @Test

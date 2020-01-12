@@ -38,9 +38,9 @@ CREATE TABLE IF NOT EXISTS `belimo`.`user` (
 
 
 -- -----------------------------------------------------
--- Table `belimo`.`busline`
+-- Table `belimo`.`busLine`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `belimo`.`busline` (
+CREATE TABLE IF NOT EXISTS `belimo`.`busLine` (
                                                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                                                   `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                                   `lastchanged` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `belimo`.`busline` (
                                                   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
                                                   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
                                                   INDEX `createduser_idx` (`createduser` ASC) VISIBLE,
-                                                  CONSTRAINT `createduser_busline_user`
+                                                  CONSTRAINT `createduser_busLine_user`
                                                       FOREIGN KEY (`createduser`)
                                                           REFERENCES `belimo`.`user` (`name`))
     ENGINE = InnoDB
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `belimo`.`logrecord` (
                                                     `unique_identifier` VARCHAR(45) CHARACTER SET 'utf8' NULL DEFAULT NULL,
                                                     `timestamp` DATETIME NOT NULL,
                                                     `site` INT(11) NULL DEFAULT NULL,
-                                                    `busline` INT(11) NULL DEFAULT NULL,
+                                                    `busLine` INT(11) NULL DEFAULT NULL,
                                                     `address` INT(11) NOT NULL,
                                                     `milliseconds` INT(11) NOT NULL,
                                                     `type` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
@@ -105,11 +105,11 @@ CREATE TABLE IF NOT EXISTS `belimo`.`logrecord` (
                                                     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
                                                     UNIQUE INDEX `unique_identifier_UNIQUE` (`unique_identifier` ASC) VISIBLE,
                                                     INDEX `createduser_idx` (`createduser` ASC) VISIBLE,
-                                                    INDEX `busline_idx` (`busline` ASC) VISIBLE,
+                                                    INDEX `busLine_idx` (`busLine` ASC) VISIBLE,
                                                     INDEX `site_idx` (`site` ASC) VISIBLE,
-                                                    CONSTRAINT `busline`
-                                                        FOREIGN KEY (`busline`)
-                                                            REFERENCES `belimo`.`busline` (`id`),
+                                                    CONSTRAINT `busLine`
+                                                        FOREIGN KEY (`busLine`)
+                                                            REFERENCES `belimo`.`busLine` (`id`),
                                                     CONSTRAINT `createduser_logrecord_user`
                                                         FOREIGN KEY (`createduser`)
                                                             REFERENCES `belimo`.`user` (`name`),

@@ -21,11 +21,10 @@
     -transparent_red: rgba(255,0,0,0.2);
 }
 
-.root{
+#MainApp{
     -fx-background-color : -white;
     -fx-fill-width : true;
     -fx-color : -color;
-
     -fx-fill-height : true;
     -fx-font-family: 'Segoe UI';
     /* remove the ugly focus shade */
@@ -105,6 +104,7 @@
  */
 .button {
     -fx-background-color : -gray,-gray,-gray,-gray;
+    -fx-color: black;
 }
 .button:default{
     -fx-background-color : -color;
@@ -128,15 +128,6 @@
     -fx-color: -white;
 }
 
-
-.toggle-button{
-    -fx-background-color : -gray;
-}
-
-.toggle-button:selected{
-    -fx-background-color : -darkGray;
-}
-
 #main_menu_pane {
     -fx-background-color: -menucolor;
 }
@@ -156,53 +147,12 @@
 }
 
 /* added */
+.main_menu_button {
+    -fx-background-color : -menucolor;
+}
+
 .main_menu_button:selected {
     -fx-background-color: -menucolor_selected;
-}
-
-.menu-button{
-    -fx-background-color : -gray;
-}
-
-.split-menu-button{
-    -fx-background-color : -gray;
-}
-
-.split-menu-button>*.label{
-    -fx-background-color : -gray;
-}
-
-.split-menu-button>*.arrow-button{
-    -fx-background-color : -gray;
-}
-
-
-/*
- * **********
- * PROGRESSBAR
- * **********
- *
- */
-.progress-indicator {
-    -fx-indeterminate-segment-count : 12;
-    -fx-progress-color : -color;
-    -fx-spin-enabled : true;
-}
-
-.progress-bar>*.bar{
-    -fx-background-color : -color;
-}
-
-.progress-bar>*.track{
-    -fx-background-color : -gray;
-}
-
-.progress-bar:determinate>*.determinate-indicator>*.track{
-    -fx-background-color : -gray;
-}
-
-.progress-bar:determinate>*.determinate-indicator>*.indicator{
-    -fx-background-color : -gray;
 }
 
 /*
@@ -221,22 +171,6 @@
 
 .date-picker>*.arrow-button>*.arrow{
     -fx-background-color : -darkGray, -black;
-}
-/*
- * **********
- * SLIDER
- * **********
- *
- */
-.slider>*.track{
-    -fx-background-color : -gray;
-}
-.slider>*.axis:bottom{
-    -fx-tick-label-font-family : 'Segoe UI';
-}
-
-.slider>*.thumb{
-    -fx-background-color : -color;
 }
 
 /*
@@ -430,17 +364,6 @@
 }
 
 .tree-table-view>*.column-header-background>*.show-hide-columns-button{
-    -fx-background-color : -gray;
-}
-
-
-/*
- * **********
- * Color picker
- * **********
- *
- */
-.color-picker{
     -fx-background-color : -gray;
 }
 

@@ -203,9 +203,9 @@ public class MySQLLogRecordReadDAO implements LogRecordReadDAO {
                     inConditionListString = inConditionListSite.stream()
                             .map(site -> String.valueOf(site.getId()))
                             .collect(Collectors.toCollection(ArrayList::new));
-                } else if (inConditionList.get(0) instanceof Busline) {
-                    ObservableList<Busline> inConditionListBusline = (ObservableList<Busline>) inConditionList;
-                    inConditionListString = inConditionListBusline.stream()
+                } else if (inConditionList.get(0) instanceof BusLine) {
+                    ObservableList<BusLine> inConditionListBusLine = (ObservableList<BusLine>) inConditionList;
+                    inConditionListString = inConditionListBusLine.stream()
                             .map(busLine -> String.valueOf(busLine.getId()))
                             .collect(Collectors.toCollection(ArrayList::new));
                 } else if (inConditionList.get(0) instanceof EventType) {
@@ -269,7 +269,6 @@ public class MySQLLogRecordReadDAO implements LogRecordReadDAO {
      *
      * @param rs result set of log records
      * @return log record extracted from result set
-     * @throws SQLException database exception
      */
     private LogRecord extractLogRecordFromResultSet(ResultSet rs) {
         LogRecord logRecord = null;
@@ -282,7 +281,7 @@ public class MySQLLogRecordReadDAO implements LogRecordReadDAO {
             logRecord.setUniqueIdentifier(rs.getString("unique_identifier"));
             logRecord.setTimestamp(DateUtil.getZonedDateTimeFromDateTimeString(rs.getDate("timestamp") + " " + rs.getTime("timestamp"), MySQLConst.DATETIMEPATTERN));
             logRecord.setSite(appDataController.getSiteById(rs.getInt("site")));
-            logRecord.setBusline(appDataController.getBuslineById(rs.getInt("busline")));
+            logRecord.setBusLine(appDataController.getBusLineById(rs.getInt("busLine")));
             logRecord.setSource(rs.getString("source"));
             logRecord.setAddress(rs.getInt("address"));
             logRecord.setMilliseconds(rs.getInt("milliseconds"));

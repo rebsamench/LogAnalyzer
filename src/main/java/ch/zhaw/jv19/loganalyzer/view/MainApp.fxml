@@ -8,10 +8,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="MainApp" stylesheets="/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.jv19.loganalyzer.view.MainAppUIController">
-    <children>
+<AnchorPane id="MainApp" stylesheets="/css/main.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.jv19.loganalyzer.view.MainAppUIController">
+
         <VBox id="main_menu_pane" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
+
                 <HBox id="logo" fx:id="logoBox" prefHeight="100.0" prefWidth="200.0" alignment="CENTER"/>
                 <ToggleButton fx:id="btnImport" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#handleMenuButtonClicks" styleClass="main_menu_button" text="Import">
                     <padding>
@@ -33,13 +33,13 @@
                         <Insets left="20.0" />
                     </padding>
                 </ToggleButton>
-            </children>
+
         </VBox>
-        <SplitPane dividerPositions="0.1" layoutX="200.0" layoutY="50.0" orientation="VERTICAL" styleClass="splite-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-            <items>
-                <TextArea id="messageBox" fx:id="messageBox" promptText="Messages" styleClass="split-pane" wrapText="true" />
+        <SplitPane dividerPositions="0.1" layoutX="200.0" layoutY="50.0" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+
+                <TextArea id="messageBox" fx:id="messageBox" promptText="Messages" wrapText="true" />
                 <AnchorPane fx:id="contentPane" minHeight="200.0" minWidth="200.0" />
-            </items>
+
         </SplitPane>
-    </children>
+
 </AnchorPane>

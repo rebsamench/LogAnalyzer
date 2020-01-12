@@ -3,7 +3,7 @@ package ch.zhaw.jv19.loganalyzer.util.properties;
 /**
  * Defines constants needed for file import.
  *
- * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class ImportFileConst {
 

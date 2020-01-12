@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 /**
@@ -76,8 +77,8 @@ public class ReportResultPanelUIController extends ExportPanelUIController imple
         TableColumn<LogRecord, Site> siteCol = new TableColumn<>("Site");
         siteCol.setCellValueFactory(new PropertyValueFactory<>("site"));
 
-        TableColumn<LogRecord, Busline> busLineCol = new TableColumn<>("Busline");
-        busLineCol.setCellValueFactory(new PropertyValueFactory<>("busline"));
+        TableColumn<LogRecord, BusLine> busLineCol = new TableColumn<>("BusLine");
+        busLineCol.setCellValueFactory(new PropertyValueFactory<>("busLine"));
 
         TableColumn<LogRecord, Integer> addressCol = new TableColumn<>("Address");
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -90,14 +91,14 @@ public class ReportResultPanelUIController extends ExportPanelUIController imple
 
         TableColumn<LogRecord, String> messageCol = new TableColumn<>("Message");
         messageCol.setCellValueFactory(new PropertyValueFactory<>("message"));
-
+        // https://stackoverflow.com/questions/34638870/issues-with-unchecked-generics
         if (showMetaColumns) {
-            resultTable.getColumns().addAll(idCol, createdCol, lastChangedCol,
+            resultTable.getColumns().addAll(Arrays.asList(idCol, createdCol, lastChangedCol,
                     createdUserColumn, timestampCol, millisecondsCol, siteCol,
-                    busLineCol, addressCol, sourceCol, eventTypeCol, messageCol);
+                    busLineCol, addressCol, sourceCol, eventTypeCol, messageCol));
         } else {
-            resultTable.getColumns().addAll(timestampCol, millisecondsCol, siteCol,
-                    busLineCol, addressCol, sourceCol, eventTypeCol, messageCol);
+            resultTable.getColumns().addAll(Arrays.asList(timestampCol, millisecondsCol, siteCol,
+                    busLineCol, addressCol, sourceCol, eventTypeCol, messageCol));
         }
         resultTable.setItems(tableData);
     }

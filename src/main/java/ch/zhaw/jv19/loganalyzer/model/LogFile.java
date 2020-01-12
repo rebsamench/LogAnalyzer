@@ -5,27 +5,27 @@ import java.util.List;
 
 /**
  * Hols all the logRecords for a single field device.
- * A field device has an address that is unique within a busline. Therefore it is absolutely necessary
+ * A field device has an address that is unique within a busLine. Therefore it is absolutely necessary
  * to have such a data structure in order to set the address for each logRecord.
  *
- * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class LogFile {
 
-    private final List<LogRecord> recordlist;
+    private final List<LogRecord> recordList;
     private int address;
     private boolean addressSet = false;
 
     public LogFile() {
-        recordlist = new ArrayList<>();
+        recordList = new ArrayList<>();
     }
     
     public void addLogRecord(LogRecord logRecord) {
-        recordlist.add(logRecord);
+        recordList.add(logRecord);
     }
 
     public List<LogRecord> getRecordList() {
-        return recordlist;
+        return recordList;
     }
 
     public int getAddress() {

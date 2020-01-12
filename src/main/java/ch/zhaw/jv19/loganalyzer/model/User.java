@@ -5,7 +5,7 @@ import java.time.ZonedDateTime;
 /**
  * Holds all the data for a single user and provides getter and setter methods to alter data.
  *
- * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class User {
     private int id;
@@ -50,10 +50,6 @@ public class User {
 
     public int getId() {
         return id;
-    }
-
-    public ZonedDateTime getCreated() {
-        return created;
     }
 
     public String getCreatedUser() {

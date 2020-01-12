@@ -1,6 +1,5 @@
 package ch.zhaw.jv19.loganalyzer;
 
-import ch.zhaw.jv19.loganalyzer.view.MainAppUIController;
 import javafx.scene.layout.Pane;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

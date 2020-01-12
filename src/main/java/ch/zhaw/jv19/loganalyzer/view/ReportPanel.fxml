@@ -12,159 +12,151 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<AnchorPane id="ReportPanel" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.jv19.loganalyzer.view.ReportPanelUIController">
-   <children>
-         <VBox prefHeight="543.2" prefWidth="624.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-               <TitledPane  text="Report definieren" VBox.vgrow="ALWAYS">
-                     <AnchorPane>
-                        <children>
-                     <VBox prefHeight="269.6" prefWidth="622.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <children>
-                                 <GridPane minHeight="200.0" prefHeight="139.0" prefWidth="578.0">
-                                   <columnConstraints>
-                                     <ColumnConstraints hgrow="NEVER" maxWidth="1.7976931348623157E308" prefWidth="110.0" />
-                                     <ColumnConstraints hgrow="ALWAYS" prefWidth="120.0" />
-                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="0.0" prefWidth="0.0" />
-                                       <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
-                                       <ColumnConstraints hgrow="NEVER" maxWidth="1.7976931348623157E308" prefWidth="110.0" />
-                                       <ColumnConstraints hgrow="ALWAYS" prefWidth="120.0" />
-                                   </columnConstraints>
-                                   <rowConstraints>
-                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                   </rowConstraints>
-                                    <children>
-                                       <HBox GridPane.columnIndex="1">
-                                          <children>
-                                             <DatePicker fx:id="createdFrom" minWidth="-Infinity" prefWidth="105.0" styleClass="datefield" />
-                                             <TextField fx:id="createdFromTime" maxWidth="65.0" minWidth="-Infinity" prefWidth="70.0" promptText="hh:mm:ss" styleClass="timefield">
-                                                <HBox.margin>
-                                                   <Insets left="5.0" />
-                                                </HBox.margin>
-                                             </TextField>
-                                          </children>
-                                          <GridPane.margin>
-                                             <Insets top="2.0" />
-                                          </GridPane.margin>
-                                       </HBox>
-                                 <HBox GridPane.columnIndex="5">
-                                    <children>
-                                             <DatePicker fx:id="createdUpTo" minWidth="-Infinity" prefWidth="105.0" styleClass="datefield" />
-                                             <TextField fx:id="createdUpToTime" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" promptText="hh:mm:ss" styleClass="timefield">
-                                          <HBox.margin>
-                                             <Insets left="5.0" />
-                                          </HBox.margin>
-                                       </TextField>
-                                    </children>
-                                    <GridPane.margin>
-                                       <Insets top="2.0" />
-                                    </GridPane.margin>
-                                 </HBox>
-                                 <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                    <children>
-                                             <DatePicker fx:id="loggedTimestampFrom" minWidth="-Infinity" prefWidth="105.0" styleClass="datefield" />
-                                             <TextField fx:id="loggedTimestampFromTime" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" promptText="hh:mm:ss" styleClass="timefield">
-                                          <HBox.margin>
-                                             <Insets left="5.0" />
-                                          </HBox.margin>
-                                       </TextField>
-                                    </children>
-                                    <GridPane.margin>
-                                       <Insets top="2.0" />
-                                    </GridPane.margin>
-                                 </HBox>
-                                 <HBox GridPane.columnIndex="5" GridPane.rowIndex="1">
-                                    <children>
-                                             <DatePicker fx:id="loggedTimestampUpTo" minWidth="-Infinity" prefWidth="105.0" styleClass="datefield" />
-                                             <TextField fx:id="loggedTimestampUpToTime" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" promptText="hh:mm:ss" styleClass="timefield">
-                                          <HBox.margin>
-                                             <Insets left="5.0" />
-                                          </HBox.margin>
-                                       </TextField>
-                                    </children>
-                                    <GridPane.margin>
-                                       <Insets top="2.0" />
-                                    </GridPane.margin>
-                                 </HBox>
-                                       <Label text="Created from" />
-                                       <Label text="Logged from" GridPane.rowIndex="1">
-                                          <GridPane.margin>
-                                             <Insets />
-                                          </GridPane.margin>
-                                 </Label>
-                                       <Label text="User" GridPane.rowIndex="2" />
-                                       <Label text="Created until" GridPane.columnIndex="4" />
-                                       <Label text="Logged until" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                       <CheckComboBox fx:id="createdUser" minWidth="180.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
-                                       <CheckComboBox fx:id="eventType" minWidth="180.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                                       <Label text="Record type" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                                       <Label text="Site" GridPane.rowIndex="3" />
-                                       <Label text="Message substring" GridPane.rowIndex="5" />
-                                       <TextField fx:id="message" minWidth="-Infinity" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                       <Button defaultButton="true" minWidth="-Infinity" mnemonicParsing="false" onAction="#search" prefWidth="70.0" text="Search" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="5" />
-                                       <CheckComboBox fx:id="site" minWidth="180.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
-                                       <Label prefHeight="18.0" prefWidth="118.0" text="Source" GridPane.rowIndex="4" />
-                                 <Label text="Busline" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                                 <CheckComboBox fx:id="busLine" minWidth="180.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                                 <Label text="Address" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                                 <TextField fx:id="address" maxWidth="-Infinity" prefWidth="180.0" promptText="0-127" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-                                 <CheckComboBox fx:id="source" minWidth="180.0" title="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                    </children>
-                                 </GridPane>
-                                  <VBox fx:id="furtherAnalysisBox" alignment="BOTTOM_LEFT" prefHeight="50.0">
-                                      <children>
-                                          <Label alignment="BOTTOM_LEFT" text="Further analysis">
-                                    <font>
-                                       <Font name="System Bold" size="12.0" />
-                                    </font></Label>
-                                          <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
-                                              <children>
-                                                  <Label text="Seconds before">
-                                                      <HBox.margin>
-                                                          <Insets />
-                                                      </HBox.margin>
-                                                  </Label>
-                                                  <TextField fx:id="secondsBefore" prefWidth="50.0" text="10" />
-                                                  <Label text="Seconds after" />
-                                                  <TextField fx:id="secondsAfter" prefWidth="50.0" text="0" />
-                                                  <Button mnemonicParsing="false" onAction="#inspectSelectedRecords" text="Inspect..." />
-                                              </children>
-                                              <opaqueInsets>
-                                                  <Insets />
-                                              </opaqueInsets>
-                                              <VBox.margin>
-                                                  <Insets top="5.0" />
-                                              </VBox.margin>
-                                          </HBox>
-                                      </children>
-                              <VBox.margin>
-                                 <Insets top="10.0" />
-                              </VBox.margin>
-                                  </VBox>
-                        </children>
-                     </VBox>
-                        </children>
-                     </AnchorPane>
-               </TitledPane>
-               <TitledPane id="tp2" text="Report" >
-                  <content>
+<AnchorPane id="ReportPanel" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.zhaw.jv19.loganalyzer.view.ReportPanelUIController">
+
+        <VBox prefHeight="543.2" prefWidth="624.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+                <TitledPane text="Report definieren" VBox.vgrow="ALWAYS">
+                    <AnchorPane>
+
+                            <VBox prefHeight="269.6" prefWidth="622.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+                                    <GridPane minHeight="200.0" prefHeight="139.0" prefWidth="578.0">
+                                        <columnConstraints>
+                                            <ColumnConstraints hgrow="NEVER" maxWidth="1.7976931348623157E308" prefWidth="110.0" />
+                                            <ColumnConstraints hgrow="ALWAYS" prefWidth="120.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="0.0" prefWidth="0.0" />
+                                            <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
+                                            <ColumnConstraints hgrow="NEVER" maxWidth="1.7976931348623157E308" prefWidth="110.0" />
+                                            <ColumnConstraints hgrow="ALWAYS" prefWidth="120.0" />
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        </rowConstraints>
+
+                                            <HBox GridPane.columnIndex="1">
+
+                                                    <DatePicker fx:id="createdFrom" minWidth="-Infinity" prefWidth="105.0" styleClass="date-picker" />
+                                                    <TextField fx:id="createdFromTime" maxWidth="65.0" minWidth="-Infinity" prefWidth="70.0" promptText="hh:mm:ss">
+                                                        <HBox.margin>
+                                                            <Insets left="5.0" />
+                                                        </HBox.margin>
+                                                    </TextField>
+
+                                                <GridPane.margin>
+                                                    <Insets top="2.0" />
+                                                </GridPane.margin>
+                                            </HBox>
+                                            <HBox GridPane.columnIndex="5">
+
+                                                    <DatePicker fx:id="createdUpTo" minWidth="-Infinity" prefWidth="105.0" showWeekNumbers="true" styleClass="date-picker" />
+                                                    <TextField fx:id="createdUpToTime" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" promptText="hh:mm:ss">
+                                                        <HBox.margin>
+                                                            <Insets left="5.0" />
+                                                        </HBox.margin>
+                                                    </TextField>
+
+                                                <GridPane.margin>
+                                                    <Insets top="2.0" />
+                                                </GridPane.margin>
+                                            </HBox>
+                                            <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+
+                                                    <DatePicker fx:id="loggedTimestampFrom" minWidth="-Infinity" prefWidth="105.0" showWeekNumbers="true" styleClass="date-picker" />
+                                                    <TextField fx:id="loggedTimestampFromTime" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" promptText="hh:mm:ss" >
+                                                        <HBox.margin>
+                                                            <Insets left="5.0" />
+                                                        </HBox.margin>
+                                                    </TextField>
+
+                                                <GridPane.margin>
+                                                    <Insets top="2.0" />
+                                                </GridPane.margin>
+                                            </HBox>
+                                            <HBox GridPane.columnIndex="5" GridPane.rowIndex="1">
+
+                                                    <DatePicker fx:id="loggedTimestampUpTo" minWidth="-Infinity" prefWidth="105.0" showWeekNumbers="true" styleClass="date-picker" />
+                                                    <TextField fx:id="loggedTimestampUpToTime" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" promptText="hh:mm:ss" >
+                                                        <HBox.margin>
+                                                            <Insets left="5.0" />
+                                                        </HBox.margin>
+                                                    </TextField>
+
+                                                <GridPane.margin>
+                                                    <Insets top="2.0" />
+                                                </GridPane.margin>
+                                            </HBox>
+                                            <Label styleClass="label" text="Created from" />
+                                            <Label styleClass="label" text="Logged from" GridPane.rowIndex="1">
+                                                <GridPane.margin>
+                                                    <Insets />
+                                                </GridPane.margin>
+                                            </Label>
+                                            <Label styleClass="label" text="User" GridPane.rowIndex="2" />
+                                            <Label styleClass="label" text="Created until" GridPane.columnIndex="4" />
+                                            <Label styleClass="label" text="Logged until" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                            <CheckComboBox fx:id="createdUser" minWidth="180.0" styleClass="combo-box" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+                                            <CheckComboBox fx:id="eventType" minWidth="180.0" styleClass="combo-box" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                                            <Label styleClass="label" text="Record type" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                            <Label styleClass="label" text="Site" GridPane.rowIndex="3" />
+                                            <Label styleClass="label" text="Message substring" GridPane.rowIndex="5" />
+                                            <TextField fx:id="message" minWidth="-Infinity" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                            <Button defaultButton="true" minWidth="-Infinity" mnemonicParsing="false" onAction="#search" prefWidth="70.0" text="Search" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="5" />
+                                            <CheckComboBox fx:id="site" minWidth="180.0" styleClass="combo-box" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+                                            <Label prefHeight="18.0" prefWidth="118.0" styleClass="label" text="Source" GridPane.rowIndex="4" />
+                                            <Label text="BusLine" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                                            <CheckComboBox fx:id="busLine" minWidth="180.0" styleClass="combo-box" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                                            <Label styleClass="label" text="Address" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                                            <TextField fx:id="address" maxWidth="-Infinity" prefWidth="180.0" promptText="0-127" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                                            <CheckComboBox fx:id="source" minWidth="180.0" styleClass="combo-box" title="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                                    </GridPane>
+                                    <VBox fx:id="furtherAnalysisBox" alignment="BOTTOM_LEFT" prefHeight="50.0">
+
+                                            <Label alignment="BOTTOM_LEFT" styleClass="title" text="Further analysis" />
+                                            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+
+                                                    <Label styleClass="label" text="Seconds before" />
+                                                    <TextField fx:id="secondsBefore" prefWidth="50.0" text="10" />
+                                                    <Label styleClass="label" text="Seconds after" />
+                                                    <TextField fx:id="secondsAfter" prefWidth="50.0" text="0" />
+                                                    <Button mnemonicParsing="false" onAction="#inspectSelectedRecords" styleClass="button" text="Inspect..." />
+
+                                                <opaqueInsets>
+                                                    <Insets />
+                                                </opaqueInsets>
+                                                <VBox.margin>
+                                                    <Insets top="5.0" />
+                                                </VBox.margin>
+                                            </HBox>
+
+                                        <VBox.margin>
+                                            <Insets top="10.0" />
+                                        </VBox.margin>
+                                    </VBox>
+
+                            </VBox>
+
+                    </AnchorPane>
+                </TitledPane>
+                <TitledPane id="tp2" text="Report">
+
                         <!-- fx:id must correspond (controller name without "Controller") with name of controller, see https://riptutorial.com/javafx/example/7285/nested-controllers-->
-                       <fx:include fx:id="reportResultPanelUI" source="ReportResultPanel.fxml" />
-                  </content>
-               </TitledPane>
-            </children>
-         </VBox>
-      <VBox maxHeight="40.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-   </children>
-   <opaqueInsets>
-      <Insets />
-   </opaqueInsets>
+                        <fx:include fx:id="reportResultPanelUI" source="ReportResultPanel.fxml" />
+
+                </TitledPane>
+
+        </VBox>
+        <VBox maxHeight="40.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+
+    <opaqueInsets>
+        <Insets />
+    </opaqueInsets>
 </AnchorPane>

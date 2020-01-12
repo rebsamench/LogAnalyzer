@@ -74,7 +74,7 @@ public class AppDataController {
      * Gets a list of bus lines.
      * @return ObservableList of bus lines
      */
-    public ObservableList<Busline> getBuslineList() {
+    public ObservableList<BusLine> getBusLineList() {
         return appData.getBusLineList();
     }
 
@@ -143,14 +143,14 @@ public class AppDataController {
     }
 
     /**
-     * Gets busline from AppData by its id
+     * Gets busLine from AppData by its id
      *
      * @param id bus line id
      * @return Bus line which matches given id
      */
-    public Busline getBuslineById(int id) {
-        return getBuslineList().stream()
-                .filter(busline -> (busline.getId() == id))
+    public BusLine getBusLineById(int id) {
+        return getBusLineList().stream()
+                .filter(busLine -> (busLine.getId() == id))
                 .findAny()
                 .orElse(null);
     }
@@ -173,10 +173,10 @@ public class AppDataController {
 
     /**
      * Adds given bus line to bus line list.
-     * @param busline to be added
+     * @param busLine to be added
      */
-    public void addBuslineToBuslineList(Busline busline) {
-        appData.addBusline(busline);
+    public void addBusLineToBusLineList(BusLine busLine) {
+        appData.addBusLine(busLine);
     }
 
     /**

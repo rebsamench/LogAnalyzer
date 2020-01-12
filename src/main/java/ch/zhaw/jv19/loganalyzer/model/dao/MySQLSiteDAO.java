@@ -16,34 +16,15 @@ import java.sql.SQLException;
 /**
  * Provides functionality for extraction, update and save of site data from and to data base.
  *
- * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class MySQLSiteDAO implements SiteDAO {
-
-    /**
-     * Reads a single Site from data base.
-     *
-     * @param name Site name
-     * @return Site instance
-     * @throws Exception
-     */
-    @Override
-    public Site getSiteByName(String name) throws Exception {
-        Site site = null;
-        Connection con = DBUtil.getConnection();
-        if (con != null) {
-            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM site WHERE name = '?';");
-            ResultSet rs = pstmt.executeQuery();
-            site = extractSiteFromResultSet(rs);
-        }
-        return site;
-    }
 
     /**
      * Returns a list of all sites in the data base.
      *
      * @return list of sites
-     * @throws Exception
+     * @throws Exception if query fails
      */
     @Override
     public ObservableList<Site> getAllSitesList() throws Exception {
@@ -64,7 +45,7 @@ public class MySQLSiteDAO implements SiteDAO {
      *
      * @param site Site instance
      * @return int represents the row count.
-     * @throws Exception
+     * @throws Exception if saving fails
      */
     @Override
     public int saveSite(Site site) throws Exception {
@@ -100,9 +81,9 @@ public class MySQLSiteDAO implements SiteDAO {
      *
      * @param rs result set
      * @return extracted site
-     * @throws SQLException
+     * @throws SQLException if extraction fails
      */
-    public Site extractSiteFromResultSet(ResultSet rs) throws SQLException {
+    private Site extractSiteFromResultSet(ResultSet rs) throws SQLException {
         Site site = new Site();
         site.setId(rs.getInt("id"));
         site.setCreated(DateUtil.getZonedDateTimeFromDateTimeString(rs.getString("created"), MySQLConst.DATETIMEPATTERN));
@@ -120,7 +101,7 @@ public class MySQLSiteDAO implements SiteDAO {
      *
      * @param siteList list for sites
      * @return int[] representing the updated rows
-     * @throws SQLException
+     * @throws SQLException if updating fails
      */
     public int[] updateSiteData(ObservableList<Site> siteList) throws SQLException {
         Connection connection = DBUtil.getConnection();

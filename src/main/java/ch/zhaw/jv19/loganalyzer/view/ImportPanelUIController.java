@@ -35,7 +35,7 @@ public class ImportPanelUIController implements Initializable, UIPanelController
     private ComboBox<Site> chooseSite;
 
     @FXML
-    private ComboBox<Busline> chooseBusline;
+    private ComboBox<BusLine> chooseBusLine;
 
     @FXML
     private Button selectLogFiles;
@@ -44,8 +44,8 @@ public class ImportPanelUIController implements Initializable, UIPanelController
     private Button importData;
 
     @FXML
-    private TableView<FileWrapper> showSelectedFiles;
-    private final ObservableList<Files> selectedFiles = FXCollections.observableArrayList();
+    private TableView<FileWrapper> selectedFilesTable;
+    private final ObservableList<Files> selectedFilesList = FXCollections.observableArrayList();
 
     public ImportPanelUIController() {
     }
@@ -56,14 +56,14 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         if (appDataController.isDatabaseAccessible().get()) {
             chooseCreatedUser.getItems().addAll(appDataController.getUserList());
             chooseSite.getItems().addAll(appDataController.getSiteList());
-            chooseBusline.getItems().addAll(appDataController.getBuslineList());
+            chooseBusLine.getItems().addAll(appDataController.getBusLineList());
             selectLogFiles.disableProperty().bind((chooseSite.valueProperty().isNull())
-                    .or(chooseBusline.valueProperty().isNull())
+                    .or(chooseBusLine.valueProperty().isNull())
                     .or(chooseCreatedUser.valueProperty().isNull()));
             importData.disableProperty().bind((chooseSite.valueProperty().isNull())
-                    .or(chooseBusline.valueProperty().isNull())
+                    .or(chooseBusLine.valueProperty().isNull())
                     .or(chooseCreatedUser.valueProperty().isNull())
-                    .or(Bindings.size(selectedFiles).isEqualTo(0)));
+                    .or(Bindings.size(selectedFilesList).isEqualTo(0)));
         }
     }
 
@@ -96,43 +96,43 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         for (File file : fileList) {
             listToArrayList.add(new FileWrapper(file));
         }
-        selectedFiles.clear();
-        selectedFiles.addAll(listToArrayList);
-        buildSelectedFilesTable(selectedFiles);
+        selectedFilesList.clear();
+        selectedFilesList.addAll(listToArrayList);
+        buildSelectedFilesTable(selectedFilesList);
     }
 
     /**
-     * Bundles all the selected data such as user, site, busline and the selected files and hands it over to
+     * Bundles all the selected data such as user, site, busLine and the selected files and hands it over to
      * the the FileImportController.
      */
     @FXML
     public void handleImportData() {
         User user = chooseCreatedUser.getSelectionModel().getSelectedItem();
         Site site = chooseSite.getSelectionModel().getSelectedItem();
-        Busline busline = chooseBusline.getSelectionModel().getSelectedItem();
+        BusLine busLine = chooseBusLine.getSelectionModel().getSelectedItem();
         try {
-            new FileImportController(user, site, busline, fileList);
+            new FileImportController(user, site, busLine, fileList);
         } catch (Exception e) {
             e.printStackTrace();
             appDataController.setMessage("SQL Error: " + e.getMessage());
         }
         appDataController.setMessage("Data Import completed");
-        showSelectedFiles.getItems().clear();
-        showSelectedFiles.getColumns().clear();
+        selectedFilesTable.getItems().clear();
+        selectedFilesTable.getColumns().clear();
         chooseCreatedUser.getSelectionModel().clearSelection();
-        chooseBusline.getSelectionModel().clearSelection();
+        chooseBusLine.getSelectionModel().clearSelection();
         chooseSite.getSelectionModel().clearSelection();
     }
 
     /**
      * Creates a table view of the selected files.
      *
-     * @param selectedFiles : observable list of the selected files.
+     * @param selectedFiles observable list of the selected files.
      */
     public void buildSelectedFilesTable(ObservableList selectedFiles) {
         TableColumn<FileWrapper, String> fileColumn = new TableColumn<>("selected files");
-        fileColumn.setCellValueFactory(new PropertyValueFactory("name"));
-        showSelectedFiles.getColumns().add(fileColumn);
-        showSelectedFiles.setItems(selectedFiles);
+        fileColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        selectedFilesTable.getColumns().add(fileColumn);
+        selectedFilesTable.setItems(selectedFiles);
     }
 }

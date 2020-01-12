@@ -1,5 +1,6 @@
 package ch.zhaw.jv19.loganalyzer.model;
 
+import ch.zhaw.jv19.loganalyzer.model.dao.LogRecordWriteDAO;
 import ch.zhaw.jv19.loganalyzer.model.dao.MySQLLogRecordWriteDAO;
 import ch.zhaw.jv19.loganalyzer.util.properties.ImportFileConst;
 
@@ -11,22 +12,22 @@ import java.util.List;
  * Receives the collected import data from ImportPanelUIController and processes it to an appropriate form,
  * ready for the data base import.
  *
- * @author: Christoph Rebsamen, rebsach1@students.zhaw.ch
+ * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
 public class FileImportController {
 
-    private User user;
-    private Site site;
-    private Busline busline;
+    private final User user;
+    private final Site site;
+    private final BusLine busLine;
     private List<LogFile> logFileList;
     private List<LogRecord> logRecordList;
-    private AppDataController appDataController;
+    private final AppDataController appDataController;
 
-    public FileImportController(User user, Site site, Busline busline, List<File> fileList) throws Exception {
+    public FileImportController(User user, Site site, BusLine busLine, List<File> fileList) throws Exception {
         appDataController = AppDataController.getInstance();
         this.user = user;
         this.site = site;
-        this.busline = busline;
+        this.busLine = busLine;
         createLogFiles(fileList);
         createLogRecordList(logFileList);
         saveToDB(logRecordList);
@@ -54,7 +55,7 @@ public class FileImportController {
                     String[] tokens = strLine.split("\t");
                     // ignore all records with different line lengths from 5
                     if (tokens.length == 5) {
-                        LogRecord record = new LogRecord(trimTimestamp(tokens[0]), convertMilliSeconds(tokens[1]), tokens[2], tokens[3], tokens[4], user, site, busline);
+                        LogRecord record = new LogRecord(trimTimestamp(tokens[0]), convertMilliSeconds(tokens[1]), tokens[2], tokens[3], tokens[4], user, site, busLine);
                         if (logFile.isAddressSet() || record.getMessage().contains("address")) {
                             if (logFile.isAddressSet()) {
                                 record.setAddress(logFile.getAddress());
@@ -94,11 +95,11 @@ public class FileImportController {
     /**
      * Hands the LogRecordList over to the logRecordDAOWriter.
      *
-     * @param logRecordList : List of LogRecords
-     * @throws Exception
+     * @param logRecordList List of LogRecords
+     * @throws Exception if saving fails
      */
     private void saveToDB(List<LogRecord> logRecordList) throws Exception {
-        MySQLLogRecordWriteDAO logRecordDAOWriter = new MySQLLogRecordWriteDAO();
+        LogRecordWriteDAO logRecordDAOWriter = new MySQLLogRecordWriteDAO();
         logRecordDAOWriter.insertLogRecords(logRecordList);
     }
 
