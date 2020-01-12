@@ -31,7 +31,6 @@ public class MySQLLogRecordWriteDAO implements LogRecordWriteDAO {
         Connection connection = DBUtil.getConnection();
             PreparedStatement ps = connection.prepareStatement("INSERT IGNORE INTO logrecord (createduser,unique_identifier,timestamp,site,busLine,address,milliseconds,type,source,message) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
                 for (LogRecord logRecord: logRecordList){
-                // INSERT INTO logrecord (createduser,unique_identifier,timestamp,site,busLine,address,milliseconds,type,source, message) values ('admin', 'hueresiech', '2019-11-13 16:31:08', 1, 1, 1, 798420, 'Warning', 'Controller', 'Errors: +Mechanical')
                 ps.setString(1, logRecord.getUser().getName());
                 ps.setString(2, logRecord.getUniqueIdentifier());
                 ps.setString(3, DateUtil.convertDateTimeToString(logRecord.getTimestamp(), MySQLConst.DATETIMEPATTERN));

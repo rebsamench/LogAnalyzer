@@ -12,6 +12,7 @@ public class ExportPanelUIController {
 
     /**
      * Exports current resultTable to Excel. Default file name is Export_[currentDateTime].xlsx.
+     * @param table table to be exported
      */
     void exportTable(TableView<?> table) {
         FileChooser chooser = new FileChooser();

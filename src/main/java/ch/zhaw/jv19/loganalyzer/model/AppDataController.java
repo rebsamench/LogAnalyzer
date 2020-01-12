@@ -111,7 +111,7 @@ public class AppDataController {
     /**
      * Exports TableView as Excel file
      */
-    public void exportToExcel(TableView<?> table, File file) {
+    public void exportToExcel (TableView<?> table, File file) {
         ExcelExporter exporter = new ExcelExporter();
         exporter.saveTable(table, file);
     }
