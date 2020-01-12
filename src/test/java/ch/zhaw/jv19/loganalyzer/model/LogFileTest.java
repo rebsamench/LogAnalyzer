@@ -8,6 +8,10 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * Provides unit tests for LogRecord.
+ * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
+ */
 public class LogFileTest {
 
     private LogFile logFile;

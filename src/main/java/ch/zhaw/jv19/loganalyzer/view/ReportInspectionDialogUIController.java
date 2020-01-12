@@ -13,6 +13,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
+/**
+ * Controls ui interactions of inspection dialog.
+ * @author Simon Rizzi, rizzisim@students.zhaw.ch
+ */
 public class ReportInspectionDialogUIController extends ExportPanelUIController implements Initializable, UIPanelController {
     @FXML
     private HBox resultPanelContainer;

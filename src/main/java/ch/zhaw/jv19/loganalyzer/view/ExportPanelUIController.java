@@ -7,11 +7,16 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 
+/**
+ * Controls excel export. Used as super class for all panels with exportable tables.
+ * @author Simon Rizzi, rizzisim@students.zhaw.ch
+ */
 public class ExportPanelUIController {
     private final AppDataController appDataController = AppDataController.getInstance();
 
     /**
      * Exports current resultTable to Excel. Default file name is Export_[currentDateTime].xlsx.
+     * @param table table to be exported
      */
     void exportTable(TableView<?> table) {
         FileChooser chooser = new FileChooser();

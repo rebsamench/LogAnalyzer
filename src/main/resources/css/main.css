@@ -8,83 +8,29 @@
 */
 
 * {
-    -color : dimgray;
-    -white : #efefef;
-    -gray : #dfdfdf;
-    -darkGray : derive(-gray,-20%);
-    -black : #444444dd;
-    -abort : #e74c3c;
+    -color: dimgray;
+    -light_color: derive(dimgray, 40%);
+    -white: #efefef;
+    -gray: #dfdfdf;
+    -darkGray: derive(-gray, -20%);
+    -black: #444444dd;
+    -abort: #e74c3c;
     -menucolor: -color;
     -menucolor_text: -white;
     -menucolor_hover: derive(-color, 40%);
     -menucolor_selected: derive(-color, 50%);
-    -transparent_red: rgba(255,0,0,0.2);
+    -transparent_red: rgba(255, 0, 0, 0.2);
 }
 
-#MainApp{
-    -fx-background-color : -white;
-    -fx-fill-width : true;
-    -fx-color : -color;
-    -fx-fill-height : true;
+#MainApp {
+    -fx-background-color: -white;
+    -fx-fill-width: true;
+    -fx-color: -color;
+    -fx-fill-height: true;
     -fx-font-family: 'Segoe UI';
     /* remove the ugly focus shade */
-    -fx-focus-color : transparent;
+    -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
-}
-
-#flatbee-tiny{
-    -fx-font-size : 8.0;
-}
-
-#flatbee-small{
-    -fx-font-size : 10.0;
-}
-
-#flatbee-medium{
-    -fx-font-size : 12.0;
-}
-
-#flatbee-large{
-    -fx-font-size : 18.0;
-}
-
-#flatbee-xlarge{
-    -fx-font-size : 24.0;
-}
-
-#flatbee-xxlarge{
-    -fx-font-size : 32.0;
-    -fx-font-weight: bold;
-}
-
-#flatbee-xxxlarge{
-    -fx-font-size : 40.0;
-    -fx-font-weight: bold;
-}
-
-#flatbee-jumbo{
-    -fx-font-size : 48.0;
-    -fx-font-weight: bold;
-}
-
-#flatbee-card{
-    -fx-spacing : 12.0;
-    -fx-padding : 10;
-    -fx-hgap : 10;
-    -fx-vgap : 10;
-    -fx-background-color : -white;
-    -fx-effect : dropshadow(two-pass-box,-black,10,0,0,0);
-}
-
-#flatbee-container{
-    -fx-spacing : 12.0;
-    -fx-padding : 10;
-    -fx-hgap : 10;
-    -fx-vgap : 10;
-}
-
-#flatbee-panel{
-    -fx-padding : 10;
 }
 
 /*
@@ -92,8 +38,12 @@
  * LABELS
  * **********
 */
-.label{
-    -fx-text-fill : -black;
+.label {
+    -fx-text-fill: -black;
+}
+
+.title {
+    -fx-font-weight: bold;
 }
 
 /*
@@ -102,37 +52,48 @@
  * **********
  *
  */
+
 .button {
-    -fx-background-color : -gray,-gray,-gray,-gray;
-    -fx-color: black;
+    -fx-background-color: -light_color;
+    -fx-text-fill: -white;
 }
-.button:default{
-    -fx-background-color : -color;
+
+.button:default {
+    -fx-background-color: -color;
+    -fx-text-fill: -white;
 }
-.button:cancel{
-    -fx-background-color : -abort;
+
+.button:disabled {
+    -fx-text-fill: -black;
+}
+
+.button:cancel {
+    -fx-background-color: -abort;
 }
 
 .button:focused {
-    -fx-color : -darkGray;
-    -fx-background-color : -darkGray;
-    -fx-focus-color : -darkGray;
+    -fx-color: -white;
+    -fx-background-color: -color;
+    -fx-focus-color: -color;
 }
+
 .button:hover {
-    -fx-color: -darkGray;
-    -fx-inner-border : -darkGray;
-    -fx-body-color : -darkGray;
+    -fx-text-fill: -white;
+    -fx-background-color: -color;
+    -fx-inner-border: -color;
+    -fx-body-color: -color;
 }
 
 .button:armed {
     -fx-color: -white;
 }
 
+
 #main_menu_pane {
     -fx-background-color: -menucolor;
 }
 
-/* added */
+
 .main_menu_button {
     -fx-background-color: -menucolor;
     -fx-text-fill: -menucolor_text;
@@ -141,14 +102,14 @@
     -fx-background-radius: 0;
 }
 
-/* added */
+
 .main_menu_button:hover {
     -fx-background-color: -menucolor_hover;
 }
 
-/* added */
+
 .main_menu_button {
-    -fx-background-color : -menucolor;
+    -fx-background-color: -menucolor;
 }
 
 .main_menu_button:selected {
@@ -161,17 +122,18 @@
 * **********
 *
 */
-.date-picker{
-    -fx-background-color : -white,-gray,gray;
+.date-picker {
+    -fx-background-color: -white, -gray, gray;
 }
 
-.date-picker>*.arrow-button{
-    -fx-background-color : -white,-gray,-gray;
+.date-picker > .arrow-button {
+    -fx-background-color: -color, -color, -color;
 }
 
-.date-picker>*.arrow-button>*.arrow{
-    -fx-background-color : -darkGray, -black;
+.date-picker > .arrow-button > .arrow {
+    -fx-background-color: -color, white;
 }
+
 
 /*
  * **********
@@ -180,45 +142,51 @@
  *
  */
 .combo-box {
-    -fx-background-color : -gray;
+    -fx-background-color: -gray;
 }
 
-.check-box>*.box{
-    -fx-background-color : -color;
+.combo-box .cell:selected {
+    -fx-text-fill: -black;
+}
+
+.check-box > *.box {
+    -fx-background-color: -color;
 }
 
 
 /*
  * **********
- * TABPANE
+ * TAB PANE
  * **********
  *
  */
-.tab-pane>*.tab-header-area{
-    -fx-padding : 0,0,0,0;
+.tab-pane > *.tab-header-area {
+    -fx-padding: 0, 0, 0, 0;
 }
-.tab-pane>*.tab-header-area>*.headers-region>*.tab:selected:top{
-    -fx-padding : 6,6,6,6;
-    -fx-text-fill : -white;
-    -fx-background-color : -color;
+
+.tab-pane > *.tab-header-area > *.headers-region > *.tab:selected:top {
+    -fx-padding: 6, 6, 6, 6;
+    -fx-text-fill: -white;
+    -fx-background-color: -color;
 }
-.tab-pane>*.tab-header-area>*.headers-region>*.tab:selected>*.tab-container>*.tab-label{
-    -fx-font-size : 13.0;
+
+.tab-pane > *.tab-header-area > *.headers-region > *.tab:selected > *.tab-container > *.tab-label {
+    -fx-font-size: 13.0;
     -fx-font-weight: bold;
 }
 
-.tab-pane>*.tab-header-area>*.headers-region>*.tab:top{
-    -fx-padding : 4,4,4,4;
-    -fx-text-fill : -white;
-    -fx-background-color : -white;
+.tab-pane > *.tab-header-area > *.headers-region > *.tab:top {
+    -fx-padding: 4, 4, 4, 4;
+    -fx-text-fill: -white;
+    -fx-background-color: -light_color;
 }
 
-.tab-pane>*.tab-header-area>*.control-buttons-tab>*.container>*.tab-down-button{
-    -fx-background-color : -white;
+.tab-pane > *.tab-header-area > *.control-buttons-tab > *.container > *.tab-down-button {
+    -fx-background-color: -white;
 }
 
-.tab-pane>*.tab-header-area>*.control-buttons-tab>*.container>*.tab-down-button>*.arrow{
-    -fx-background-color : -darkGray;
+.tab-pane > *.tab-header-area > *.control-buttons-tab > *.container > *.tab-down-button > *.arrow {
+    -fx-background-color: -darkGray;
 }
 
 
@@ -228,8 +196,8 @@
  * **********
  *
  */
-.menu-bar{
-    -fx-background-color : -gray;
+.menu-bar {
+    -fx-background-color: -gray;
 }
 
 
@@ -239,30 +207,16 @@
  * **********
  *
  */
-.check-box>*.box{
-    -fx-background-color : -gray;
+.check-box > *.box {
+    -fx-background-color: -gray;
 }
 
-.check-box:selected>*.box>*.mark{
-    -fx-background-color : -black;
-}
-.check-box:indeterminate>*.box>*.mark{
-    -fx-background-color : -black;
+.check-box:selected > *.box > *.mark {
+    -fx-background-color: -black;
 }
 
-
-/*
-* **********
-* RADIO BUTTONS
-* **********
-*
-*/
-.radio-button>*.radio{
-    -fx-background-color : -gray;
-}
-
-.radio-button:selected>*.radio>*.dot{
-    -fx-background-color : -black;
+.check-box:indeterminate > *.box > *.mark {
+    -fx-background-color: -black;
 }
 
 /*
@@ -271,22 +225,14 @@
  * **********
  *
  */
-.text-field{
-    -fx-highlight-fill : -color;
-    -fx-highlight-text-fill : -white;
+.text-field {
+    -fx-highlight-fill: -color;
+    -fx-highlight-text-fill: -white;
 }
 
-.text-area{
-    -fx-highlight-fill : -color;
-    -fx-highlight-text-fill : -white;
-}
-
-.spinner>*.increment-arrow-button{
-    -fx-background-color : -gray;
-}
-
-.spinner>*.decrement-arrow-button{
-    -fx-background-color : -gray;
+.text-area {
+    -fx-highlight-fill: -color;
+    -fx-highlight-text-fill: -white;
 }
 
 /*
@@ -296,20 +242,23 @@
  *
  */
 
-.first-titled-pane:expanded>*.title{
-    -fx-background-color : -color;
+.first-titled-pane:expanded > *.title, .titled-pane:expanded > *.title, .first-titled-pane:expanded, .titled-pane:expanded {
+    -fx-background-color: -color;
+    -fx-text-fill: -white;
 }
 
-.titled-pane:expanded>*.title{
-    -fx-background-color : -color;
+.titled-pane:collapsed {
+    -fx-background-color: -gray;
+    -fx-text-fill: -black;
 }
 
-.titled-pane:collapsed>*.title{
-    -fx-background-color : -gray;
+.titled-pane:collapsed > *.title, .first-titled-pane:collapsed > *.title {
+    -fx-background-color: -gray;
+    -fx-text-fill: -white;
 }
 
-.titled-pane*>*.title>*.arrow-button>*.arrow{
-    -fx-background-color : -black;
+.titled-pane * > *.title > *.arrow-button > *.arrow {
+    -fx-background-color: -white;
 }
 
 /*
@@ -318,53 +267,53 @@
  * **********
  *
  */
-.table-view:row-selection{
-    -fx-background-color : -gray;
+.table-view:row-selection {
+    -fx-background-color: -gray;
 }
 
-.table-view:row-selection>*.column-header-background{
-    -fx-background-color : -white;
+.table-view:row-selection > *.column-header-background {
+    -fx-background-color: -white;
 }
 
-.table-view>*.column-resize-line{
-    -fx-background-color : -black;
+.table-view > *.column-resize-line {
+    -fx-background-color: -black;
 }
 
-.table-view>*.column-header-background>*.nested-column-header>*.table-column{
-    -fx-background-color : -darkGray, -white;
+.table-view > *.column-header-background > *.nested-column-header > *.table-column {
+    -fx-background-color: -darkGray, -white;
 }
 
-.table-view>*.column-header-background>*.filler{
-    -fx-background-color : -darkGray, -gray;
+.table-view > *.column-header-background > *.filler {
+    -fx-background-color: -darkGray, -gray;
 }
 
-.table-view>*.column-header-background>*.show-hide-columns-button{
-    -fx-background-color : -gray;
+.table-view > *.column-header-background > *.show-hide-columns-button {
+    -fx-background-color: -gray;
 }
 
 
-.tree-table-view:row-selection{
-    -fx-background-color : -gray;
+.tree-table-view:row-selection {
+    -fx-background-color: -gray;
 }
 
-.tree-table-view:row-selection>*.column-header-background{
-    -fx-background-color : -white;
+.tree-table-view:row-selection > *.column-header-background {
+    -fx-background-color: -white;
 }
 
-.tree-table-view>*.column-resize-line{
-    -fx-background-color : -black;
+.tree-table-view > *.column-resize-line {
+    -fx-background-color: -black;
 }
 
-.tree-table-view>*.column-header-background>*.nested-column-header>*.table-column{
-    -fx-background-color : -darkGray, -white;
+.tree-table-view > *.column-header-background > *.nested-column-header > *.table-column {
+    -fx-background-color: -darkGray, -white;
 }
 
-.tree-table-view>*.column-header-background>*.filler{
-    -fx-background-color : -darkGray, -gray;
+.tree-table-view > *.column-header-background > *.filler {
+    -fx-background-color: -darkGray, -gray;
 }
 
-.tree-table-view>*.column-header-background>*.show-hide-columns-button{
-    -fx-background-color : -gray;
+.tree-table-view > *.column-header-background > *.show-hide-columns-button {
+    -fx-background-color: -gray;
 }
 
 /*
@@ -373,23 +322,21 @@
  * **********
  *
  */
-.scroll-pane>*.scroll-bar{
-    -fx-background-color : -gray;
+.scroll-pane > *.scroll-bar {
+    -fx-background-color: -gray;
 }
 
-.scroll-pane>*.scroll-bar>*.thumb{
-    -fx-background-color : -color;
+.scroll-pane > *.scroll-bar > *.thumb {
+    -fx-background-color: -color;
 }
 
-/* added */
 .split-pane-divider {
-    -fx-border-color:  transparent;
+    -fx-border-color: transparent;
     -fx-background-color: darkGray;
     -fx-background-insets: 0;
     -fx-padding: 0 2px 0 2px;
 }
 
-/* added */
 .invalid {
     -fx-background-color: -transparent_red;
 }
