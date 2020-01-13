@@ -136,6 +136,9 @@ public class MainAppUIController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlName + ".fxml"));
             pane = fxmlLoader.load();
+            // check if controller.isAdminPanel matches isAdmin attribute of logged in user
+            // not implemented in MVP because of missing user login (out of scope)
+            UIPanelController controller = fxmlLoader.getController();
             // top level pane in panel needs an id attribute in order to load it by id
             if(pane.getId() != null) {
                 uiPanelList.add(pane);

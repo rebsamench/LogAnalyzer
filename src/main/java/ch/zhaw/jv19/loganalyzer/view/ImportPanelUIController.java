@@ -135,4 +135,9 @@ public class ImportPanelUIController implements Initializable, UIPanelController
         selectedFilesTable.getColumns().add(fileColumn);
         selectedFilesTable.setItems(selectedFiles);
     }
+
+    @Override
+    public boolean isAdminPanel() {
+        return false;
+    }
 }

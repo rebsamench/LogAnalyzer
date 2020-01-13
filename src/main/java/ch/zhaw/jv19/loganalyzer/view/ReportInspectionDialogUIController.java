@@ -46,4 +46,9 @@ public class ReportInspectionDialogUIController extends ExportPanelUIController 
         }
 
     }
+
+    @Override
+    public boolean isAdminPanel() {
+        return false;
+    }
 }

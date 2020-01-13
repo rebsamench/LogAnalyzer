@@ -11,7 +11,7 @@ import java.io.File;
  * Controls excel export. Used as super class for all panels with exportable tables.
  * @author Simon Rizzi, rizzisim@students.zhaw.ch
  */
-public class ExportPanelUIController {
+public class ExportPanelUIController implements UIPanelController {
     private final AppDataController appDataController = AppDataController.getInstance();
 
     /**
@@ -29,5 +29,10 @@ public class ExportPanelUIController {
             appDataController.exportToExcel(table, file);
             appDataController.setMessage("File successfully saved to " + file.getAbsolutePath());
         }
+    }
+
+    @Override
+    public boolean isAdminPanel() {
+        return false;
     }
 }
