@@ -110,6 +110,8 @@ public class AppDataController {
 
     /**
      * Exports TableView as Excel file
+     * @param table table to be exported
+     * @param file file to which the table is exported
      */
     public void exportToExcel (TableView<?> table, File file) {
         ExcelExporter exporter = new ExcelExporter();

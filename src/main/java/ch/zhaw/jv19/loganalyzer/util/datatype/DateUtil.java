@@ -24,6 +24,7 @@ public final class DateUtil {
 
     /**
      * Converts given ZonedDateTime to string with given pattern.
+     * @param dateTime ZonedDateTime to be converted
      * @param pattern pattern to format result
      * @return converted ZonedDateTime time as formatted string
      * @throws DateTimeException if date is invalid (e. g. month is 13)
@@ -62,6 +63,7 @@ public final class DateUtil {
     /**
      * Gets ZonedDateTime from String with given inputDateTimePattern
      * @param dateTime String representing date and time
+     * @param inputDateTimePattern pattern for result string.
      * @return ZonedDateTime with system time zone
      * @throws DateTimeException if date is invalid (e. g. month is 13) or pattern doesnt match date
      */

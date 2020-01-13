@@ -7,11 +7,12 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * Provides unit tests for LogRecord.
+ * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
+ */
 public class LogRecordTest {
-    /**
-     * Provides unit tests for LogRecord.
-     * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
-     */
+
     private LogRecord logRecord;
     private Site site;
     private BusLine busLine;

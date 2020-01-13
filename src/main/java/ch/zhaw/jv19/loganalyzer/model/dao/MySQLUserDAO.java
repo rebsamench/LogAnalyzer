@@ -63,8 +63,8 @@ public class MySQLUserDAO implements UserDAO {
      * Saves user in data base
      *
      * @param user to be saved to data base
-     * @return number of rows affected. if > 0 -> user has been saved.
-     * @throws SQLException database exception
+     * @return number of rows affected. If greater than 0, user has been saved.
+     * @throws SQLException database exception if saving user fails
      */
     @Override
     public int saveUser(User user) throws Exception {

@@ -8,5 +8,5 @@ public interface UserDAO {
     User getUserByName(String name) throws Exception;
     ObservableList<User> getAllUsersList() throws Exception;
     int saveUser(User user) throws Exception;
-    int[] updateUserData(ObservableList<User> userList) throws SQLException;
+    int[] updateUserData (ObservableList<User> userList) throws SQLException;
 }
