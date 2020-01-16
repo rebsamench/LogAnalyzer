@@ -40,6 +40,8 @@ public class ReportInspectionDialogUIController extends ExportPanelUIController 
             uiPanelController.showTableData(appDataController.getLogRecordsListByConditions(searchConditions), false);
             // reselect log record from which analysis started
             uiPanelController.selectLogRecord(logRecord);
+            // mark log record permanently (even if selection changes)
+            uiPanelController.markLogRecordPermanently(logRecord);
             resultPanelContainer.getChildren().add(resultTablePanel);
         } catch (IOException e) {
             e.printStackTrace();

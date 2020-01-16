@@ -129,17 +129,20 @@ public class ReportResultPanelUIController extends ExportPanelUIController imple
         resultTable.getSelectionModel().select(logRecord);
     }
 
-    public void markSelectedLogRecordPermanently() {
-        LogRecord selectedLogRecord = resultTable.getSelectionModel().getSelectedItem();
-        resultTable.setRowFactory(new Callback<TableView<LogRecord>, TableRow<LogRecord>>() {
+    /**
+     * Marks given LogRecord in resultTable by setting red background.
+     * @param logRecord log record to mark
+     */
+    public void markLogRecordPermanently(LogRecord logRecord) {
+        resultTable.setRowFactory(new Callback<>() {
             @Override
-            public TableRow<LogRecord> call(TableView<LogRecord> personTableView) {
-                return new TableRow<LogRecord>() {
+            public TableRow<LogRecord> call(TableView<LogRecord> resultTable) {
+                return new TableRow<>() {
                     @Override
-                    protected void updateItem(LogRecord logrecord, boolean b) {
-                        super.updateItem(logrecord, b);
-                        if(logrecord.equals(selectedLogRecord)) {
-                            getStyleClass().add("marked");
+                    protected void updateItem(LogRecord logRecordFromTable, boolean b) {
+                        super.updateItem(logRecordFromTable, b);
+                        if (logRecordFromTable != null && logRecordFromTable.equals(logRecord)) {
+                            setStyle("-fx-background-color: rgba(255, 0, 0, 0.2);-fx-text-fill: black;");
                         }
                     }
                 };
