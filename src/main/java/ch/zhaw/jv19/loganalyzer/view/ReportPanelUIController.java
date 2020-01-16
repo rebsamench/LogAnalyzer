@@ -77,10 +77,15 @@ public class ReportPanelUIController implements Initializable, UIPanelController
         appDataController = AppDataController.getInstance();
         // fill comboboxes on first use
         createdUser.addEventHandler(ComboBox.ON_SHOWING, event -> fillUserComboBox());
-        eventType.addEventHandler(ComboBox.ON_SHOWING, event -> fillEventTypeComboBox());
-        site.addEventHandler(ComboBox.ON_SHOWING, event -> fillSiteComboBox());
+        // Workaround for refresh issue with CheckComboBox: https://bitbucket.org/controlsfx/controlsfx/issues/537/add-setitems-method-to-checkcombobox
+        Bindings.bindContent(createdUser.getItems(),appDataController.getUserList());
+        Bindings.bindContent(site.getItems(),appDataController.getSiteList());
+        Bindings.bindContent(busLine.getItems(),appDataController.getBusLineList());
+        // fill comboboxes only if needed
         busLine.addEventHandler(ComboBox.ON_SHOWING, event -> fillBusLineComboBox());
         source.addEventHandler(ComboBox.ON_SHOWING, event -> fillSourceComboBox());
+        eventType.addEventHandler(ComboBox.ON_SHOWING, event -> fillEventTypeComboBox());
+        site.addEventHandler(ComboBox.ON_SHOWING, event -> fillSiteComboBox());
         // listener for focus change in order to validate entered time
         createdFromTime.focusedProperty().addListener((o, oldValue, newValue) -> timeFieldChanged(newValue, createdFromTime));
         createdUpToTime.focusedProperty().addListener((o, oldValue, newValue) -> timeFieldChanged(newValue, createdUpToTime));
@@ -108,7 +113,9 @@ public class ReportPanelUIController implements Initializable, UIPanelController
      */
     private void fillUserComboBox() {
         if (createdUser.getItems().size() == 0) {
-            createdUser.getItems().addAll(appDataController.getUserList());
+            for(User user : appDataController.getUserList()) {
+                createdUser.getItems().add(user);
+            }
         }
     }
 
@@ -117,7 +124,7 @@ public class ReportPanelUIController implements Initializable, UIPanelController
      */
     private void fillSiteComboBox() {
         if (site.getItems().size() == 0) {
-            site.getItems().addAll(appDataController.getSiteList());
+            site.getItems().setAll(appDataController.getSiteList());
         }
     }
 

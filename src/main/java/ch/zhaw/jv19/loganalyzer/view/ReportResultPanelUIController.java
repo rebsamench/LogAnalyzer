@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.time.ZonedDateTime;
@@ -126,6 +127,24 @@ public class ReportResultPanelUIController extends ExportPanelUIController imple
      */
     public void selectLogRecord(LogRecord logRecord) {
         resultTable.getSelectionModel().select(logRecord);
+    }
+
+    public void markSelectedLogRecordPermanently() {
+        LogRecord selectedLogRecord = resultTable.getSelectionModel().getSelectedItem();
+        resultTable.setRowFactory(new Callback<TableView<LogRecord>, TableRow<LogRecord>>() {
+            @Override
+            public TableRow<LogRecord> call(TableView<LogRecord> personTableView) {
+                return new TableRow<LogRecord>() {
+                    @Override
+                    protected void updateItem(LogRecord logrecord, boolean b) {
+                        super.updateItem(logrecord, b);
+                        if(logrecord.equals(selectedLogRecord)) {
+                            getStyleClass().add("marked");
+                        }
+                    }
+                };
+            }
+        });
     }
 
     @Override

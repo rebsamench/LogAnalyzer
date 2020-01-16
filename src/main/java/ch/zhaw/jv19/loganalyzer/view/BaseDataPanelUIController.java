@@ -135,11 +135,11 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
      */
     private void initializeUserUserTab() {
         baseDataUserTable.setItems(userTableData);
-        comboBoxCreatedUserUser.getItems().addAll(appDataController.getUserList());
-        List<Integer> admin = new ArrayList<>();
+        comboBoxCreatedUserUser.setItems(appDataController.getUserList());
+        ObservableList<Integer> admin = FXCollections.observableArrayList();
         admin.add(0);
         admin.add(1);
-        comboBoxIsAdmin.getItems().addAll(admin);
+        comboBoxIsAdmin.setItems(admin);
         setupCreatedUserColumnUser();
         setupUserNameColumn();
         setupPasswordColumn();
@@ -156,7 +156,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
      */
     private void initializeSiteTab() {
         baseDataSiteTable.setItems(siteTableData);
-        comboBoxCreatedUserSite.getItems().addAll(appDataController.getUserList());
+        comboBoxCreatedUserSite.setItems(appDataController.getUserList());
         setupCreatedUserColumnSite();
         setupSiteNameColumn();
         setupStreetColumn();
@@ -176,7 +176,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
      */
     private void initializeBusLineTab() {
         baseDataBusLineTable.setItems(busLineTableData);
-        comboBoxCreatedUserBusLine.getItems().addAll(appDataController.getUserList());
+        comboBoxCreatedUserBusLine.setItems(appDataController.getUserList());
         setupCreatedUserColumnBusLine();
         setupBusLineNameColumn();
         setupBustypeColumn();
