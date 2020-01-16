@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.time.ZonedDateTime;
@@ -126,6 +127,27 @@ public class ReportResultPanelUIController extends ExportPanelUIController imple
      */
     public void selectLogRecord(LogRecord logRecord) {
         resultTable.getSelectionModel().select(logRecord);
+    }
+
+    /**
+     * Marks given LogRecord in resultTable by setting red background.
+     * @param logRecord log record to mark
+     */
+    public void markLogRecordPermanently(LogRecord logRecord) {
+        resultTable.setRowFactory(new Callback<>() {
+            @Override
+            public TableRow<LogRecord> call(TableView<LogRecord> resultTable) {
+                return new TableRow<>() {
+                    @Override
+                    protected void updateItem(LogRecord logRecordFromTable, boolean b) {
+                        super.updateItem(logRecordFromTable, b);
+                        if (logRecordFromTable != null && logRecordFromTable.equals(logRecord)) {
+                            setStyle("-fx-background-color: rgba(255, 0, 0, 0.2);-fx-text-fill: black;");
+                        }
+                    }
+                };
+            }
+        });
     }
 
     @Override

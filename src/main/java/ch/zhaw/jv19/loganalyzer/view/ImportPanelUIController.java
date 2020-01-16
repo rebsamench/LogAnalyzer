@@ -53,9 +53,9 @@ public class ImportPanelUIController implements Initializable, UIPanelController
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appDataController = AppDataController.getInstance();
         if (appDataController.isDatabaseAccessible().get()) {
-            chooseCreatedUser.getItems().addAll(appDataController.getUserList());
-            chooseSite.getItems().addAll(appDataController.getSiteList());
-            chooseBusLine.getItems().addAll(appDataController.getBusLineList());
+            chooseCreatedUser.getItems().setAll(appDataController.getUserList());
+            chooseSite.getItems().setAll(appDataController.getSiteList());
+            chooseBusLine.getItems().setAll(appDataController.getBusLineList());
             selectLogFiles.disableProperty().bind((chooseSite.valueProperty().isNull())
                     .or(chooseBusLine.valueProperty().isNull())
                     .or(chooseCreatedUser.valueProperty().isNull()));
