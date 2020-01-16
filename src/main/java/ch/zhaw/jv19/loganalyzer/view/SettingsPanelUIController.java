@@ -106,4 +106,9 @@ public class SettingsPanelUIController implements Initializable, UIPanelControll
         settingsMap.clear();
         hasUnchangedSettings.set(false);
     }
+
+    @Override
+    public boolean isAdminPanel() {
+        return false;
+    }
 }

@@ -272,4 +272,9 @@ public class ReportPanelUIController implements Initializable, UIPanelController
             e.printStackTrace();
         }
     }
+
+    @Override
+    public boolean isAdminPanel() {
+        return false;
+    }
 }

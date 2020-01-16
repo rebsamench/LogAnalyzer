@@ -128,4 +128,8 @@ public class ReportResultPanelUIController extends ExportPanelUIController imple
         resultTable.getSelectionModel().select(logRecord);
     }
 
+    @Override
+    public boolean isAdminPanel() {
+        return false;
+    }
 }

@@ -15,6 +15,7 @@ public class DBUtil {
     /**
      * Gets connection from database defined in properties file.
      * @return database connection
+     * @throws SQLException exception if connecting to database fails.
      */
     public static Connection getConnection() throws SQLException {
         Connection con = null;
@@ -32,10 +33,17 @@ public class DBUtil {
         return con;
     }
 
+    /**
+     * Connects to database
+     * @throws Exception exception if connecting fails
+     */
     private static void dbConnect() throws Exception {
         con = getConnection();
     }
 
+    /**
+     * Disconnects from database.
+     */
     public static void dbDisconnect() {
         try {
             if (con != null && !con.isClosed()) {
@@ -46,10 +54,16 @@ public class DBUtil {
         }
     }
 
-    public static int executeUpdate(String query) throws Exception {
+    /**
+     * Exequtes update with given update statement
+     * @param updateStatement SQL update statement
+     * @return number of rows affected
+     * @throws Exception database exception if update fails
+     */
+    public static int executeUpdate(String updateStatement) throws Exception {
         int affectedRows;
         dbConnect();
-        PreparedStatement pstmt = con.prepareStatement(query);
+        PreparedStatement pstmt = con.prepareStatement(updateStatement);
         affectedRows = pstmt.executeUpdate();
         dbDisconnect();
         return affectedRows;

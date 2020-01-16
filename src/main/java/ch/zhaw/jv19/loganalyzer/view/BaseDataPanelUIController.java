@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  *
  * @author Christoph Rebsamen, rebsach1@students.zhaw.ch
  */
-public class BaseDataPanelUIController implements Initializable {
+public class BaseDataPanelUIController implements Initializable, UIPanelController {
 
     private AppDataController appDataController;
     private BaseDataController baseDataController;
@@ -451,5 +451,10 @@ public class BaseDataPanelUIController implements Initializable {
             e.printStackTrace();
             appDataController.setMessage("SQL Error");
         }
+    }
+
+    @Override
+    public boolean isAdminPanel() {
+        return false;
     }
 }
