@@ -82,10 +82,10 @@
                             <Label styleClass="label" text="Street" GridPane.rowIndex="3" />
                             <TextField fx:id="fieldSiteName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                             <TextField fx:id="fieldStreetName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     <TextField fx:id="fieldZipCode" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                             <TextField fx:id="fieldCity" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                             <Button fx:id="buttonSubmitNewSite" mnemonicParsing="false" onAction="#submitNewSite" styleClass="button" text="Submit" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                             <Label styleClass="label" text="Zip Code" GridPane.rowIndex="4" />
-                            <TextField fx:id="fieldZipCode" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                             <ComboBox fx:id="comboBoxCreatedUserSite" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         </GridPane>
                     </AnchorPane>

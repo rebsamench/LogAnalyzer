@@ -361,7 +361,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
         String street = fieldStreetName.getText();
         String zipCode = fieldZipCode.getText();
         String city = fieldCity.getText();
-        Site newSite = new Site(cu, name, street, zipCode, city);
+        Site newSite = new Site(cu, name, street, "zipCode", city);
         SiteWrapper newWrappedSite = new SiteWrapper(newSite);
         fieldSiteName.clear();
         fieldStreetName.clear();
