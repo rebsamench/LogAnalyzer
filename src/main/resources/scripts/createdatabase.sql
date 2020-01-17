@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `belimo`.`site` (
   `createduser` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
   `name` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
   `street` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
-  `zipcode` VARCHAR(5) NOT NULL,
+  `zipcode` VARCHAR(10) NOT NULL,
   `city` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
   `timezone` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),

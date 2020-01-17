@@ -13,7 +13,6 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -45,7 +44,7 @@ public class ImportPanelUIController implements Initializable, UIPanelController
 
     @FXML
     private TableView<FileWrapper> selectedFilesTable;
-    private final ObservableList<Files> selectedFilesList = FXCollections.observableArrayList();
+    private final ObservableList<FileWrapper> selectedFilesList = FXCollections.observableArrayList();
 
     public ImportPanelUIController() {
     }
@@ -54,9 +53,9 @@ public class ImportPanelUIController implements Initializable, UIPanelController
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appDataController = AppDataController.getInstance();
         if (appDataController.isDatabaseAccessible().get()) {
-            chooseCreatedUser.getItems().setAll(appDataController.getUserList());
-            chooseSite.getItems().setAll(appDataController.getSiteList());
-            chooseBusLine.getItems().setAll(appDataController.getBusLineList());
+            chooseCreatedUser.setItems(appDataController.getUserList());
+            chooseSite.setItems(appDataController.getSiteList());
+            chooseBusLine.setItems(appDataController.getBusLineList());
             selectLogFiles.disableProperty().bind((chooseSite.valueProperty().isNull())
                     .or(chooseBusLine.valueProperty().isNull())
                     .or(chooseCreatedUser.valueProperty().isNull()));
@@ -72,30 +71,26 @@ public class ImportPanelUIController implements Initializable, UIPanelController
      */
     @FXML
     public void handleSelectedLogFiles() {
-        // Set extension filter
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("txt files (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
-        // Show open file dialog to select multiple files.
         fileList = fileChooser.showOpenMultipleDialog(null);
-        // check for null in case user cancels
         if(fileList != null) {
             showSelectedFiles(fileList);
         }
     }
 
     /**
-     * Wraps the files in the file list in a FileWrapper and hand it over to the table view.
+     * Wraps the files in the file list in a FileWrapper and hands it over to the table view.
      * The wrapper is necessary for the table view.
      *
      * @param fileList: list of chosen files for import.
      */
     @FXML
-    public void showSelectedFiles(List<File> fileList) {
-        ArrayList listToArrayList = new ArrayList();
-        for (File file : fileList) {
+    private void showSelectedFiles(List<File> fileList) {
+        ArrayList<FileWrapper> listToArrayList = new ArrayList<>();
+        for (File file : fileList)
             listToArrayList.add(new FileWrapper(file));
-        }
         selectedFilesList.clear();
         selectedFilesList.addAll(listToArrayList);
         buildSelectedFilesTable(selectedFilesList);
@@ -106,7 +101,7 @@ public class ImportPanelUIController implements Initializable, UIPanelController
      * the the FileImportController.
      */
     @FXML
-    public void handleImportData() {
+    private void handleImportData() {
         User user = chooseCreatedUser.getSelectionModel().getSelectedItem();
         Site site = chooseSite.getSelectionModel().getSelectedItem();
         BusLine busLine = chooseBusLine.getSelectionModel().getSelectedItem();
@@ -127,13 +122,13 @@ public class ImportPanelUIController implements Initializable, UIPanelController
     /**
      * Creates a table view of the selected files.
      *
-     * @param selectedFiles observable list of the selected files.
+     * @param selectedFilesList observable list of the selected files.
      */
-    public void buildSelectedFilesTable(ObservableList selectedFiles) {
+    private void buildSelectedFilesTable(ObservableList<FileWrapper> selectedFilesList) {
         TableColumn<FileWrapper, String> fileColumn = new TableColumn<>("selected files");
         fileColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         selectedFilesTable.getColumns().add(fileColumn);
-        selectedFilesTable.setItems(selectedFiles);
+        selectedFilesTable.setItems(selectedFilesList);
     }
 
     @Override

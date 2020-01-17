@@ -5,15 +5,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -101,7 +101,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
         appDataController = AppDataController.getInstance();
         if (appDataController.isDatabaseAccessible().get()) {
             populate();
-            initializeUserUserTab();
+            initializeUserTab();
             initializeSiteTab();
             initializeBusLineTab();
         } else {
@@ -133,7 +133,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
     /**
      * Initializes the user tab
      */
-    private void initializeUserUserTab() {
+    private void initializeUserTab() {
         baseDataUserTable.setItems(userTableData);
         comboBoxCreatedUserUser.setItems(appDataController.getUserList());
         ObservableList<Integer> admin = FXCollections.observableArrayList();
@@ -157,6 +157,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
     private void initializeSiteTab() {
         baseDataSiteTable.setItems(siteTableData);
         comboBoxCreatedUserSite.setItems(appDataController.getUserList());
+        addLengthEventfilter(fieldZipCode, 10);
         setupCreatedUserColumnSite();
         setupSiteNameColumn();
         setupStreetColumn();
@@ -459,5 +460,19 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
     @Override
     public boolean isAdminPanel() {
         return false;
+    }
+
+    /**
+     * Restricts input values on to sepcific length
+     *
+     * @param textField TextField to be restricted in length
+     * @param length max length of field
+     */
+    private void addLengthEventfilter(TextField textField, int length) {
+        textField.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
+            if (textField.getText().length() > length) {
+                keyEvent.consume();
+            }
+        });
     }
 }
