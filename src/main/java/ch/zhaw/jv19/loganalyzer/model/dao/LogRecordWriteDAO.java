@@ -5,5 +5,5 @@ import ch.zhaw.jv19.loganalyzer.model.LogRecord;
 import java.util.List;
 
 public interface LogRecordWriteDAO {
-    void insertLogRecords(List<LogRecord> logRecordList) throws Exception;
+    int[] insertLogRecords(List<LogRecord> logRecordList) throws Exception;
 }

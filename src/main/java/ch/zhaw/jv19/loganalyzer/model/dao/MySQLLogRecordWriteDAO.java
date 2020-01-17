@@ -27,7 +27,7 @@ public class MySQLLogRecordWriteDAO implements LogRecordWriteDAO {
      * @throws Exception database error, if insert fails
      */
     @Override
-    public void insertLogRecords(List<LogRecord> logRecordList) throws Exception {
+    public int[] insertLogRecords(List<LogRecord> logRecordList) throws Exception {
         Connection connection = DBUtil.getConnection();
             PreparedStatement ps = connection.prepareStatement("INSERT IGNORE INTO logrecord (createduser,unique_identifier,timestamp,site,busLine,address,milliseconds,type,source,message) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
                 for (LogRecord logRecord: logRecordList){
@@ -43,6 +43,6 @@ public class MySQLLogRecordWriteDAO implements LogRecordWriteDAO {
                 ps.setString(10, logRecord.getMessage());
                 ps.addBatch();
             }
-            ps.executeBatch();
+            return ps.executeBatch();
     }
 }
