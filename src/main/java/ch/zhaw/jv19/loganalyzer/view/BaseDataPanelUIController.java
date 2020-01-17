@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -134,6 +133,10 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
      * Initializes the user tab
      */
     private void initializeUserTab() {
+        // restrict lengths
+        addLengthEventfilter(fieldUserName, 45);
+        addLengthEventfilter(fieldPassword, 45);
+
         baseDataUserTable.setItems(userTableData);
         comboBoxCreatedUserUser.setItems(appDataController.getUserList());
         ObservableList<Integer> admin = FXCollections.observableArrayList();
@@ -145,9 +148,11 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
         setupPasswordColumn();
         setupIsadminColumn();
         baseDataUserTable.setEditable(true);
-        buttonSubmitNewUser.disableProperty().bind((fieldUserName.textProperty().isEmpty())
-                .or(fieldPassword.textProperty().isEmpty())
-                .or(comboBoxIsAdmin.valueProperty().isNull()));
+        buttonSubmitNewUser.disableProperty().bind(
+                comboBoxCreatedUserUser.valueProperty().isNull()
+                        .or(fieldUserName.textProperty().isEmpty())
+                        .or(fieldPassword.textProperty().isEmpty())
+                        .or(comboBoxIsAdmin.valueProperty().isNull()));
     }
 
 
@@ -155,9 +160,14 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
      * Initializes the site tab
      */
     private void initializeSiteTab() {
+        // restrict lengths
+        addLengthEventfilter(fieldSiteName, 45);
+        addLengthEventfilter(fieldStreetName, 45);
+        addLengthEventfilter(fieldZipCode, 10);
+        addLengthEventfilter(fieldCity, 45);
+
         baseDataSiteTable.setItems(siteTableData);
         comboBoxCreatedUserSite.setItems(appDataController.getUserList());
-        addLengthEventfilter(fieldZipCode, 10);
         setupCreatedUserColumnSite();
         setupSiteNameColumn();
         setupStreetColumn();
@@ -165,7 +175,8 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
         setupCityColumn();
         baseDataSiteTable.setEditable(true);
         buttonSubmitNewSite.disableProperty().bind(
-                (fieldSiteName.textProperty().isEmpty())
+                comboBoxCreatedUserSite.valueProperty().isNull()
+                        .or(fieldSiteName.textProperty().isEmpty())
                         .or(fieldStreetName.textProperty().isEmpty())
                         .or(fieldZipCode.textProperty().isEmpty())
                         .or(fieldCity.textProperty().isEmpty()));
@@ -176,6 +187,10 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
      * Initializes the busLine tab
      */
     private void initializeBusLineTab() {
+        // restrict lengths
+        addLengthEventfilter(fieldBusLineName, 45);
+        addLengthEventfilter(fieldBusType, 45);
+
         baseDataBusLineTable.setItems(busLineTableData);
         comboBoxCreatedUserBusLine.setItems(appDataController.getUserList());
         setupCreatedUserColumnBusLine();
@@ -183,7 +198,8 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
         setupBustypeColumn();
         baseDataBusLineTable.setEditable(true);
         buttonSubmitNewBusLine.disableProperty().bind(
-                (fieldBusLineName.textProperty().isEmpty())
+                comboBoxCreatedUserBusLine.valueProperty().isNull()
+                        .or(fieldBusLineName.textProperty().isEmpty())
                         .or(fieldBusType.textProperty().isEmpty()));
     }
 
@@ -466,7 +482,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
      * Restricts input values on to sepcific length
      *
      * @param textField TextField to be restricted in length
-     * @param length max length of field
+     * @param length    max length of field
      */
     private void addLengthEventfilter(TextField textField, int length) {
         textField.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
