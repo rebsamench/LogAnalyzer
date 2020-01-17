@@ -397,7 +397,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
         fieldBusLineName.clear();
         fieldBusType.clear();
         if (appDataController.getBusLineList().contains(newBusLine)) {
-            appDataController.setMessage("Site already exists!");
+            appDataController.setMessage("Bus line already exists!");
         } else {
             busLineTableData.add(newWrappedBusLine);
             try {
