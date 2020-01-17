@@ -6,6 +6,6 @@ import java.sql.SQLException;
 
 public interface SiteDAO {
     ObservableList<Site> getAllSitesList() throws Exception;
-    int saveSite(Site site) throws Exception;
-    int[] updateSiteData(ObservableList<Site> siteList) throws SQLException;
+    void saveSite(Site site) throws Exception;
+    void updateSiteData(ObservableList<Site> siteList) throws SQLException;
 }

@@ -67,7 +67,7 @@ public class MySQLUserDAO implements UserDAO {
      * @throws SQLException database exception if saving user fails
      */
     @Override
-    public int saveUser(User user) throws Exception {
+    public void saveUser(User user) throws Exception {
         String[] values = {
                 StringUtil.wrapQuotes.apply(user.getCreatedUser()),
                 StringUtil.wrapQuotes.apply(user.getName()),
@@ -86,7 +86,7 @@ public class MySQLUserDAO implements UserDAO {
                         ", password " + MySQLConst.EQUALS + values[2] +
                         ", isadmin " + MySQLConst.EQUALS + values[3] +
                         MySQLConst.ENDQUERY;
-        return DBUtil.executeUpdate(statementTemplate);
+        DBUtil.executeUpdate(statementTemplate);
     }
 
     /**
@@ -107,7 +107,7 @@ public class MySQLUserDAO implements UserDAO {
         return user;
     }
 
-    public int[] updateUserData(ObservableList<User> userList) throws SQLException {
+    public void updateUserData(ObservableList<User> userList) throws SQLException {
         Connection connection = DBUtil.getConnection();
             // update user set createduser = 'a', password = 'a', isadmin = 1 where id = 17
             PreparedStatement ps = connection.prepareStatement("UPDATE USER SET createduser = ?, password = ?, isadmin = ? WHERE id = ?");
@@ -118,6 +118,6 @@ public class MySQLUserDAO implements UserDAO {
                 ps.setInt(4, user.getId());
                 ps.addBatch();
             }
-            return ps.executeBatch();
+            ps.executeBatch();
     }
 }
