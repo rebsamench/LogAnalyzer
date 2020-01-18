@@ -104,7 +104,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
             initializeSiteTab();
             initializeBusLineTab();
         } else {
-            appDataController.setMessage("Could not load base data. Check database connection settings in properties file or on panel 'Settings'.");
+            appDataController.setMessage("Could not load base data. Adjust database connection settings in properties file or on panel 'Settings' and restart application.");
         }
     }
 
@@ -134,8 +134,8 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
      */
     private void initializeUserTab() {
         // restrict lengths
-        addLengthEventfilter(fieldUserName, 45);
-        addLengthEventfilter(fieldPassword, 45);
+        addLengthEventFilter(fieldUserName, 45);
+        addLengthEventFilter(fieldPassword, 45);
 
         baseDataUserTable.setItems(userTableData);
         comboBoxCreatedUserUser.setItems(appDataController.getUserList());
@@ -146,7 +146,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
         setupCreatedUserColumnUser();
         setupUserNameColumn();
         setupPasswordColumn();
-        setupIsadminColumn();
+        setupIsAdminColumn();
         baseDataUserTable.setEditable(true);
         buttonSubmitNewUser.disableProperty().bind(
                 comboBoxCreatedUserUser.valueProperty().isNull()
@@ -161,10 +161,10 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
      */
     private void initializeSiteTab() {
         // restrict lengths
-        addLengthEventfilter(fieldSiteName, 45);
-        addLengthEventfilter(fieldStreetName, 45);
-        addLengthEventfilter(fieldZipCode, 10);
-        addLengthEventfilter(fieldCity, 45);
+        addLengthEventFilter(fieldSiteName, 45);
+        addLengthEventFilter(fieldStreetName, 45);
+        addLengthEventFilter(fieldZipCode, 10);
+        addLengthEventFilter(fieldCity, 45);
 
         baseDataSiteTable.setItems(siteTableData);
         comboBoxCreatedUserSite.setItems(appDataController.getUserList());
@@ -188,8 +188,8 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
      */
     private void initializeBusLineTab() {
         // restrict lengths
-        addLengthEventfilter(fieldBusLineName, 45);
-        addLengthEventfilter(fieldBusType, 45);
+        addLengthEventFilter(fieldBusLineName, 45);
+        addLengthEventFilter(fieldBusType, 45);
 
         baseDataBusLineTable.setItems(busLineTableData);
         comboBoxCreatedUserBusLine.setItems(appDataController.getUserList());
@@ -246,7 +246,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
         );
     }
 
-    private void setupIsadminColumn() {
+    private void setupIsAdminColumn() {
         TableColumn<UserWrapper, Integer> isadminColumn = new TableColumn<>("Admin");
         isadminColumn.setCellValueFactory(new PropertyValueFactory<>("isadmin"));
         isadminColumn.setCellFactory(ComboBoxTableCell.forTableColumn(0, 1));
@@ -361,7 +361,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
                 appDataController.setMessage("New User successfully submitted");
             } catch (Exception e) {
                 e.printStackTrace();
-                appDataController.setMessage("SQL Error");
+                appDataController.setMessage("SQL Error: " + e.getMessage());
             }
         }
     }
@@ -394,7 +394,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
                 appDataController.setMessage("New Site successfully submitted");
             } catch (Exception e) {
                 e.printStackTrace();
-                appDataController.setMessage("SQL Error");
+                appDataController.setMessage("SQL Error: " + e.getMessage());
             }
         }
     }
@@ -423,7 +423,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
                 appDataController.setMessage("New bus line successfully submitted");
             } catch (Exception e) {
                 e.printStackTrace();
-                appDataController.setMessage("SQL Error");
+                appDataController.setMessage("SQL Error: " + e.getMessage());
             }
         }
     }
@@ -439,7 +439,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
             appDataController.setMessage("User Data successfully updated");
         } catch (SQLException e) {
             e.printStackTrace();
-            appDataController.setMessage("SQL Error");
+            appDataController.setMessage("SQL Error: " + e.getMessage());
         }
     }
 
@@ -454,7 +454,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
             appDataController.setMessage("Site Data successfully updated");
         } catch (SQLException e) {
             e.printStackTrace();
-            appDataController.setMessage("SQL Error");
+            appDataController.setMessage("SQL Error: " + e.getMessage());
         }
     }
 
@@ -466,10 +466,10 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
         baseDataController = new BaseDataController();
         try {
             baseDataController.updateBusLineData();
-            appDataController.setMessage("BusLine Data successfully updated");
+            appDataController.setMessage("Bus Line Data successfully updated");
         } catch (SQLException e) {
             e.printStackTrace();
-            appDataController.setMessage("SQL Error");
+            appDataController.setMessage("SQL Error: " + e.getMessage());
         }
     }
 
@@ -484,7 +484,7 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
      * @param textField TextField to be restricted in length
      * @param length    max length of field
      */
-    private void addLengthEventfilter(TextField textField, int length) {
+    private void addLengthEventFilter(TextField textField, int length) {
         textField.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
             if (textField.getText().length() > length) {
                 keyEvent.consume();
