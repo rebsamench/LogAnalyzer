@@ -2,15 +2,14 @@ package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.model.*;
 import ch.zhaw.jv19.loganalyzer.util.datatype.DateUtil;
+import ch.zhaw.jv19.loganalyzer.util.ui.UIUtil;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -91,12 +90,16 @@ public class ReportPanelUIController implements Initializable, UIPanelController
         createdUpToTime.focusedProperty().addListener((o, oldValue, newValue) -> timeFieldChanged(newValue, createdUpToTime));
         loggedTimestampFromTime.focusedProperty().addListener((o, oldValue, newValue) -> timeFieldChanged(newValue, loggedTimestampFromTime));
         loggedTimestampUpToTime.focusedProperty().addListener((o, oldValue, newValue) -> timeFieldChanged(newValue, loggedTimestampUpToTime));
+        UIUtil.addLengthEventFilter(createdFromTime, 8);
+        UIUtil.addLengthEventFilter(createdUpToTime, 8);
+        UIUtil.addLengthEventFilter(loggedTimestampFromTime, 8);
+        UIUtil.addLengthEventFilter(loggedTimestampUpToTime, 8);
         //disable further analysis box when no table row is selected
         furtherAnalysisBox.disableProperty().bind(Bindings.isEmpty(reportResultPanelUIController.getSelectedItems()));
         // allow numeric values only
-        addNumericEventfilter(secondsBefore);
-        addNumericEventfilter(secondsAfter);
-        addNumericEventfilter(address);
+        UIUtil.addNumericEventFilter(secondsBefore);
+        UIUtil.addNumericEventFilter(secondsAfter);
+        UIUtil.addNumericEventFilter(address);
     }
 
     /**
@@ -238,20 +241,6 @@ public class ReportPanelUIController implements Initializable, UIPanelController
      */
     private boolean isTimeValid(String timeString) {
         return (timeString.matches("(?:[01]\\d|2[0123]):(?:[012345]\\d):(?:[012345]\\d)"));
-    }
-
-    /**
-     * Restricts input values on node to numeric values
-     * https://stackoverflow.com/questions/7555564/what-is-the-recommended-way-to-make-a-numeric-textfield-in-javafx
-     *
-     * @param node numeric node (e. g. TextField)
-     */
-    private void addNumericEventfilter(Node node) {
-        node.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
-            if (!"0123456789".contains(keyEvent.getCharacter())) {
-                keyEvent.consume();
-            }
-        });
     }
 
     /**

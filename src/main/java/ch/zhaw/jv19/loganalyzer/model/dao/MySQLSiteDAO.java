@@ -44,7 +44,6 @@ public class MySQLSiteDAO implements SiteDAO {
      * Saves a single site instance to the data base.
      *
      * @param site Site instance
-     * @return int represents the row count.
      * @throws Exception if saving fails
      */
     @Override
@@ -100,7 +99,6 @@ public class MySQLSiteDAO implements SiteDAO {
      * Updates site date in the data base provided in a list.
      *
      * @param siteList list for sites
-     * @return int[] representing the updated rows
      * @throws SQLException if updating fails
      */
     public void updateSiteData(ObservableList<Site> siteList) throws SQLException {

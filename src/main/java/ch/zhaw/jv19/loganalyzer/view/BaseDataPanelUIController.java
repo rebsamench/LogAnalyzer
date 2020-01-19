@@ -1,6 +1,7 @@
 package ch.zhaw.jv19.loganalyzer.view;
 
 import ch.zhaw.jv19.loganalyzer.model.*;
+import ch.zhaw.jv19.loganalyzer.util.ui.UIUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -134,8 +135,8 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
      */
     private void initializeUserTab() {
         // restrict lengths
-        addLengthEventFilter(fieldUserName, 45);
-        addLengthEventFilter(fieldPassword, 45);
+        UIUtil.addLengthEventFilter(fieldUserName, 45);
+        UIUtil.addLengthEventFilter(fieldPassword, 45);
 
         baseDataUserTable.setItems(userTableData);
         comboBoxCreatedUserUser.setItems(appDataController.getUserList());
@@ -161,10 +162,10 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
      */
     private void initializeSiteTab() {
         // restrict lengths
-        addLengthEventFilter(fieldSiteName, 45);
-        addLengthEventFilter(fieldStreetName, 45);
-        addLengthEventFilter(fieldZipCode, 10);
-        addLengthEventFilter(fieldCity, 45);
+        UIUtil.addLengthEventFilter(fieldSiteName, 45);
+        UIUtil.addLengthEventFilter(fieldStreetName, 45);
+        UIUtil.addLengthEventFilter(fieldZipCode, 10);
+        UIUtil.addLengthEventFilter(fieldCity, 45);
 
         baseDataSiteTable.setItems(siteTableData);
         comboBoxCreatedUserSite.setItems(appDataController.getUserList());
@@ -188,8 +189,8 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
      */
     private void initializeBusLineTab() {
         // restrict lengths
-        addLengthEventFilter(fieldBusLineName, 45);
-        addLengthEventFilter(fieldBusType, 45);
+        UIUtil.addLengthEventFilter(fieldBusLineName, 45);
+        UIUtil.addLengthEventFilter(fieldBusType, 45);
 
         baseDataBusLineTable.setItems(busLineTableData);
         comboBoxCreatedUserBusLine.setItems(appDataController.getUserList());
@@ -476,19 +477,5 @@ public class BaseDataPanelUIController implements Initializable, UIPanelControll
     @Override
     public boolean isAdminPanel() {
         return false;
-    }
-
-    /**
-     * Restricts input values on to sepcific length
-     *
-     * @param textField TextField to be restricted in length
-     * @param length    max length of field
-     */
-    private void addLengthEventFilter(TextField textField, int length) {
-        textField.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
-            if (textField.getText().length() > length) {
-                keyEvent.consume();
-            }
-        });
     }
 }
